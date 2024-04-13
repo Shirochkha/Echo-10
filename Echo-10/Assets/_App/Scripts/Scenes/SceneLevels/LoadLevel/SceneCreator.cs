@@ -5,7 +5,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.LoadLevel
 {
     public class SceneCreator : MonoBehaviour
     {
-        public ConfigPrefabs objectListSO;
+        public ConfigObjects _configObjects;
 
         private void Start()
         {
@@ -14,21 +14,22 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.LoadLevel
 
         public void RecreateSceneFromScriptableObject()
         {
-            if (objectListSO == null)
+            if (_configObjects == null)
             {
                 Debug.LogError("ObjectListSO is not assigned!");
                 return;
             }
 
-            foreach (ObjectData data in objectListSO.objects)
+            foreach (ObjectData data in _configObjects.objects)
             {
-                if (data.objectReference == null)
+                if (data.prefabReference == null)
                 {
                     Debug.LogWarning("GameObject is null in ObjectData!");
                     continue;
                 }
 
-                GameObject newObject = Instantiate(data.objectReference, data.position, Quaternion.identity);
+                GameObject newObject = Instantiate(data.prefabReference, data.position, Quaternion.identity);
+                data.objectReference = newObject;
                 newObject.transform.localScale = data.scale;
             }
         }

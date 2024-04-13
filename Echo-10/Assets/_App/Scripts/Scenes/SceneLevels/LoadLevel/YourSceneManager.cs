@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class YourSceneManager : MonoBehaviour
 {
-    public ConfigPrefabs objectListSO;
+    public ConfigObjects objectListSO;
+    public ConfigPrefabsTypes prefabTypesSO;
 
     private void Start()
     {
@@ -43,11 +44,20 @@ public class YourSceneManager : MonoBehaviour
 
             if (prefabDictionary.ContainsKey(obj.name))
             {
-                newData.objectReference = prefabDictionary[obj.name];
+                newData.prefabReference = prefabDictionary[obj.name];
+
+                foreach (PrefabData prefabData in prefabTypesSO.prefabTypes)
+                {
+                    if (prefabData.prefab == newData.prefabReference)
+                    {
+                        newData.objectType = prefabData.type;
+                        break;
+                    }
+                }
             }
             else
             {
-                newData.objectReference = null;
+                continue;
             }
 
             newData.objectName = obj.name;
