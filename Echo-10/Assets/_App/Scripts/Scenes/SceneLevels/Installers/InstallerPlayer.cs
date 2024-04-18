@@ -17,6 +17,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private float _cameraHeightOffset = -35f;
         [SerializeField] private ConfigObjects _configObjects;
         [SerializeField] private GameObject _player;
+        [SerializeField] private Collider _playerCollider;
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -30,7 +31,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 _cameraHeightOffset);
             container.SetService<IUpdatable, SystemCameraFollow>(cameraFollow);
 
-            var playerInteractions = new SystemPlayerInteractions(_configObjects, _player);
+            var playerInteractions = new SystemPlayerInteractions(_configObjects, _player, _playerCollider);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  
     }

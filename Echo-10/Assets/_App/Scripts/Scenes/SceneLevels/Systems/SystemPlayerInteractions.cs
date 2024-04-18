@@ -9,10 +9,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private ConfigObjects _configObjects;
         private GameObject _player;
 
-        public SystemPlayerInteractions(ConfigObjects configObjects, GameObject player)
+        private Collider _playerCollider;
+
+        public SystemPlayerInteractions(ConfigObjects configObjects, GameObject player, Collider playerCollider)
         {
             _configObjects = configObjects;
             _player = player;
+            _playerCollider = playerCollider;
         }
 
         public void Update()
@@ -26,8 +29,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 foreach (ObjectData otherObjectData in _configObjects.objects)
                 {
-                    if (otherObjectData.objectReference == null || 
-                        _player.gameObject.transform.position.z > otherObjectData.objectReference.transform.position.z) 
+                    if (otherObjectData.objectReference == null
+                        || _player.gameObject.transform.position.z > otherObjectData.objectReference.transform.position.z)
                         continue;
 
                     if (IsColliding(otherObjectData))
@@ -44,7 +47,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
         private bool IsColliding(ObjectData obj2)
         {
-            Collider collider1 = _player.GetComponent<Collider>();
+            Collider collider1 = _playerCollider;
             Collider collider2 = obj2.objectReference.GetComponent<Collider>();
 
             if (collider1 != null && collider2 != null)

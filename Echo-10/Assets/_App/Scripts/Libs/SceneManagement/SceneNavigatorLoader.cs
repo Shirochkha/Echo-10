@@ -15,12 +15,12 @@ namespace _App.Scripts.Libs.SceneManagement
 
         public void LoadScene(string sceneId)
         {
-            SceneManager.LoadScene(sceneId);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneId);
         }
 
         public List<SceneInfo> GetAvailableSwitchScenes()
         {
-            var currentSceneName = SceneManager.GetActiveScene().name;
+            var currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             var result = new List<SceneInfo>();
 
