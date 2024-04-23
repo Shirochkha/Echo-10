@@ -10,12 +10,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private GameObject _player;
 
         private Collider _playerCollider;
+        private SystemHealthBarChange _healthController;
 
-        public SystemPlayerInteractions(ConfigObjects configObjects, GameObject player, Collider playerCollider)
+        public SystemPlayerInteractions(ConfigObjects configObjects, GameObject player, Collider playerCollider, SystemHealthBarChange healthController)
         {
             _configObjects = configObjects;
             _player = player;
             _playerCollider = playerCollider;
+            _healthController = healthController;
         }
 
         public void Update()
@@ -71,6 +73,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                 case ObjectType.Enemy:
                     GameObject.Destroy(obj2.objectReference.gameObject);
                     obj2.objectReference = null;
+                    _healthController.PlayerDamaged(1);
                     Debug.Log("Obstacle/Enemy");
                     break;
                 case ObjectType.Coin:

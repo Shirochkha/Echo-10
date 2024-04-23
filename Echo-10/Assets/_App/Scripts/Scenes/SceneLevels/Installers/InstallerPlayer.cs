@@ -31,7 +31,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 _cameraHeightOffset);
             container.SetService<IUpdatable, SystemCameraFollow>(cameraFollow);
 
-            var playerInteractions = new SystemPlayerInteractions(_configObjects, _player, _playerCollider);
+            var healthController = container.Get<SystemHealthBarChange>();
+
+            var playerInteractions = new SystemPlayerInteractions(_configObjects, _player, _playerCollider, 
+                healthController);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  
     }
