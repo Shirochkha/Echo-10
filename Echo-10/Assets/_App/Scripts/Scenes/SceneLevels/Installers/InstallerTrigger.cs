@@ -20,6 +20,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private float _maxAlpha = 1f;
         [SerializeField] private ConfigObjects _configObjects;
 
+        [SerializeField] private ConfigSprites _sprites;
+
         public override void InstallBindings(ServiceContainer container)
         {
             var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, _clickCount, 
@@ -32,6 +34,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,
                 colliderRadiusChange, _configObjects);
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
+
+            var spriteChange = new SystemSpriteChange(_sprites, _configObjects, _colliderComponent);
+            container.SetService<IUpdatable, SystemSpriteChange>(spriteChange);
         }
     }
 }

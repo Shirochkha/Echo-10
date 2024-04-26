@@ -16,6 +16,7 @@ MonoBehaviour:
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 8166836501575525924, guid: d320c23262ad41847a15ea03cb9ff32c, type: 3}
     objectName: BotObstacleDVA
-    position: {x: -7.9, y: 29.05, z: 56.1}
+    position: {x: -7.9, y: 29.05, z: 107.65}
     scale: {x: 2, y: 2, z: 1}
     objectType: 0
+    renderer: {fileID: 0}

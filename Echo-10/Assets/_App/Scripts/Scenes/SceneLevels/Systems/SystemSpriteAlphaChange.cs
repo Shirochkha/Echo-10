@@ -45,22 +45,19 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (_colliderRadiusChange.ClickCount < 10)
+                if (_colliderRadiusChange.ClickCount < 10 && _colliderRadiusChange.ClickCount > 0)
                 {
                     _isMaxAlpha = true;
                     _maxAlphaDuration = 2f;
                 }
             }
         }
-
+        
         private void HandleObjectVisibility()
         {
             foreach (var otherObjectData in _configObjects.objects)
             {
-                var objRef = otherObjectData.objectReference;
-                if (objRef == null) continue;
-
-                var renderer = objRef.GetComponent<Renderer>();
+                var renderer = otherObjectData.renderer;
                 if (renderer == null) continue;
 
                 var shaderName = renderer.material.shader.name;
