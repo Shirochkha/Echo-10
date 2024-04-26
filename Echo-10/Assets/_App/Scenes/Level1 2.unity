@@ -396,6 +396,9 @@ MonoBehaviour:
   _clickCount: 10
   _colliderComponent: {fileID: 430184362}
   _clickCountText: {fileID: 146147056}
+  _minAlpha: 0.03
+  _maxAlpha: 1
+  _configObjects: {fileID: 11400000, guid: 071794bdca9c620439e9d64c6ea27fbc, type: 2}
 --- !u!4 &484201442
 Transform:
   m_ObjectHideFlags: 0

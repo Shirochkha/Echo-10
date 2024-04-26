@@ -405,6 +405,7 @@
 "Assets/_App/Scripts/Scenes/SceneLevels/Systems/SystemPlayerController.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/Systems/SystemPlayerInteractions.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/Systems/SystemPlayerMovement.cs"
+"Assets/_App/Scripts/Scenes/SceneLevels/Systems/SystemSpriteAlphaChange.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/Systems/SystemTextureScroll.cs"
 "Assets/_App/Scripts/Scenes/SceneMainMenu/Features/ButtonImageChange.cs"
 "Assets/_App/Scripts/Scenes/SceneMainMenu/Features/MainMenuButtons.cs"
