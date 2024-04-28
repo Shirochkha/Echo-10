@@ -12,6 +12,8 @@ namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config
         public Vector3 position;
         public Vector3 scale;
         public ObjectType objectType;
-        public Renderer renderer;
+        public SpriteRenderer renderer;
+        public Animator animator;
+        public Rigidbody rigidbody;
     }
 }

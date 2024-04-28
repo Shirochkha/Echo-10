@@ -20,6 +20,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private float _maxAlpha = 1f;
         [SerializeField] private ConfigObjects _configObjects;
 
+        [SerializeField] private float _enemySpeed = 15;
+
         [SerializeField] private ConfigSprites _sprites;
 
         public override void InstallBindings(ServiceContainer container)
@@ -35,7 +37,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 colliderRadiusChange, _configObjects);
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
 
-            var spriteChange = new SystemSpriteChange(_sprites, _configObjects, _colliderComponent);
+            var enemyMovement = new SystemEnemyMovement(_enemySpeed);
+            container.SetServiceSelf<SystemEnemyMovement>(enemyMovement);
+
+            var spriteChange = new SystemSpriteChange(_sprites, _configObjects, _colliderComponent, enemyMovement);
             container.SetService<IUpdatable, SystemSpriteChange>(spriteChange);
         }
     }

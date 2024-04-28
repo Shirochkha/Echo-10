@@ -9,44 +9,76 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private ConfigSprites _sprites;
         private ConfigObjects _configObjects;
         private SphereCollider _sphereCollider;
+        private SystemEnemyMovement _enemyMovement;
 
-        public SystemSpriteChange(ConfigSprites sprites, ConfigObjects configObjects, SphereCollider sphereCollider)
+        public SystemSpriteChange(ConfigSprites sprites, ConfigObjects configObjects, SphereCollider sphereCollider, 
+            SystemEnemyMovement enemyMovement)
         {
             _sprites = sprites;
             _configObjects = configObjects;
             _sphereCollider = sphereCollider;
+            _enemyMovement = enemyMovement;
         }
 
         public void Update()
         {
-            ChangeSprite();
+            ChangeView();
         }
 
-        private void ChangeSprite()
+        private void ChangeView()
         {
-            foreach (var otherObjectData in _configObjects.objects)
+            foreach (var objectData in _configObjects.objects)
             {
-                var renderer = otherObjectData.renderer;
-                if (renderer == null) continue;
+                if(objectData.objectReference == null) continue;
+                var isInsideSphere = _sphereCollider.bounds.Contains(objectData.objectReference.transform.position);
 
-                var spriteRenderer = renderer.GetComponent<SpriteRenderer>();
-
-                var isInsideSphere = _sphereCollider.bounds.Contains(renderer.transform.position);
-
-                foreach (var sprite in _sprites.sprites)
+                if (objectData.objectType == ObjectType.Enemy)
                 {
-                    if (isInsideSphere && sprite.oldSprite == spriteRenderer.sprite)
-                    {
-                        spriteRenderer.sprite = sprite.newSprite;
-                    }
-                    else if (!isInsideSphere && sprite.newSprite == spriteRenderer.sprite)
-                    {
-                        spriteRenderer.sprite = sprite.oldSprite;
-                    }
+                    ChangeEnemyAnimation(objectData, isInsideSphere);
+                    
+                }
+                else
+                {
+                    ChangeSpriteForObject(objectData.renderer, isInsideSphere);
                 }
             }
         }
 
+        private void ChangeEnemyAnimation(ObjectData objectData, bool isInsideSphere)
+        {
+            var animator = objectData.animator;
+            if (animator == null) return;
+
+            bool currentAnimState = animator.GetBool("WhiteAnim");
+
+            if (isInsideSphere && !currentAnimState)
+            {
+                animator.SetBool("WhiteAnim", true);
+                _enemyMovement.MoveEnemyBackward(objectData);
+            }
+            else if (!isInsideSphere && currentAnimState)
+            {
+                animator.SetBool("WhiteAnim", false);
+            }
+        }
+
+        private void ChangeSpriteForObject(SpriteRenderer spriteRenderer, bool isInsideSphere)
+        {
+            if (spriteRenderer == null) return;
+            foreach (var sprite in _sprites.sprites)
+            {
+                if (isInsideSphere && sprite.oldSprite == spriteRenderer.sprite)
+                {
+                    spriteRenderer.sprite = sprite.newSprite;
+                    break;
+                }
+                else if (!isInsideSphere && sprite.newSprite == spriteRenderer.sprite)
+                {
+                    spriteRenderer.sprite = sprite.oldSprite;
+                    break;
+                }
+            }
+        }
 
     }
 }

@@ -30,7 +30,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.LoadLevel
 
                 GameObject newObject = Instantiate(data.prefabReference, data.position, Quaternion.identity);
                 data.objectReference = newObject;
-                data.renderer = newObject.GetComponent<Renderer>();
+                data.renderer = newObject.GetComponent<SpriteRenderer>();
+                data.animator = newObject.GetComponent<Animator>();
+                data.rigidbody = newObject.GetComponent<Rigidbody>();
                 newObject.transform.localScale = data.scale;
             }
         }
