@@ -32,9 +32,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, SystemCameraFollow>(cameraFollow);
 
             var healthController = container.Get<SystemHealthBarChange>();
+            var coinController = container.Get<SystemAddCoin>();
 
             var playerInteractions = new SystemPlayerInteractions(_configObjects, _player, _playerCollider, 
-                healthController);
+                healthController, coinController);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  
     }
