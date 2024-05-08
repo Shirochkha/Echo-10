@@ -41,10 +41,11 @@ public class SceneManager : MonoBehaviour
         {
             // Создаем новый экземпляр ObjectData и заполняем его данными
             ObjectData newData = new ObjectData();
+            string name = obj.name.Split(' ')[0];
 
-            if (prefabDictionary.ContainsKey(obj.name))
+            if (prefabDictionary.ContainsKey(name))
             {
-                newData.prefabReference = prefabDictionary[obj.name];
+                newData.prefabReference = prefabDictionary[name];
 
                 foreach (PrefabData prefabData in prefabTypesSO.prefabTypes)
                 {

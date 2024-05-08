@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84129817916b3b419b48fd1ebf1cff4, type: 3}
+  m_Name: level1
+  m_EditorClassIdentifier: Assembly-CSharp:Assets._App.Scripts.Scenes.SceneLevels.Config:ConfigScenes
+  objects:
+  - objectReference: {fileID: 0}
+    prefabReference: {fileID: 5848081133267343273, guid: 531c966f2374bfb42acec1ab7bf7c799, type: 3}
+    objectName: MidObstacle
+    position: {x: 0, y: 30.2, z: 106.1}
+    scale: {x: 2.3, y: 2.3, z: 1}
+    objectType: 0
+    renderer: {fileID: 0}
+    animator: {fileID: 0}
+    rigidbody: {fileID: 0}
+  - objectReference: {fileID: 0}
+    prefabReference: {fileID: 858110578103565113, guid: 25d6f1b2cd5d18c4f93a22fa532cfd97, type: 3}
+    objectName: TopObstacle
+    position: {x: 7, y: 37, z: 32.799995}
+    scale: {x: 1.2, y: 2, z: 1}
+    objectType: 0
+    renderer: {fileID: 0}
+    animator: {fileID: 0}
+    rigidbody: {fileID: 0}
+  - objectReference: {fileID: 0}
+    prefabReference: {fileID: 8559590442966316297, guid: e39c6ee0acd2c1d4082adb5e51663685, type: 3}
+    objectName: Coin
+    position: {x: -22.7, y: 31.3, z: 68.67}
+    scale: {x: 0.7, y: 0.7, z: 1}
+    objectType: 2
+    renderer: {fileID: 0}
+    animator: {fileID: 0}
+    rigidbody: {fileID: 0}
+  - objectReference: {fileID: 0}
+    prefabReference: {fileID: 8166836501575525924, guid: d320c23262ad41847a15ea03cb9ff32c, type: 3}
+    objectName: BotObstacle
+    position: {x: -15.6, y: 20, z: 48.4}
+    scale: {x: 2, y: 2, z: 1}
+    objectType: 0
+    renderer: {fileID: 0}
+    animator: {fileID: 0}
+    rigidbody: {fileID: 0}
+  - objectReference: {fileID: 0}
+    prefabReference: {fileID: 8960265869900573298, guid: e6969e2297e0bb644974f130ec1c485e, type: 3}
+    objectName: Enemy
+    position: {x: -10.3, y: 32.7, z: 112.5}
+    scale: {x: 0.5, y: 0.5, z: 1}
+    objectType: 1
+    renderer: {fileID: 0}
+    animator: {fileID: 0}
+    rigidbody: {fileID: 0}

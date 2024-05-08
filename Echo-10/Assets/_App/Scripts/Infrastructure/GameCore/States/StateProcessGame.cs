@@ -15,6 +15,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States
 
         public override void OnEnterState()
         {
+            Debug.Log("Process");
             _gameSystems.Init();
         }
 
@@ -25,6 +26,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States
 
         public override void OnExitState()
         {
+            Debug.Log("EndProcess");
             _gameSystems.Cleanup();
         }
     }

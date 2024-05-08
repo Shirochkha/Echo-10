@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
+using UnityEngine;
 
 namespace _App.Scripts.Infrastructure.GameCore.States.SetupState
 {
@@ -15,6 +16,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States.SetupState
 
         public override void OnEnterState()
         {
+            Debug.Log("Setup");
             ProcessSetupLevel().Forget();
         }
 

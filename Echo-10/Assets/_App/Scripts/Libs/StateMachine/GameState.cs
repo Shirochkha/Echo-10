@@ -4,11 +4,11 @@
     {
         public GameStateMachine StateMachine { get; set; }
 
-        public virtual void OnExitState()
+        public virtual void OnEnterState()
         {
         }
 
-        public virtual void OnEnterState()
+        public virtual void OnExitState()
         {
         }
 
