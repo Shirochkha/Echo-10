@@ -18,6 +18,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
         [SerializeField] private Transform _parentContainer;
+        [SerializeField] private GameObject _restartMenu;
+        [SerializeField] private GameObject _pauseMenu;
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -30,6 +32,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _parentContainer, 
                 levelSelectionService);
             container.SetServiceSelf(levelsMenuUI);
+
+            var restart = new RestartMenu(_restartMenu);
+            container.SetService<IUpdatable, RestartMenu>(restart);
+
+            var pause = new PauseMenu(_pauseMenu);
+            container.SetService<IUpdatable, PauseMenu>(pause);
 
         }
     }

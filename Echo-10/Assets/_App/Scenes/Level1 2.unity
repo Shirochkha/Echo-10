@@ -1708,7 +1708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1086476416
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1817,7 +1817,7 @@ MonoBehaviour:
   _fullHeartSprite: {fileID: 21300000, guid: 70dec2d7122de2445bc92f63edb38a96, type: 3}
   _emptyHeartSprite: {fileID: 21300000, guid: a56324c7fcbe18641a2fb0f52588db5e, type: 3}
   _maxHealth: 3
-  _restartMenu: {fileID: 0}
+  _restartMenu: {fileID: 1452579124}
   _helthContainer: {fileID: 828425013}
   _coinCountText: {fileID: 666165992}
   _maxCoinCount: 10
@@ -2440,7 +2440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1452579125
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4145,3 +4145,5 @@ MonoBehaviour:
   _levelList: {fileID: 11400000, guid: 1b682392e1ec0534f9d81ffafdf3c4d5, type: 2}
   _buttonPrefab: {fileID: 6171751197672796724, guid: 8ed53b5e50267f5429dbb7da95465420, type: 3}
   _parentContainer: {fileID: 1739090492}
+  _restartMenu: {fileID: 1452579124}
+  _pauseMenu: {fileID: 1086476415}
