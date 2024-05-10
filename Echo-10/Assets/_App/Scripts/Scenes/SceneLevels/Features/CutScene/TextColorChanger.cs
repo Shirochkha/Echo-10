@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TextColorChanger : IUpdatable
 {
+    private GameObject _cutSceneObject;
     private TextMeshProUGUI _textToChange;
     private Color32 _targetColor;
 
@@ -15,8 +16,9 @@ public class TextColorChanger : IUpdatable
     private int _currentLetterIndex = 0;
     private float _escapeHoldTime = 0f; 
 
-    public TextColorChanger(TextMeshProUGUI textToChange, Color32 targetColor)
+    public TextColorChanger(GameObject cutSceneObject, TextMeshProUGUI textToChange, Color32 targetColor)
     {
+        _cutSceneObject = cutSceneObject;
         _textToChange = textToChange;
         _targetColor = targetColor;
         _originalColor = _textToChange.color;
@@ -106,6 +108,6 @@ public class TextColorChanger : IUpdatable
 
     private void LoadNextScene()
     {
-        
+        _cutSceneObject.SetActive(false);
     }
 }

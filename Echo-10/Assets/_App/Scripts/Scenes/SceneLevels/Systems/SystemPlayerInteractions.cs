@@ -1,35 +1,50 @@
 ﻿using UnityEngine;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using _App.Scripts.Libs.Installer;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
     public class SystemPlayerInteractions : IUpdatable
     {
-        private ConfigObjects _configObjects;
-        private GameObject _player;
-
+        private ConfigLevel _level;
+        private GameObject _player;        
         private Collider _playerCollider;
         private SystemHealthBarChange _healthController;
         private SystemAddCoin _addCoin;
+        private ServiceLevelSelection _serviceLevelSelection;
 
-        public SystemPlayerInteractions(ConfigObjects configObjects, GameObject player, Collider playerCollider, 
-            SystemHealthBarChange healthController, SystemAddCoin addCoin)
+        private ConfigObjects _configObjects;
+        private bool _hasSceneCreate = false;
+
+        public SystemPlayerInteractions(ConfigLevel level, GameObject player, Collider playerCollider, 
+            SystemHealthBarChange healthController, SystemAddCoin addCoin, ServiceLevelSelection serviceLevelSelection)
         {
-            _configObjects = configObjects;
+            _level = level;
             _player = player;
             _playerCollider = playerCollider;
             _healthController = healthController;
             _addCoin = addCoin;
+            _serviceLevelSelection = serviceLevelSelection;
         }
 
         public void Update()
         {
+            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            {
+                foreach (var level in _level.levels)
+                {
+                    if (level.id == _serviceLevelSelection.SelectedLevelId)
+                        _configObjects = level.configObjects;
+                }
+                _hasSceneCreate = true;
+            }
             CheckCollisions();
         }
 
         private void CheckCollisions()
         {
+            if (_configObjects == null) return;
             if (_player != null)
             {
                 foreach (ObjectData otherObjectData in _configObjects.objects)

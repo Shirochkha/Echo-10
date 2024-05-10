@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
@@ -11,29 +12,47 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private float _maxAlpha;
         private float _maxAlphaDuration;
         private SystemColliderRadiusChange _colliderRadiusChange;
+        private ConfigLevel _level;
+        private ServiceLevelSelection _serviceLevelSelection;
+
         private ConfigObjects _configObjects;
+        private bool _hasSceneCreate = false;
 
         private bool _isMaxAlpha;
 
         public SystemSpriteAlphaChange(SphereCollider sphereCollider, float minAlpha, float maxAlpha, 
-            float maxAlphaDuration, SystemColliderRadiusChange colliderRadiusChange, ConfigObjects configObjects)
+            float maxAlphaDuration, SystemColliderRadiusChange colliderRadiusChange, ConfigLevel level,
+            ServiceLevelSelection serviceLevelSelection)
         {
             _sphereCollider = sphereCollider;
             _minAlpha = minAlpha;
             _maxAlpha = maxAlpha;
             _maxAlphaDuration = maxAlphaDuration;
             _colliderRadiusChange = colliderRadiusChange;
-            _configObjects = configObjects;
+            _level = level;
+            _serviceLevelSelection = serviceLevelSelection;
         }
 
         public void Update()
         {
+            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            {
+                foreach (var level in _level.levels)
+                {
+                    if (level.id == _serviceLevelSelection.SelectedLevelId)
+                        _configObjects = level.configObjects;
+                }
+                _hasSceneCreate = true;
+            }
+
             HandleMaxAlpha();
             HandleObjectVisibility();
         }
 
         private void HandleMaxAlpha()
         {
+            if (_configObjects == null) return;
+
             if (_isMaxAlpha)
             {
                 _maxAlphaDuration -= Time.deltaTime;
@@ -55,6 +74,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         
         private void HandleObjectVisibility()
         {
+            if (_configObjects == null) return;
+
             foreach (var otherObjectData in _configObjects.objects)
             {
                 var renderer = otherObjectData.renderer;

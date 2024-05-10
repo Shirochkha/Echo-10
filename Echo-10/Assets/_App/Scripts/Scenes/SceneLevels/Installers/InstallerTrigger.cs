@@ -2,6 +2,7 @@
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         [SerializeField] private float _minAlpha = 0.03f;
         [SerializeField] private float _maxAlpha = 1f;
-        [SerializeField] private ConfigObjects _configObjects;
+        [SerializeField] private ConfigLevel _level;
 
         [SerializeField] private float _enemySpeed = 15;
 
@@ -33,14 +34,17 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var clickCountUI = new ClickCountUI(_clickCountText, colliderRadiusChange);
             container.SetService<IUpdatable, ClickCountUI>(clickCountUI);
 
+            var levelSelection = container.Get<ServiceLevelSelection>();
+
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,
-                colliderRadiusChange, _configObjects);
+                colliderRadiusChange, _level, levelSelection);
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
 
             var enemyMovement = new SystemEnemyMovement(_enemySpeed);
             container.SetServiceSelf<SystemEnemyMovement>(enemyMovement);
 
-            var spriteChange = new SystemSpriteChange(_sprites, _configObjects, _colliderComponent, enemyMovement);
+            var spriteChange = new SystemSpriteChange(_sprites, _level, levelSelection, _colliderComponent, 
+                enemyMovement);
             container.SetService<IUpdatable, SystemSpriteChange>(spriteChange);
         }
     }

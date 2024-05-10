@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
@@ -7,26 +8,42 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
     public class SystemSpriteChange : IUpdatable
     {
         private ConfigSprites _sprites;
-        private ConfigObjects _configObjects;
+        private ConfigLevel _level;
+        private ServiceLevelSelection _serviceLevelSelection;
         private SphereCollider _sphereCollider;
         private SystemEnemyMovement _enemyMovement;
 
-        public SystemSpriteChange(ConfigSprites sprites, ConfigObjects configObjects, SphereCollider sphereCollider, 
-            SystemEnemyMovement enemyMovement)
+        private ConfigObjects _configObjects;
+        private bool _hasSceneCreate = false;
+
+        public SystemSpriteChange(ConfigSprites sprites, ConfigLevel level, ServiceLevelSelection serviceLevelSelection,
+            SphereCollider sphereCollider, SystemEnemyMovement enemyMovement)
         {
             _sprites = sprites;
-            _configObjects = configObjects;
+            _level = level;
+            _serviceLevelSelection = serviceLevelSelection;
             _sphereCollider = sphereCollider;
             _enemyMovement = enemyMovement;
         }
 
         public void Update()
         {
+            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            {
+                foreach (var level in _level.levels)
+                {
+                    if (level.id == _serviceLevelSelection.SelectedLevelId)
+                        _configObjects = level.configObjects;
+                }
+                _hasSceneCreate = true;
+            }
             ChangeView();
         }
 
         private void ChangeView()
         {
+            if (_configObjects == null) return;
+
             foreach (var objectData in _configObjects.objects)
             {
                 if(objectData.objectReference == null) continue;

@@ -14,10 +14,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
     {
         [SerializeField] private List<WallMaterialOffset> _wallOffsets;
 
+        [SerializeField] private GameObject _levelsMenuUI;
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
         [SerializeField] private Transform _parentContainer;
-
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -25,8 +25,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, SystemTextureScroll>(textureScroll);
 
             var levelSelectionService = new ServiceLevelSelection();
+            container.SetServiceSelf(levelSelectionService);
 
-            var levelsMenuUI = new LevelsMenuUI(_levelList, _buttonPrefab, _parentContainer, levelSelectionService);
+            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _parentContainer, 
+                levelSelectionService);
             container.SetServiceSelf(levelsMenuUI);
 
         }

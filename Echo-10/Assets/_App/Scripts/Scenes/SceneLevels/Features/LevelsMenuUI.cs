@@ -7,14 +7,16 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
     public class LevelsMenuUI
     {
+        private GameObject _levelsMenuUI;
         private ConfigLevel _levelList;
         private Button _buttonPrefab;
         private Transform _parentContainer;
         private ServiceLevelSelection _levelSelectionService;
 
-        public LevelsMenuUI(ConfigLevel levelList, Button buttonPrefab, Transform parentContainer,
-            ServiceLevelSelection levelSelectionService)
+        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, 
+            Transform parentContainer,ServiceLevelSelection levelSelectionService)
         {
+            _levelsMenuUI = levelsMenuUI;
             _levelList = levelList;
             _buttonPrefab = buttonPrefab;
             _parentContainer = parentContainer;
@@ -42,6 +44,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
                 instance.onClick.AddListener(() =>
                 {
+                    _levelsMenuUI.SetActive(false);
                     _levelSelectionService.SetSelectedLevel(level.id);
                     Debug.Log($"Clicked on level: {_levelSelectionService.SelectedLevelId}");
                 });

@@ -1,6 +1,7 @@
 ﻿using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private float _cameraSmoothSpeed = 0.125f;
         [SerializeField] private float _cameraHeightOffset = -35f;
-        [SerializeField] private ConfigObjects _configObjects;
+        [SerializeField] private ConfigLevel _level;
         [SerializeField] private GameObject _player;
         [SerializeField] private Collider _playerCollider;
 
@@ -33,9 +34,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var healthController = container.Get<SystemHealthBarChange>();
             var coinController = container.Get<SystemAddCoin>();
+            var levelSelection = container.Get<ServiceLevelSelection>();
 
-            var playerInteractions = new SystemPlayerInteractions(_configObjects, _player, _playerCollider, 
-                healthController, coinController);
+            var playerInteractions = new SystemPlayerInteractions(_level, _player, _playerCollider, 
+                healthController, coinController, levelSelection);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  
     }

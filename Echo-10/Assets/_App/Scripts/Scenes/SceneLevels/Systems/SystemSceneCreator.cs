@@ -1,28 +1,44 @@
-﻿using UnityEngine;
-using _App.Scripts.Libs.Factory.Mono;
+﻿using _App.Scripts.Libs.Factory.Mono;
+using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Assets._App.Scripts.Scenes.SceneLevels.LoadLevel
+namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
-    public class SceneCreator : MonoBehaviour
+    public class SystemSceneCreator : IUpdatable
     {
-        public ConfigObjects _configObjects;
+        private ConfigLevel _level;
+        private ServiceLevelSelection _serviceLevelSelection;
 
-        private void Start()
+        private ConfigObjects _configObjects;
+        private bool _hasSceneCreate = false;
+
+        public SystemSceneCreator(ConfigLevel level, ServiceLevelSelection serviceLevelSelection)
         {
-            RecreateSceneFromScriptableObject();
+            _level = level;
+            _serviceLevelSelection = serviceLevelSelection;
+        }
+
+        public void Update()
+        {
+            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            {
+                RecreateSceneFromScriptableObject();
+                _hasSceneCreate = true;
+            }
         }
 
         public void RecreateSceneFromScriptableObject()
         {
-            if (_configObjects == null)
+            foreach(var level in _level.levels)
             {
-                Debug.LogError("ConfigObjects is not assigned!");
-                return;
-            }
+                if(level.id == _serviceLevelSelection.SelectedLevelId)
+                    _configObjects = level.configObjects;
+            }            
 
-            Dictionary<GameObject, FactoryMonoPrefab<GameObject>> prefabFactories = 
+            Dictionary<GameObject, FactoryMonoPrefab<GameObject>> prefabFactories =
                 new Dictionary<GameObject, FactoryMonoPrefab<GameObject>>();
 
             foreach (ObjectData data in _configObjects.objects)
