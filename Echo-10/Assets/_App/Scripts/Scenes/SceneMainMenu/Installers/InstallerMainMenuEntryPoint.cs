@@ -8,6 +8,9 @@ namespace _App.Scripts.Scenes.SceneMainMenu.Installers
 {
     public class InstallerMainMenuEntryPoint : MonoInstaller
     {
+        // TODO: Я тупик
+
+
         [SerializeField] private Button _buttonStart;
         [SerializeField] private Button _buttonExit;
 
