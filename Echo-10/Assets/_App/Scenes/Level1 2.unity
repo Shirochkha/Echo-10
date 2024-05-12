@@ -854,13 +854,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installers:
-  - {fileID: 1754780880}
   - {fileID: 2133943642}
   - {fileID: 78048610}
   - {fileID: 1094272857}
   - {fileID: 1171870230}
   - {fileID: 484201441}
   - {fileID: 1299497565}
+  - {fileID: 1754780880}
 --- !u!4 &505671639
 Transform:
   m_ObjectHideFlags: 0

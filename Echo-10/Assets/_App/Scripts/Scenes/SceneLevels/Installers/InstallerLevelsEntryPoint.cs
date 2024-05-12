@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Scenes.SceneLevels.States;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
+using Assets._App.Scripts.Scenes.SceneLevels.Features;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
@@ -21,21 +22,28 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         public override void InstallBindings(ServiceContainer container)
         {
             var gameStateMachine = BuildStateMachine(container);
-            var controllerEntryPoint = new ControllerEntryPoint<StateSetupLevel>(gameStateMachine);
+            var controllerEntryPoint = new ControllerEntryPoint<StateLevelMenu>(gameStateMachine);
 
-            container.SetService<IInitializable, ControllerEntryPoint<StateSetupLevel>>(controllerEntryPoint);
-            container.SetService<IUpdatable, ControllerEntryPoint<StateSetupLevel>>(controllerEntryPoint);
+            container.SetService<IInitializable, ControllerEntryPoint<StateLevelMenu>>(controllerEntryPoint);
+            container.SetService<IUpdatable, ControllerEntryPoint<StateLevelMenu>>(controllerEntryPoint);
         }
 
         private GameStateMachine BuildStateMachine(ServiceContainer container)
         {
             var gameStateMachine = new GameStateMachine();
 
-            gameStateMachine.AddState(CreateStateSetupLevel(container));
-            //gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
-           // gameStateMachine.AddState(CreateRestartState(container, gameStateMachine));
+            gameStateMachine.AddState(CreateLevelMenuState(container));
+
+            //gameStateMachine.AddState(CreateStateSetupLevel(container));
+            gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
+            // gameStateMachine.AddState(CreateRestartState(container, gameStateMachine));
 
             return gameStateMachine;
+        }
+
+        private GameState CreateLevelMenuState(ServiceContainer container)
+        {
+            return new StateLevelMenu((container.Get<LevelsMenuUI>()));
         }
 
         /*private GameState CreateRestartState(ServiceContainer container, GameStateMachine gameStateMachine)
@@ -45,14 +53,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             //return new StateRestartLevel(container.Get<ViewGridLetters>());
         }*/
 
-        private GameState CreateStateSetupLevel(ServiceContainer container)
+        /*private GameState CreateStateSetupLevel(ServiceContainer container)
         {
             var handlers = new List<IHandlerSetupLevel>
             {
-                /*new HandlerSetupLevel(container.Get<IProviderFillwordLevel>(),
+                *//*new HandlerSetupLevel(container.Get<IProviderFillwordLevel>(),
                     container.Get<IServiceLevelSelection>(),
                     container.Get<ViewGridLetters>(),
-                    container.Get<ContainerGrid>()),*/
+                    container.Get<ContainerGrid>()),*//*
             };
 
             var handlerStateSetup = new HandlerSetupLevelContainer(handlers);
@@ -60,7 +68,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var stateSetupLevel = new StateSetupLevel(handlerStateSetup);
 
             return stateSetupLevel;
-        }
+        }*/
 
         private GameState CreateProcessState(ServiceContainer container, GameStateMachine gameStateMachine)
         {

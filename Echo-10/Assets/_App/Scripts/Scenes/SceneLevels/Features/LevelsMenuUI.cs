@@ -1,5 +1,6 @@
 ﻿using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,8 +14,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private Transform _parentContainer;
         private ServiceLevelSelection _levelSelectionService;
 
-        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, 
-            Transform parentContainer,ServiceLevelSelection levelSelectionService)
+        public event Action<int> OnLevelButtonClicked;
+
+
+        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab,
+            Transform parentContainer, ServiceLevelSelection levelSelectionService)
         {
             _levelsMenuUI = levelsMenuUI;
             _levelList = levelList;
@@ -47,6 +51,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                     _levelsMenuUI.SetActive(false);
                     _levelSelectionService.SetSelectedLevel(level.id);
                     Debug.Log($"Clicked on level: {_levelSelectionService.SelectedLevelId}");
+                    OnLevelButtonClicked?.Invoke(level.id);
                 });
             }
         }
