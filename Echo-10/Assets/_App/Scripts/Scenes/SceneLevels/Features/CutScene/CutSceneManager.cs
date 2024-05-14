@@ -1,60 +1,45 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.CutScene.Config;
-using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
-using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._App.Scripts.Scenes.SceneLevels.Features.CutScene
+namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
     public class CutSceneManager : IUpdatable
     {
         private GameObject _cutSceneObject;
         private ConfigCharacters _characterManager;
-        private ConfigLevel _configLevel;
         private float _pauseTime;
         private float _speedText;
         private Image _dialogImage;
         private Text _textArea;
-        private ServiceLevelSelection _serviceLevelSelection;
 
         private ConfigCutScene _configDialogLines;
         private int _currentLineIndex = 0;
         private bool _isAnimatingText = false;
         private float _timeSinceLastLetter = 0f;
         private int _letterIndex = 0;
-        private string _currentDialog;
+        private string _currentDialog = "";
         private float _timeUntilNextAction;
-        private bool _hasStartedDialog = false;
 
         private bool _isWaitingForSpace = false;
 
 
-        public CutSceneManager(GameObject cutSceneObject, ConfigCharacters characterManager, ConfigLevel configLevel, 
-            float pauseTime, float speedText, Image dialogImage, Text textArea, 
-            ServiceLevelSelection serviceLevelSelection)
+        public CutSceneManager(GameObject cutSceneObject, ConfigCharacters characterManager,
+            float pauseTime, float speedText, Image dialogImage, Text textArea)
         {
             _cutSceneObject = cutSceneObject;
             _characterManager = characterManager;
-            _configLevel = configLevel;
             _pauseTime = pauseTime;
             _speedText = speedText;
             _dialogImage = dialogImage;
             _textArea = textArea;
-            _serviceLevelSelection = serviceLevelSelection;
 
             _cutSceneObject.SetActive(false);
         }
 
         public void Update()
         {
-            if (!_hasStartedDialog && _serviceLevelSelection.SelectedLevelId > 0)
-            {
-                InitializeCutScene();
-                _hasStartedDialog = true;
-            }
-
             if (_timeUntilNextAction > 0)
             {
                 _timeUntilNextAction -= Time.deltaTime;
@@ -91,11 +76,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features.CutScene
             }
         }
 
-        private void InitializeCutScene()
+        public void InitializeCutScene(int selectedLevelId, ConfigCutScene configDialogLines)
         {
-            var selectedLevelId = _serviceLevelSelection.SelectedLevelId;
-            _configDialogLines = _configLevel.levels
-                .FirstOrDefault(level => level.id == selectedLevelId && selectedLevelId!=null).cutScene;
+            _configDialogLines = configDialogLines;
 
             if (_configDialogLines != null)
             {

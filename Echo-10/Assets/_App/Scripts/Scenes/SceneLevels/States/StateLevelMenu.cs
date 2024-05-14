@@ -32,7 +32,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
 
             var selectedLevelId = await tcs.Task;
 
-            StateMachine.ChangeState<StateProcessGame>();
+            StateMachine.ChangeState<StateLoadLevel>();
         }
     }
 }

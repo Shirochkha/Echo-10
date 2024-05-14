@@ -16,9 +16,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         {
             var serviceLevelSelection = container.Get<ServiceLevelSelection>();
 
-            var sceneCreator = new SystemSceneCreator(_configLevel, serviceLevelSelection);
-            container.SetService<IUpdatable, SystemSceneCreator>(sceneCreator);
-
             var objectsDestroy = new SystemObjectsDestroy(_configLevel, serviceLevelSelection, _camera);
             container.SetService<IUpdatable, SystemObjectsDestroy>(objectsDestroy);
         }

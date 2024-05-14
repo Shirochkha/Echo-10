@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using _App.Scripts.Infrastructure.GameCore.States.SetupState;
+using _App.Scripts.Infrastructure.GameCore.States.LoadState;
 using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
@@ -19,7 +19,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         public override void OnEnterState()
         {
             Debug.Log("Restart");
-            StateMachine.ChangeState<StateSetupLevel>();
+            StateMachine.ChangeState<StateLoadLevel>();
         }
 
         

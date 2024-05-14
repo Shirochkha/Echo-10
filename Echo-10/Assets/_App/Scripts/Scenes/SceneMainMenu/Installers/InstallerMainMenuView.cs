@@ -1,5 +1,5 @@
 ﻿using _App.Scripts.Infrastructure.GameCore.Controllers;
-using _App.Scripts.Infrastructure.GameCore.States.SetupState;
+using _App.Scripts.Infrastructure.GameCore.States.LoadState;
 using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.ServiceLocator;
 using System.ComponentModel;

@@ -1,6 +1,6 @@
 ﻿using _App.Scripts.Infrastructure.GameCore.Commands.SwitchLevel;
 using _App.Scripts.Infrastructure.GameCore.Controllers;
-using _App.Scripts.Infrastructure.GameCore.States.SetupState;
+using _App.Scripts.Infrastructure.GameCore.States.LoadState;
 using _App.Scripts.Infrastructure.GameCore.States;
 using _App.Scripts.Infrastructure.GameCore.Systems;
 using _App.Scripts.Infrastructure.LevelSelection.ViewHeader;
@@ -8,17 +8,20 @@ using _App.Scripts.Infrastructure.LevelSelection;
 using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.Systems;
-using System;
 using System.Collections.Generic;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Scenes.SceneLevels.States;
-using Assets._App.Scripts.Scenes.SceneLevels.Systems;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
+using Assets._App.Scripts.Scenes.SceneLevels.States.Load;
+using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
     internal class InstallerLevelsEntryPoint : MonoInstaller
     {
+        [SerializeField] private ConfigLevel _configLevel;
+
         public override void InstallBindings(ServiceContainer container)
         {
             var gameStateMachine = BuildStateMachine(container);
@@ -33,6 +36,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var gameStateMachine = new GameStateMachine();
 
             gameStateMachine.AddState(CreateLevelMenuState(container));
+            gameStateMachine.AddState(CreateLoadLevelState(container));
 
             //gameStateMachine.AddState(CreateStateSetupLevel(container));
             gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
@@ -44,6 +48,25 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         private GameState CreateLevelMenuState(ServiceContainer container)
         {
             return new StateLevelMenu((container.Get<LevelsMenuUI>()));
+        }
+
+        private GameState CreateLoadLevelState(ServiceContainer container)
+        {
+            var handlers = new List<IHandlerLoadLevel>
+            {
+                new HandlerLoadCutScene(_configLevel,
+                    container.Get<Sevices.ServiceLevelSelection>(),
+                    container.Get<CutSceneManager>()),
+                new HandlerLoadObjects(_configLevel,
+                    container.Get<Sevices.ServiceLevelSelection>())
+                
+            };
+
+            var handlerStateSetup = new HandlerLoadLevelContainer(handlers);
+
+            var stateLoadLevel = new StateLoadLevel(handlerStateSetup);
+
+            return stateLoadLevel;
         }
 
         /*private GameState CreateRestartState(ServiceContainer container, GameStateMachine gameStateMachine)

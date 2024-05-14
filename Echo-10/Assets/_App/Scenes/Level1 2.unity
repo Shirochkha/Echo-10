@@ -154,7 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cutScene: {fileID: 932434621}
   _characterManager: {fileID: 11400000, guid: d9185e8375e2ef64593ffc959a4e1316, type: 2}
-  _configLevel: {fileID: 11400000, guid: 1b682392e1ec0534f9d81ffafdf3c4d5, type: 2}
   _pauseTime: 1
   _speedText: 0.05
   _dialogImage: {fileID: 1295055760}
@@ -3561,6 +3560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa433d7cd19f5bd45a921d4925f5113e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configLevel: {fileID: 11400000, guid: 1b682392e1ec0534f9d81ffafdf3c4d5, type: 2}
 --- !u!4 &1754780881
 Transform:
   m_ObjectHideFlags: 0
