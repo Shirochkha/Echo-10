@@ -30,6 +30,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, _clickCount, 
                 _colliderComponent);
             container.SetService<IUpdatable, SystemColliderRadiusChange>(colliderRadiusChange);
+            container.SetServiceSelf<SystemColliderRadiusChange>(colliderRadiusChange);
 
             var clickCountUI = new ClickCountUI(_clickCountText, colliderRadiusChange);
             container.SetService<IUpdatable, ClickCountUI>(clickCountUI);

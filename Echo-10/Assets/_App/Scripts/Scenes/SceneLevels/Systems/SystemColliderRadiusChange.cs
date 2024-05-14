@@ -8,6 +8,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private float _maxRadius;
         private float _duration;
         private int _clickCount;
+        private int _maxClickCount;
         private SphereCollider _colliderComponent;
 
         private float _originalRadius;
@@ -15,6 +16,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private float _elapsedTime = 0f;
 
         public int ClickCount { get => _clickCount; set => _clickCount = value; }
+        public int MaxClickCount { get => _maxClickCount; set => _maxClickCount = value; }
 
         public SystemColliderRadiusChange(float maxRadius, float duration, int clickCount, 
             SphereCollider colliderComponent)
@@ -24,6 +26,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             _clickCount = clickCount;
             _colliderComponent = colliderComponent;
             _originalRadius = _colliderComponent.radius;
+
+            MaxClickCount = ClickCount;
         }
 
         public void Update()

@@ -27,6 +27,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var playerMovement = new SystemPlayerMovement(_playerTransform, _defaultSpeed);
             container.SetService<IUpdatable, SystemPlayerMovement>(playerMovement);
+            container.SetServiceSelf<SystemPlayerMovement>(playerMovement);
 
             var cameraFollow = new SystemCameraFollow(_playerTransform, _cameraTransform, _cameraSmoothSpeed, 
                 _cameraHeightOffset);

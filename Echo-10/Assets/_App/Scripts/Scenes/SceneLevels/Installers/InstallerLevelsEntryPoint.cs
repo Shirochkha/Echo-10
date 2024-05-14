@@ -15,6 +15,7 @@ using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.States.Load;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using UnityEngine;
+using Assets._App.Scripts.Scenes.SceneLevels.Systems;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
@@ -37,10 +38,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             gameStateMachine.AddState(CreateLevelMenuState(container));
             gameStateMachine.AddState(CreateLoadLevelState(container));
+            gameStateMachine.AddState(CreateRestartState(container));
 
-            //gameStateMachine.AddState(CreateStateSetupLevel(container));
             gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
-            // gameStateMachine.AddState(CreateRestartState(container, gameStateMachine));
+            
 
             return gameStateMachine;
         }
@@ -69,42 +70,28 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             return stateLoadLevel;
         }
 
-        /*private GameState CreateRestartState(ServiceContainer container, GameStateMachine gameStateMachine)
+        private GameState CreateRestartState(ServiceContainer container)
         {
 
-            return new StateRestartLevel(container.Get<SystemHealthBarChange>());
-            //return new StateRestartLevel(container.Get<ViewGridLetters>());
-        }*/
-
-        /*private GameState CreateStateSetupLevel(ServiceContainer container)
-        {
-            var handlers = new List<IHandlerSetupLevel>
-            {
-                *//*new HandlerSetupLevel(container.Get<IProviderFillwordLevel>(),
-                    container.Get<IServiceLevelSelection>(),
-                    container.Get<ViewGridLetters>(),
-                    container.Get<ContainerGrid>()),*//*
-            };
-
-            var handlerStateSetup = new HandlerSetupLevelContainer(handlers);
-
-            var stateSetupLevel = new StateSetupLevel(handlerStateSetup);
-
-            return stateSetupLevel;
-        }*/
+            return new StateRestartLevel(container.Get<SystemHealthBarChange>(),
+                    container.Get<SystemColliderRadiusChange>(),
+                    container.Get<SystemPlayerMovement>(),
+                    container.Get<SystemAddCoin>(),
+                    _configLevel);
+        }
 
         private GameState CreateProcessState(ServiceContainer container, GameStateMachine gameStateMachine)
         {
             var systems = new SystemsGroup();
             systems.AddSystems(container.GetServices<ISystem>());
 
-            var commandSwitchLevel = new CommandSwitchLevelState<StateRestartLevel>(
+            /*var commandSwitchLevel = new CommandSwitchLevelState<StateRestartLevel>(
                 container.Get<IServiceLevelSelection>(),
                 gameStateMachine);
 
             systems.AddSystem(new SystemProcessNextLevel(
                 container.Get<ViewLevelHeader>(),
-                commandSwitchLevel));
+                commandSwitchLevel));*/
 
             var stateProcess = new StateProcessGame(systems);
             return stateProcess;

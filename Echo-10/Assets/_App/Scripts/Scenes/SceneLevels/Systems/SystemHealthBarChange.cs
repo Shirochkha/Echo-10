@@ -11,22 +11,25 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private HealthUI _healthUI;
         private GameObject _restartMenu;
 
+        public int CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
+        public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+
         public SystemHealthBarChange(int maxHealth, HealthUI healthUI, GameObject restartMenu)
         {
-            _maxHealth = maxHealth;
-            _currentHealth = maxHealth;
+            MaxHealth = maxHealth;
+            CurrentHealth = maxHealth;
             _healthUI = healthUI;
             _restartMenu = restartMenu;
-            _currentHealth = _maxHealth;
-            _healthUI.UpdateHealthUI(_currentHealth, _maxHealth);
-        }
+            CurrentHealth = MaxHealth;
+            _healthUI.UpdateHealthUI(CurrentHealth, MaxHealth);
+        }       
 
         public void PlayerDamaged(int damageAmount)
         {
-            _currentHealth -= damageAmount;
-            _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+            CurrentHealth -= damageAmount;
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
 
-            if (_currentHealth == 0)
+            if (CurrentHealth == 0)
             {
                 if (_restartMenu != null)
                 {
@@ -35,8 +38,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                 }
             }
 
-            _healthUI.UpdateHealthUI(_currentHealth, _maxHealth);
-            Debug.Log($"Player health: {_currentHealth}");
+            _healthUI.UpdateHealthUI(CurrentHealth, MaxHealth);
+            Debug.Log($"Player health: {CurrentHealth}");
         }
     }
 }
