@@ -60,7 +60,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             {
                 new HandlerLoadCutScene(_configLevel,
                     container.Get<Sevices.ServiceLevelSelection>(),
-                    container.Get<CutSceneManager>()),
+                    container.Get<CutSceneManager>(),
+                    container.Get<TextColorChanger>()),
                 new HandlerLoadObjects(_configLevel,
                     container.Get<Sevices.ServiceLevelSelection>())
                 

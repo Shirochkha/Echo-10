@@ -168,16 +168,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 _textArea.text = string.Empty;
             }
         }
-
-        public void EndCutScene()
-        {
-            _cutSceneObject.SetActive(false);
-        }
-        /*private void EndCutScene()
+        private void EndCutScene()
         {
             _cutSceneObject.SetActive(false);
 
             OnCutSceneEnd?.Invoke();
-        }*/
+        }
     }
 }

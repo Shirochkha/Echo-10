@@ -12,17 +12,18 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
         private ConfigLevel _configLevel;
         private ServiceLevelSelection _serviceLevelSelection;
         private CutSceneManager _cutSceneManager;
+        private TextColorChanger _textColorChanger;
 
         public HandlerLoadCutScene(ConfigLevel configLevel, ServiceLevelSelection serviceLevelSelection,
-            CutSceneManager cutSceneManager)
+            CutSceneManager cutSceneManager, TextColorChanger textColorChanger)
         {
             _configLevel = configLevel;
             _serviceLevelSelection = serviceLevelSelection;
             _cutSceneManager = cutSceneManager;
+            _textColorChanger = textColorChanger;
         }
 
-
-        public Task Process()
+        public async Task Process()
         {
             var selectedLevelId = _serviceLevelSelection.SelectedLevelId;
             var configDialogLines = _configLevel.levels
@@ -30,26 +31,27 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
 
             _cutSceneManager.InitializeCutScene((int)selectedLevelId, configDialogLines);
 
-            return Task.CompletedTask;
+            await Task.WhenAny(WaitForCutSceneEnd(), WaitForTextColorChange());
         }
 
-        /*public Task Process()
+        private async Task WaitForCutSceneEnd()
         {
-            var selectedLevelId = _serviceLevelSelection.SelectedLevelId;
-            var configDialogLines = _configLevel.levels
-                .FirstOrDefault(level => level.id == selectedLevelId && selectedLevelId != null).cutScene;
-
             var tcs = new TaskCompletionSource<object>();
 
-            _cutSceneManager.InitializeCutScene((int)selectedLevelId, configDialogLines);
+            _cutSceneManager.OnCutSceneEnd = () => tcs.TrySetResult(null);
 
-            _cutSceneManager.OnCutSceneEnd = () =>
-            {
-                tcs.SetResult(null);
-            };
+            await tcs.Task;
+        }
 
-            return tcs.Task;
-        }*/
+        private async Task WaitForTextColorChange()
+        {
+            var tcs = new TaskCompletionSource<object>();
 
+            _textColorChanger.OnCutSceneEnd = () => tcs.TrySetResult(null);
+
+            await tcs.Task;
+        }
     }
+
+
 }

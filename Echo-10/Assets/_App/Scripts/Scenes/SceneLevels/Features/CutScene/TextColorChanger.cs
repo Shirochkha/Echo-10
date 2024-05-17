@@ -1,4 +1,5 @@
 ﻿using _App.Scripts.Libs.Installer;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private float _elapsedTime = 0f;
         private int _currentLetterIndex = 0;
         private float _escapeHoldTime = 0f;
+        private Action _onCutSceneEnd;
+
+        public Action OnCutSceneEnd { get => _onCutSceneEnd; set => _onCutSceneEnd = value; }
 
         public TextColorChanger(GameObject cutSceneObject, TextMeshProUGUI textToChange, Color32 targetColor)
         {
@@ -111,6 +115,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private void LoadNextScene()
         {
             _cutSceneObject.SetActive(false);
+            OnCutSceneEnd?.Invoke();
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, CutSceneManager>(cutSceneManager);
 
             var textColorChanger = new TextColorChanger(_cutScene, _textToChange, _targetColor);
+            container.SetServiceSelf<TextColorChanger>(textColorChanger);
             container.SetService<IUpdatable, TextColorChanger>(textColorChanger);
 
         }
