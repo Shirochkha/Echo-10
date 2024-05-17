@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.CutScene.Config;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         private bool _isWaitingForSpace = false;
 
+        private Action _onCutSceneEnd;
+
+        public Action OnCutSceneEnd { get => _onCutSceneEnd; set => _onCutSceneEnd = value; }
 
         public CutSceneManager(GameObject cutSceneObject, ConfigCharacters characterManager,
             float pauseTime, float speedText, Image dialogImage, Text textArea)
@@ -154,7 +158,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _currentLineIndex++;
             if (_currentLineIndex >= _configDialogLines.dialogLines.Length)
             {
-                LoadNextSceneInBuildSettings();
+                EndCutScene();
             }
             else
             {
@@ -165,9 +169,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             }
         }
 
-        private void LoadNextSceneInBuildSettings()
+        public void EndCutScene()
         {
             _cutSceneObject.SetActive(false);
         }
+        /*private void EndCutScene()
+        {
+            _cutSceneObject.SetActive(false);
+
+            OnCutSceneEnd?.Invoke();
+        }*/
     }
 }

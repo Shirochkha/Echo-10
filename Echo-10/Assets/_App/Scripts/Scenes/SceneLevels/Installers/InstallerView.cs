@@ -20,6 +20,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Transform _parentContainer;
         [SerializeField] private GameObject _restartMenu;
         [SerializeField] private GameObject _pauseMenu;
+        [SerializeField] private Button _buttonInPauseMenu;
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -33,12 +34,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 levelSelectionService);
             container.SetServiceSelf(levelsMenuUI);
 
-            var restart = new RestartMenu(_restartMenu);
-            container.SetService<IUpdatable, RestartMenu>(restart);
+            var restart = new GameOverMenu(_restartMenu);
+            container.SetService<IUpdatable, GameOverMenu>(restart);
 
-            var pause = new PauseMenu(_pauseMenu);
-            container.SetService<IUpdatable, PauseMenu>(pause);
-
+            var pause = new PauseMenu(_pauseMenu, _buttonInPauseMenu);
+            container.SetServiceSelf(pause);
         }
     }
 }

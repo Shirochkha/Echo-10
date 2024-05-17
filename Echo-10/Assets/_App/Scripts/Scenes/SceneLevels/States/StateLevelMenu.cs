@@ -1,5 +1,4 @@
-﻿using _App.Scripts.Infrastructure.GameCore.States;
-using _App.Scripts.Libs.StateMachine;
+﻿using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using System;
@@ -19,20 +18,30 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         public override void OnEnterState()
         {
             Debug.Log("LevelMenu");
+            _levelsMenuUI.LevelsMenuPanel.SetActive(true);
             ProcessLevelMenu().Forget();
         }
 
         private async Task ProcessLevelMenu()
         {
-            var tcs = new TaskCompletionSource<int>();
-            _levelsMenuUI.OnLevelButtonClicked += levelId =>
+            while (true)
             {
-                tcs.SetResult(levelId);
-            };
+                var tcs = new TaskCompletionSource<int>();
 
-            var selectedLevelId = await tcs.Task;
+                Action<int> handler = null;
+                handler = levelId =>
+                {
+                    tcs.SetResult(levelId);
+                    _levelsMenuUI.OnLevelButtonClicked -= handler;
+                };
 
-            StateMachine.ChangeState<StateLoadLevel>();
+                _levelsMenuUI.OnLevelButtonClicked += handler;
+
+                var selectedLevelId = await tcs.Task;
+
+                StateMachine.ChangeState<StateLoadLevel>();
+            }
         }
+
     }
 }

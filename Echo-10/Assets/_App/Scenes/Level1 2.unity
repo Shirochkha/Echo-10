@@ -4147,3 +4147,4 @@ MonoBehaviour:
   _parentContainer: {fileID: 1739090492}
   _restartMenu: {fileID: 1452579124}
   _pauseMenu: {fileID: 1086476415}
+  _buttonInPauseMenu: {fileID: 1700939141}

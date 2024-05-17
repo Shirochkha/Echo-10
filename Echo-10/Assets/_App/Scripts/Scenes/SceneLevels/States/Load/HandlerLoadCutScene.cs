@@ -32,5 +32,24 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
 
             return Task.CompletedTask;
         }
+
+        /*public Task Process()
+        {
+            var selectedLevelId = _serviceLevelSelection.SelectedLevelId;
+            var configDialogLines = _configLevel.levels
+                .FirstOrDefault(level => level.id == selectedLevelId && selectedLevelId != null).cutScene;
+
+            var tcs = new TaskCompletionSource<object>();
+
+            _cutSceneManager.InitializeCutScene((int)selectedLevelId, configDialogLines);
+
+            _cutSceneManager.OnCutSceneEnd = () =>
+            {
+                tcs.SetResult(null);
+            };
+
+            return tcs.Task;
+        }*/
+
     }
 }

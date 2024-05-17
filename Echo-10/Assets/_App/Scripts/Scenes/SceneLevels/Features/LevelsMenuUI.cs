@@ -14,13 +14,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private Transform _parentContainer;
         private ServiceLevelSelection _levelSelectionService;
 
+        public GameObject LevelsMenuPanel { get => _levelsMenuUI; set => _levelsMenuUI = value; }
+
         public event Action<int> OnLevelButtonClicked;
 
 
         public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab,
             Transform parentContainer, ServiceLevelSelection levelSelectionService)
         {
-            _levelsMenuUI = levelsMenuUI;
+            LevelsMenuPanel = levelsMenuUI;
             _levelList = levelList;
             _buttonPrefab = buttonPrefab;
             _parentContainer = parentContainer;
@@ -48,7 +50,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
                 instance.onClick.AddListener(() =>
                 {
-                    _levelsMenuUI.SetActive(false);
+                    LevelsMenuPanel.SetActive(false);
                     _levelSelectionService.SetSelectedLevel(level.id);
                     Debug.Log($"Clicked on level: {_levelSelectionService.SelectedLevelId}");
                     OnLevelButtonClicked?.Invoke(level.id);

@@ -16,6 +16,7 @@ using Assets._App.Scripts.Scenes.SceneLevels.States.Load;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using UnityEngine;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
+using UnityEngine.Rendering.VirtualTexturing;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
@@ -41,7 +42,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             gameStateMachine.AddState(CreateRestartState(container));
 
             gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
-            
+
+            gameStateMachine.AddState(CreatePauseState(container));
+
 
             return gameStateMachine;
         }
@@ -82,19 +85,26 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateProcessState(ServiceContainer container, GameStateMachine gameStateMachine)
         {
-            var systems = new SystemsGroup();
+            /*var systems = new SystemsGroup();
             systems.AddSystems(container.GetServices<ISystem>());
 
-            /*var commandSwitchLevel = new CommandSwitchLevelState<StateRestartLevel>(
+            var commandSwitchLevel = new CommandSwitchLevelState<StateRestartLevel>(
                 container.Get<IServiceLevelSelection>(),
                 gameStateMachine);
 
             systems.AddSystem(new SystemProcessNextLevel(
                 container.Get<ViewLevelHeader>(),
-                commandSwitchLevel));*/
+                commandSwitchLevel));
 
-            var stateProcess = new StateProcessGame(systems);
+            var stateProcess = new StateProcessGame(systems);*/
+            var stateProcess = new StateProcessGame();
             return stateProcess;
+        }
+
+        private GameState CreatePauseState(ServiceContainer container)
+        {
+
+            return new StatePauseGame(container.Get<PauseMenu>());
         }
     }
 }

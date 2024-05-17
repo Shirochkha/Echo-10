@@ -1,33 +1,33 @@
 ﻿using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.Systems;
+using Assets._App.Scripts.Scenes.SceneLevels.Features;
+using Assets._App.Scripts.Scenes.SceneLevels.States;
 using UnityEngine;
 
 namespace _App.Scripts.Infrastructure.GameCore.States
 {
     public class StateProcessGame : GameState
     {
-        private readonly SystemsGroup _gameSystems;
-
-        public StateProcessGame(SystemsGroup gameSystems)
+        public StateProcessGame()
         {
-            _gameSystems = gameSystems;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("Process");
-            _gameSystems.Init();
         }
 
         public override void Update()
         {
-            _gameSystems.Update(Time.deltaTime);
+            if (!GameOverMenu.IsGameOverMenuActive() && Input.GetKeyUp(KeyCode.Escape) && !PauseMenu.GameIsPaused)
+            {
+                StateMachine.ChangeState<StatePauseGame>();
+            }
         }
 
         public override void OnExitState()
         {
             Debug.Log("EndProcess");
-            _gameSystems.Cleanup();
         }
     }
 }
