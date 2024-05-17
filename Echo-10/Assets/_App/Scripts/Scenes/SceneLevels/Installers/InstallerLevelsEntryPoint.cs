@@ -51,7 +51,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateLevelMenuState(ServiceContainer container)
         {
-            return new StateLevelMenu((container.Get<LevelsMenuUI>()));
+            return new StateLevelMenu(container.Get<LevelsMenuUI>(), _configLevel);
         }
 
         private GameState CreateLoadLevelState(ServiceContainer container)
@@ -98,7 +98,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 commandSwitchLevel));
 
             var stateProcess = new StateProcessGame(systems);*/
-            var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>());
+            var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>(),
+                                                    container.Get<SystemPlayerInteractions>());
             return stateProcess;
         }
 
@@ -109,7 +110,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateGameOverState(ServiceContainer container)
         {
-            return new StateGameOver(container.Get<GameOverMenu>(), _configLevel);
+            return new StateGameOver(container.Get<GameOverMenu>());
         }
     }
 }

@@ -8,12 +8,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
     public class StateGameOver : GameState
     {
         private GameOverMenu _gameOverMenu;
-        private ConfigLevel _configLevel;
+        
 
-        public StateGameOver(GameOverMenu gameOverMenu, ConfigLevel configLevel)
+        public StateGameOver(GameOverMenu gameOverMenu)
         {
             _gameOverMenu = gameOverMenu;
-            _configLevel = configLevel;
 
             _gameOverMenu.ButtonRetry.onClick.AddListener(Retry);
             _gameOverMenu.ButtonReturnToMenu.onClick.AddListener(LevelMenu);
@@ -37,14 +36,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         }
         private void LevelMenu()
         {
-            foreach (var level in _configLevel.levels)
-            {
-                foreach (var objectData in level.configObjects.objects)
-                {
-                    if (objectData.objectReference != null)
-                        GameObject.Destroy(objectData.objectReference);
-                }
-            }
+            
             StateMachine.ChangeState<StateLevelMenu>();
         }
     }

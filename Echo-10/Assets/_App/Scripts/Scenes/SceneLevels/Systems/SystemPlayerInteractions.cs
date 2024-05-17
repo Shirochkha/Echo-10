@@ -15,7 +15,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private ServiceLevelSelection _serviceLevelSelection;
 
         private ConfigObjects _configObjects;
+        private bool _isWin = false;
         private bool _hasSceneCreate = false;
+
+        public bool IsWin { get => _isWin; set => _isWin = value; }
 
         public SystemPlayerInteractions(ConfigLevel level, GameObject player, Collider playerCollider, 
             SystemHealthBarChange healthController, SystemAddCoin addCoin, ServiceLevelSelection serviceLevelSelection)
@@ -103,6 +106,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     break;
                 case ObjectType.LevelEnd:
                     Debug.Log("LevelEnd");
+                    IsWin = true;
                     break;
                 default:
                     Debug.LogWarning("Unknown object type.");

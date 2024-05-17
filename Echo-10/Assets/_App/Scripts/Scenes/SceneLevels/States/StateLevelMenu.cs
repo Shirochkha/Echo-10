@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
+using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using System;
 using System.Threading.Tasks;
@@ -10,14 +11,26 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
     public class StateLevelMenu : GameState
     {
         private LevelsMenuUI _levelsMenuUI;
-        public StateLevelMenu(LevelsMenuUI levelsMenuUI)
+        private ConfigLevel _configLevel;
+        public StateLevelMenu(LevelsMenuUI levelsMenuUI, ConfigLevel configLevel)
         {
             _levelsMenuUI = levelsMenuUI;
+            _configLevel = configLevel;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("LevelMenu");
+
+            foreach (var level in _configLevel.levels)
+            {
+                foreach (var objectData in level.configObjects.objects)
+                {
+                    if (objectData.objectReference != null)
+                        GameObject.Destroy(objectData.objectReference);
+                }
+            }
+
             _levelsMenuUI.LevelsMenuPanel.SetActive(true);
             ProcessLevelMenu().Forget();
         }

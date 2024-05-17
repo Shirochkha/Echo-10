@@ -39,6 +39,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var playerInteractions = new SystemPlayerInteractions(_level, _player, _playerCollider, 
                 healthController, coinController, levelSelection);
+            container.SetServiceSelf(playerInteractions);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  
     }

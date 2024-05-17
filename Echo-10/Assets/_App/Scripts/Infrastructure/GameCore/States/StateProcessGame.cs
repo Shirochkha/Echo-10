@@ -9,10 +9,12 @@ namespace _App.Scripts.Infrastructure.GameCore.States
     public class StateProcessGame : GameState
     {
         private SystemHealthBarChange _healthBar;
+        private SystemPlayerInteractions _playerInteractions;
 
-        public StateProcessGame(SystemHealthBarChange healthBar)
+        public StateProcessGame(SystemHealthBarChange healthBar, SystemPlayerInteractions playerInteractions)
         {
             _healthBar = healthBar;
+            _playerInteractions = playerInteractions;
         }
 
         public override void OnEnterState()
@@ -30,6 +32,12 @@ namespace _App.Scripts.Infrastructure.GameCore.States
             if(_healthBar.CurrentHealth <= 0)
             {
                 StateMachine.ChangeState<StateGameOver>();
+            }
+
+            if (_playerInteractions.IsWin)
+            {
+                _playerInteractions.IsWin = false;
+                StateMachine.ChangeState<StateLevelMenu>();
             }
         }
 
