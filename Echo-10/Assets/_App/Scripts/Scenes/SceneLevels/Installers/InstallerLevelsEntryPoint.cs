@@ -44,7 +44,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
 
             gameStateMachine.AddState(CreatePauseState(container));
-
+            gameStateMachine.AddState(CreateGameOverState(container));
 
             return gameStateMachine;
         }
@@ -98,14 +98,18 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 commandSwitchLevel));
 
             var stateProcess = new StateProcessGame(systems);*/
-            var stateProcess = new StateProcessGame();
+            var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>());
             return stateProcess;
         }
 
         private GameState CreatePauseState(ServiceContainer container)
         {
-
             return new StatePauseGame(container.Get<PauseMenu>());
+        }
+
+        private GameState CreateGameOverState(ServiceContainer container)
+        {
+            return new StateGameOver(container.Get<GameOverMenu>(), _configLevel);
         }
     }
 }

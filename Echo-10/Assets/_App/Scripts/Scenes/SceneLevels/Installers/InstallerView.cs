@@ -14,11 +14,18 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
     {
         [SerializeField] private List<WallMaterialOffset> _wallOffsets;
 
+        [Header("LevelMenu")]
         [SerializeField] private GameObject _levelsMenuUI;
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
         [SerializeField] private Transform _parentContainer;
-        [SerializeField] private GameObject _restartMenu;
+
+        [Header("GameOver")]
+        [SerializeField] private GameObject _gameOverMenu;
+        [SerializeField] private Button _buttonRetry;
+        [SerializeField] private Button _buttonReturnToMenu;
+
+        [Header("Pause")]
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private Button _buttonInPauseMenu;
 
@@ -34,8 +41,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 levelSelectionService);
             container.SetServiceSelf(levelsMenuUI);
 
-            var restart = new GameOverMenu(_restartMenu);
-            container.SetService<IUpdatable, GameOverMenu>(restart);
+            var gameOver = new GameOverMenu(_gameOverMenu, _buttonRetry, _buttonReturnToMenu);
+            container.SetServiceSelf(gameOver);
 
             var pause = new PauseMenu(_pauseMenu, _buttonInPauseMenu);
             container.SetServiceSelf(pause);

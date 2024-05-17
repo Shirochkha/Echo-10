@@ -418,6 +418,7 @@
 "Assets/_App/Scripts/Scenes/SceneLevels/Sevices/ServiceLevelSelection.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/States/Load/HandlerLoadCutScene.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/States/Load/HandlerLoadObjects.cs"
+"Assets/_App/Scripts/Scenes/SceneLevels/States/StateGameOver.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/States/StateLevelMenu.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/States/StatePauseGame.cs"
 "Assets/_App/Scripts/Scenes/SceneLevels/States/StateRestartLevel.cs"

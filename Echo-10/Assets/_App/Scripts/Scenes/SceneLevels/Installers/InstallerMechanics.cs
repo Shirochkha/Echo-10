@@ -14,7 +14,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Sprite _fullHeartSprite;
         [SerializeField] private Sprite _emptyHeartSprite;
         [SerializeField] private int _maxHealth = 3;
-        [SerializeField] private GameObject _restartMenu;
         [SerializeField] private Transform _helthContainer;
 
         [SerializeField] private Text _coinCountText;
@@ -26,7 +25,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var health = new HealthUI(_helthContainer, _fullHeartSprite, _emptyHeartSprite);
             container.SetServiceSelf<HealthUI>(health);
 
-            var healthController = new SystemHealthBarChange(_maxHealth, health, _restartMenu);
+            var healthController = new SystemHealthBarChange(_maxHealth, health);
             container.SetServiceSelf<SystemHealthBarChange>(healthController);
 
             var coin = new CoinUI(_coinCountText);

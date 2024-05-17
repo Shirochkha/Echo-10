@@ -46,7 +46,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     objectData.objectReference.transform.position.z < _camera.transform.position.z)
                 {
                     //GameObject.Destroy(objectData.objectReference);
-                    objectData.objectReference.SetActive(false);
+                    //objectData.objectReference.SetActive(false);
                 }
             }
         }

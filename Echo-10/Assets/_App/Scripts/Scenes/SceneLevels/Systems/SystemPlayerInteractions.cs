@@ -89,7 +89,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 case ObjectType.Obstacle:
                 case ObjectType.Enemy:
-                    GameObject.Destroy(obj2.objectReference.gameObject);
+                    //GameObject.Destroy(obj2.objectReference.gameObject);
+                    obj2.objectReference.SetActive(false);
                     obj2.objectReference = null;
                     _healthController.PlayerDamaged(1);
                     Debug.Log("Obstacle/Enemy");

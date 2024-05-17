@@ -1,11 +1,13 @@
-﻿using _App.Scripts.Libs.Installer;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
-    public class GameOverMenu : IUpdatable
+    public class GameOverMenu
     {
         private GameObject _gameOver;
+        private Button _buttonRetry;
+        private Button _buttonReturnToMenu;
 
         public static bool IsGameOverMenuActive()
         {
@@ -18,31 +20,31 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         private static GameOverMenu instance;
 
-        public GameOverMenu(GameObject gameOverMenu)
+        public Button ButtonRetry { get => _buttonRetry; set => _buttonRetry = value; }
+        public Button ButtonReturnToMenu { get => _buttonReturnToMenu; set => _buttonReturnToMenu = value; }
+
+        public GameOverMenu(GameObject gameOverMenu, Button buttonRetry, Button buttonReturnToMenu)
         {
             _gameOver = gameOverMenu;
+            ButtonRetry = buttonRetry;
+            ButtonReturnToMenu = buttonReturnToMenu;
 
             instance = this;
-            Time.timeScale = 1.0f;
             _gameOver.SetActive(false);
         }
 
-        public void Update()
+        public void GameOver(bool isOver)
         {
-            if (Input.GetKeyUp(KeyCode.R))
+            if (isOver)
             {
-                Restart();
+                _gameOver.SetActive(true);
+                Time.timeScale = 0.0f;
             }
-        }
-
-        public void Restart()
-        {
-            // Загружаем текущую сцену заново
-        }
-
-        public void LoadMenu()
-        {
-            _gameOver.SetActive(false);
+            else
+            {
+                _gameOver.SetActive(false);
+                Time.timeScale = 1.0f;
+            }
         }
     }
 }

@@ -2434,7 +2434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1452579125}
   m_Layer: 5
-  m_Name: RestartMenu
+  m_Name: GameOverMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4145,6 +4145,8 @@ MonoBehaviour:
   _levelList: {fileID: 11400000, guid: 1b682392e1ec0534f9d81ffafdf3c4d5, type: 2}
   _buttonPrefab: {fileID: 6171751197672796724, guid: 8ed53b5e50267f5429dbb7da95465420, type: 3}
   _parentContainer: {fileID: 1739090492}
-  _restartMenu: {fileID: 1452579124}
+  _gameOverMenu: {fileID: 1452579124}
+  _buttonRetry: {fileID: 1081957505}
+  _buttonReturnToMenu: {fileID: 926263227}
   _pauseMenu: {fileID: 1086476415}
   _buttonInPauseMenu: {fileID: 1700939141}
