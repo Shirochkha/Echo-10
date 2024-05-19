@@ -63,6 +63,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 }
                 else if (_isWaitingForSpace)
                 {
+                    _isWaitingForSpace = false;
                     ContinueToNextLine();
                     return;
                 }
@@ -120,6 +121,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _textArea.color = selectedCharacter.textColor;
 
             _isWaitingForSpace = currentDialogLine.pauseResume > 1;
+            _timeUntilNextAction = _isWaitingForSpace ? 0 : currentDialogLine.pauseResume;
+
+            Debug.Log($"Setting up dialog line: {_currentLineIndex}, Waiting for space: {_isWaitingForSpace}");
         }
 
         private void AddNextLetter()
@@ -151,6 +155,19 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _textArea.text = _currentDialog;
             _letterIndex = _currentDialog.Length;
             _isAnimatingText = false;
+
+            if (_isWaitingForSpace)
+            {
+                Debug.Log("Waiting for space to continue.");
+            }
+            else
+            {
+                _timeUntilNextAction = _configDialogLines.dialogLines[_currentLineIndex].pauseResume;
+                if (_timeUntilNextAction > 0)
+                {
+                    Debug.Log($"Waiting for {_timeUntilNextAction} seconds to continue.");
+                }
+            }
         }
 
         private void ContinueToNextLine()
@@ -168,6 +185,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 _textArea.text = string.Empty;
             }
         }
+
         private void EndCutScene()
         {
             _cutSceneObject.SetActive(false);

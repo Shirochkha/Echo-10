@@ -10,21 +10,25 @@ namespace _App.Scripts.Infrastructure.GameCore.States
     {
         private SystemHealthBarChange _healthBar;
         private SystemPlayerInteractions _playerInteractions;
+        private SystemPlayerMovement _playerMovement;
 
-        public StateProcessGame(SystemHealthBarChange healthBar, SystemPlayerInteractions playerInteractions)
+        public StateProcessGame(SystemHealthBarChange healthBar, SystemPlayerInteractions playerInteractions, 
+            SystemPlayerMovement playerMovement)
         {
             _healthBar = healthBar;
             _playerInteractions = playerInteractions;
+            _playerMovement = playerMovement;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("Process");
+            _playerMovement.ChangeSpeed(_playerMovement.DefaultSpeed);
         }
 
         public override void Update()
         {
-            if (!GameOverMenu.IsGameOverMenuActive() && Input.GetKeyUp(KeyCode.Escape) && !PauseMenu.GameIsPaused)
+            if (!GameOverMenu.IsGameOverMenuActive() && Input.GetKeyDown(KeyCode.Escape) && !PauseMenu.GameIsPaused)
             {
                 StateMachine.ChangeState<StatePauseGame>();
             }
@@ -44,6 +48,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States
         public override void OnExitState()
         {
             Debug.Log("EndProcess");
+            _playerMovement.ChangeSpeed(0f);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private GameObject _levelsMenuUI;
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
+        [SerializeField] private Button _buttonPMainMenu;
         [SerializeField] private Transform _parentContainer;
 
         [Header("GameOver")]
@@ -28,7 +29,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [Header("Pause")]
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private Button _buttonInPauseMenu;
-
+        [SerializeField] private Button _buttonRestart;
         public override void InstallBindings(ServiceContainer container)
         {
             var textureScroll = new SystemTextureScroll(_wallOffsets);
@@ -37,14 +38,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelSelectionService = new ServiceLevelSelection();
             container.SetServiceSelf(levelSelectionService);
 
-            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _parentContainer, 
-                levelSelectionService);
+            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonPMainMenu,
+                _parentContainer, levelSelectionService);
             container.SetServiceSelf(levelsMenuUI);
 
             var gameOver = new GameOverMenu(_gameOverMenu, _buttonRetry, _buttonReturnToMenu);
             container.SetServiceSelf(gameOver);
 
-            var pause = new PauseMenu(_pauseMenu, _buttonInPauseMenu);
+            var pause = new PauseMenu(_pauseMenu, _buttonInPauseMenu, _buttonRestart);
             container.SetServiceSelf(pause);
         }
     }

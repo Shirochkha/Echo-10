@@ -15,5 +15,6 @@ namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config
         public SpriteRenderer renderer;
         public Animator animator;
         public Rigidbody rigidbody;
+        public Collider collider;
     }
 }

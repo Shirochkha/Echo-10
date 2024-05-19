@@ -78,6 +78,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         {
 
             return new StateRestartLevel(container.Get<SystemHealthBarChange>(),
+                    container.Get<HealthUI>(),
                     container.Get<SystemColliderRadiusChange>(),
                     container.Get<SystemPlayerMovement>(),
                     container.Get<SystemAddCoin>(),
@@ -99,7 +100,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var stateProcess = new StateProcessGame(systems);*/
             var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>(),
-                                                    container.Get<SystemPlayerInteractions>());
+                                                    container.Get<SystemPlayerInteractions>(),
+                                                    container.Get<SystemPlayerMovement>());
             return stateProcess;
         }
 

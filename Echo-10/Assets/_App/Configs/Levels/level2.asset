@@ -16,36 +16,20 @@ MonoBehaviour:
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 5848081133267343273, guid: 531c966f2374bfb42acec1ab7bf7c799, type: 3}
     objectName: MidObstacle
-    position: {x: -9.9, y: 30, z: 160.5}
+    position: {x: 0, y: 30, z: 70}
     scale: {x: 2.3, y: 2.3, z: 1}
     objectType: 0
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
-    prefabReference: {fileID: 858110578103565113, guid: 25d6f1b2cd5d18c4f93a22fa532cfd97, type: 3}
-    objectName: TopObstacle
-    position: {x: -11.4, y: 36.8, z: 107.3}
-    scale: {x: 1.2, y: 2, z: 1}
-    objectType: 0
+    prefabReference: {fileID: 8960265869900573298, guid: e6969e2297e0bb644974f130ec1c485e, type: 3}
+    objectName: Enemy
+    position: {x: -0.8, y: 34.1, z: 82}
+    scale: {x: 0.5, y: 0.5, z: 1}
+    objectType: 1
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
-  - objectReference: {fileID: 0}
-    prefabReference: {fileID: 8166836501575525924, guid: d320c23262ad41847a15ea03cb9ff32c, type: 3}
-    objectName: BotObstacle (1)
-    position: {x: -17.57, y: 19.7, z: 76.7}
-    scale: {x: 2, y: 2, z: 1}
-    objectType: 0
-    renderer: {fileID: 0}
-    animator: {fileID: 0}
-    rigidbody: {fileID: 0}
-  - objectReference: {fileID: 0}
-    prefabReference: {fileID: 8166836501575525924, guid: d320c23262ad41847a15ea03cb9ff32c, type: 3}
-    objectName: BotObstacle
-    position: {x: 0.6, y: 20, z: 76.7}
-    scale: {x: 2, y: 2, z: 1}
-    objectType: 0
-    renderer: {fileID: 0}
-    animator: {fileID: 0}
-    rigidbody: {fileID: 0}
+    collider: {fileID: 0}

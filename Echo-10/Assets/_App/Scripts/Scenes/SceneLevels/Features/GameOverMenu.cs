@@ -38,12 +38,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             if (isOver)
             {
                 _gameOver.SetActive(true);
-                Time.timeScale = 0.0f;
             }
             else
             {
                 _gameOver.SetActive(false);
-                Time.timeScale = 1.0f;
             }
         }
     }

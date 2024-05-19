@@ -73,7 +73,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             Collider collider1 = _playerCollider;
             Collider collider2 = obj2.objectReference.GetComponent<Collider>();
 
-            if (collider1 != null && collider2 != null)
+            if (collider1 != null && collider2 != null && collider2.enabled == true)
             {
                 return collider1.bounds.Intersects(collider2.bounds);
             }
@@ -92,20 +92,22 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 case ObjectType.Obstacle:
                 case ObjectType.Enemy:
-                    //GameObject.Destroy(obj2.objectReference.gameObject);
-                    obj2.objectReference.SetActive(false);
-                    obj2.objectReference = null;
+                    obj2.collider.enabled = false;
+                    obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
+                            obj2.renderer.color.b, 0);
                     _healthController.PlayerDamaged(1);
                     Debug.Log("Obstacle/Enemy");
                     break;
                 case ObjectType.Coin:
-                    GameObject.Destroy(obj2.objectReference.gameObject);
-                    obj2.objectReference = null;
+                    obj2.collider.enabled = false;
+                    obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
+                            obj2.renderer.color.b, 0);
                     _addCoin.AddCoins(1);
                     Debug.Log("Coin");
                     break;
                 case ObjectType.LevelEnd:
                     Debug.Log("LevelEnd");
+                    obj2.collider.enabled = false;
                     IsWin = true;
                     break;
                 default:

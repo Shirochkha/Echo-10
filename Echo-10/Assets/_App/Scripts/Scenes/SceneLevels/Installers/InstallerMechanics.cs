@@ -17,7 +17,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Transform _helthContainer;
 
         [SerializeField] private Text _coinCountText;
-        [NonSerialized] private int _coinCount = 0;
         [SerializeField] private int _maxCoinCount = 10;
 
         public override void InstallBindings(ServiceContainer container)
@@ -31,7 +30,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var coin = new CoinUI(_coinCountText);
             container.SetServiceSelf<CoinUI>(coin);
 
-            var coinController = new SystemAddCoin(_coinCount, _maxCoinCount, coin);
+            var coinController = new SystemAddCoin(_maxCoinCount, coin);
             container.SetServiceSelf<SystemAddCoin>(coinController);
         }
     }

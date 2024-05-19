@@ -4,16 +4,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
     public class SystemAddCoin
     {
-        private int _coinCount;
+        private int _coinCount = 0;
         private int _coinMaxCount;
         private CoinUI _coinUI;
 
         public int CoinCount { get => _coinCount; set => _coinCount = value; }
         public int CoinMaxCount { get => _coinMaxCount; set => _coinMaxCount = value; }
 
-        public SystemAddCoin(int coinCount, int coinMaxCount, CoinUI coinUI)
+        public SystemAddCoin(int coinMaxCount, CoinUI coinUI)
         {
-            CoinCount = coinCount;
             CoinMaxCount = coinMaxCount;
             _coinUI = coinUI;
             _coinUI.UpdateCoinCountUI(CoinCount, coinMaxCount);

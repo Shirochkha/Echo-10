@@ -37,6 +37,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 GameObject.Destroy(heartToRemove.gameObject);
             }
 
+            UpdateCurrentHealthUI(currentHealth);
+        }
+
+        public void UpdateCurrentHealthUI(int currentHealth)
+        {
             for (int i = 0; i < _heartImages.Count; i++)
             {
                 _heartImages[i].sprite = i < currentHealth ? _fullHeartSprite : _emptyHeartSprite;

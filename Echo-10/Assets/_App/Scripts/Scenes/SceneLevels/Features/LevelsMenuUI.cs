@@ -11,6 +11,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private GameObject _levelsMenuUI;
         private ConfigLevel _levelList;
         private Button _buttonPrefab;
+        private Button _buttonMenu;
         private Transform _parentContainer;
         private ServiceLevelSelection _levelSelectionService;
 
@@ -19,19 +20,21 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public event Action<int> OnLevelButtonClicked;
 
 
-        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab,
+        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, Button buttonMenu,
             Transform parentContainer, ServiceLevelSelection levelSelectionService)
         {
             LevelsMenuPanel = levelsMenuUI;
             _levelList = levelList;
             _buttonPrefab = buttonPrefab;
+            _buttonMenu = buttonMenu;
             _parentContainer = parentContainer;
             _levelSelectionService = levelSelectionService;
 
+            _buttonMenu.onClick.AddListener(ReturnToMainMenu);
             CreateButtonsPrefabs();
         }
 
-        void CreateButtonsPrefabs()
+        private void CreateButtonsPrefabs()
         {
             foreach (Transform child in _parentContainer)
             {
@@ -56,6 +59,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                     OnLevelButtonClicked?.Invoke(level.id);
                 });
             }
+        }
+
+        private void ReturnToMainMenu()
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 }

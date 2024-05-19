@@ -42,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Parallax
+    uniqueID: 4006600435
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

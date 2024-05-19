@@ -14,6 +14,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         {
             _pauseMenu = pauseMenu;
             _pauseMenu.ButtonInPauseMenu.onClick.AddListener(LoadMenu);
+            _pauseMenu.ButtonRestart.onClick.AddListener(Restart);
         }
 
         public override void OnEnterState()
@@ -28,7 +29,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
 
         public override void Update()
         {
-            if (!GameOverMenu.IsGameOverMenuActive() && Input.GetKeyUp(KeyCode.Escape) && PauseMenu.GameIsPaused)
+            if (!GameOverMenu.IsGameOverMenuActive() && Input.GetKeyDown(KeyCode.Escape) && PauseMenu.GameIsPaused)
             {
                 StateMachine.ChangeState<StateProcessGame>();
             }
@@ -45,6 +46,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         {
             _pauseMenu.Resume();
             StateMachine.ChangeState<StateLevelMenu>();
+        }
+
+        private void Restart()
+        {
+            _pauseMenu.Resume();
+            StateMachine.ChangeState<StateRestartLevel>();
         }
     }
 

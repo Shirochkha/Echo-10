@@ -58,6 +58,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
                 data.renderer = newObject.GetComponent<SpriteRenderer>();
                 data.animator = newObject.GetComponent<Animator>();
                 data.rigidbody = newObject.GetComponent<Rigidbody>();
+                data.collider = newObject.GetComponent<Collider>();
             }
 
             return Task.CompletedTask;

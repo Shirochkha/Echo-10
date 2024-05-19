@@ -1,4 +1,5 @@
 ﻿using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -64,7 +65,6 @@ public class SceneManager : MonoBehaviour
             newData.objectName = obj.name;
             newData.position = obj.transform.position;
             newData.scale = obj.transform.localScale;
-
 
             objectListSO.objects.Add(newData);
         }
