@@ -1,13 +1,8 @@
-﻿using _App.Scripts.Infrastructure.GameCore.Commands.SwitchLevel;
-using _App.Scripts.Infrastructure.GameCore.Controllers;
+﻿using _App.Scripts.Infrastructure.GameCore.Controllers;
 using _App.Scripts.Infrastructure.GameCore.States.LoadState;
 using _App.Scripts.Infrastructure.GameCore.States;
-using _App.Scripts.Infrastructure.GameCore.Systems;
-using _App.Scripts.Infrastructure.LevelSelection.ViewHeader;
-using _App.Scripts.Infrastructure.LevelSelection;
 using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.StateMachine;
-using _App.Scripts.Libs.Systems;
 using System.Collections.Generic;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Scenes.SceneLevels.States;
@@ -16,8 +11,6 @@ using Assets._App.Scripts.Scenes.SceneLevels.States.Load;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using UnityEngine;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
-using UnityEngine.Rendering.VirtualTexturing;
-
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
     internal class InstallerLevelsEntryPoint : MonoInstaller
@@ -87,18 +80,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateProcessState(ServiceContainer container, GameStateMachine gameStateMachine)
         {
-            /*var systems = new SystemsGroup();
-            systems.AddSystems(container.GetServices<ISystem>());
-
-            var commandSwitchLevel = new CommandSwitchLevelState<StateRestartLevel>(
-                container.Get<IServiceLevelSelection>(),
-                gameStateMachine);
-
-            systems.AddSystem(new SystemProcessNextLevel(
-                container.Get<ViewLevelHeader>(),
-                commandSwitchLevel));
-
-            var stateProcess = new StateProcessGame(systems);*/
             var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>(),
                                                     container.Get<SystemPlayerInteractions>(),
                                                     container.Get<SystemPlayerMovement>());

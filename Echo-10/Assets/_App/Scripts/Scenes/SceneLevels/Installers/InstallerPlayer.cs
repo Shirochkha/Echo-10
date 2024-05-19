@@ -36,9 +36,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var healthController = container.Get<SystemHealthBarChange>();
             var coinController = container.Get<SystemAddCoin>();
             var levelSelection = container.Get<ServiceLevelSelection>();
+            var levelState = container.Get<ServiceLevelState>();
 
             var playerInteractions = new SystemPlayerInteractions(_level, _player, _playerCollider, 
-                healthController, coinController, levelSelection);
+                healthController, coinController, levelSelection, levelState);
             container.SetServiceSelf(playerInteractions);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  

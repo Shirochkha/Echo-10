@@ -1,16 +1,21 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using _App.Scripts.Libs.SceneManagement;
+using UnityEngine;
 
 public class MainMenuButtons
 {
-    public MainMenuButtons()
+    private SceneNavigatorLoader _scenes;
+    public MainMenuButtons(SceneNavigatorLoader scenes)
     {
-
+        _scenes = scenes;
     }
 
     public void PlayGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
+        foreach (var scene in _scenes.GetAvailableSwitchScenes())
+        {
+            if (scene.SceneViewName == "Levels")
+                _scenes.LoadScene(scene.SceneKey);
+        }
     }
 
     public void ExitGame()

@@ -1,4 +1,5 @@
 ﻿using _App.Scripts.Libs.Installer;
+using _App.Scripts.Libs.SceneManagement;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
@@ -18,7 +19,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private GameObject _levelsMenuUI;
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
-        [SerializeField] private Button _buttonPMainMenu;
+        [SerializeField] private Button _buttonMainMenu;
         [SerializeField] private Transform _parentContainer;
 
         [Header("GameOver")]
@@ -38,9 +39,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelSelectionService = new ServiceLevelSelection();
             container.SetServiceSelf(levelSelectionService);
 
-            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonPMainMenu,
-                _parentContainer, levelSelectionService);
+            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu,
+                _parentContainer, levelSelectionService, container.Get<SceneNavigatorLoader>(), container.Get<ServiceLevelState>());
             container.SetServiceSelf(levelsMenuUI);
+            container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
 
             var gameOver = new GameOverMenu(_gameOverMenu, _buttonRetry, _buttonReturnToMenu);
             container.SetServiceSelf(gameOver);
