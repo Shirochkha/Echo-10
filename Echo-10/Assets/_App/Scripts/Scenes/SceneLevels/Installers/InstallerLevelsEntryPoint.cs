@@ -44,7 +44,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateLevelMenuState(ServiceContainer container)
         {
-            return new StateLevelMenu(container.Get<LevelsMenuUI>(), _configLevel);
+            return new StateLevelMenu(container.Get<LevelsMenuUI>(), 
+                                    _configLevel, 
+                                    container.Get<SystemPlayerInteractions>(),
+                                    container.Get<SystemSpriteAlphaChange>(),
+                                    container.Get<SystemSpriteChange>());
         }
 
         private GameState CreateLoadLevelState(ServiceContainer container)

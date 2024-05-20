@@ -33,16 +33,18 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             _serviceLevelSelection = serviceLevelSelection;
         }
 
+        public bool HasSceneCreate { get => _hasSceneCreate; set => _hasSceneCreate = value; }
+
         public void Update()
         {
-            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            if (!HasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
             {
                 foreach (var level in _level.levels)
                 {
                     if (level.id == _serviceLevelSelection.SelectedLevelId)
                         _configObjects = level.configObjects;
                 }
-                _hasSceneCreate = true;
+                HasSceneCreate = true;
             }
 
             HandleMaxAlpha();

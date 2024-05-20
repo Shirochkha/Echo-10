@@ -40,6 +40,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,
                 colliderRadiusChange, _level, levelSelection);
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
+            container.SetServiceSelf<SystemSpriteAlphaChange>(spriteAlphaChange);
 
             var enemyMovement = new SystemEnemyMovement(_enemySpeed);
             container.SetServiceSelf<SystemEnemyMovement>(enemyMovement);
@@ -47,6 +48,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var spriteChange = new SystemSpriteChange(_sprites, _level, levelSelection, _colliderComponent, 
                 enemyMovement);
             container.SetService<IUpdatable, SystemSpriteChange>(spriteChange);
+            container.SetServiceSelf<SystemSpriteChange>(spriteChange);
         }
     }
 }

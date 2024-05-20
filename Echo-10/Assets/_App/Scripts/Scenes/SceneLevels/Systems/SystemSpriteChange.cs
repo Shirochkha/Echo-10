@@ -16,6 +16,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private ConfigObjects _configObjects;
         private bool _hasSceneCreate = false;
 
+        public bool HasSceneCreate { get => _hasSceneCreate; set => _hasSceneCreate = value; }
+
         public SystemSpriteChange(ConfigSprites sprites, ConfigLevel level, ServiceLevelSelection serviceLevelSelection,
             SphereCollider sphereCollider, SystemEnemyMovement enemyMovement)
         {
@@ -28,14 +30,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
         public void Update()
         {
-            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            if (!HasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
             {
                 foreach (var level in _level.levels)
                 {
                     if (level.id == _serviceLevelSelection.SelectedLevelId)
                         _configObjects = level.configObjects;
                 }
-                _hasSceneCreate = true;
+                HasSceneCreate = true;
             }
             ChangeView();
         }

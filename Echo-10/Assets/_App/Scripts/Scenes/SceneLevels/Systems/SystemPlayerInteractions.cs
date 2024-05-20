@@ -140,6 +140,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private bool _hasSceneCreate = false;
 
         public bool IsWin { get => _isWin; set => _isWin = value; }
+        public bool HasSceneCreate { get => _hasSceneCreate; set => _hasSceneCreate = value; }
 
         public SystemPlayerInteractions(ConfigLevel level, GameObject player, Collider playerCollider,
             SystemHealthBarChange healthController, SystemAddCoin addCoin, ServiceLevelSelection serviceLevelSelection,
@@ -156,14 +157,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
         public void Update()
         {
-            if (!_hasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            if (!HasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
             {
                 foreach (var level in _level.levels)
                 {
                     if (level.id == _serviceLevelSelection.SelectedLevelId)
                         _configObjects = level.configObjects;
                 }
-                _hasSceneCreate = true;
+                HasSceneCreate = true;
             }
             CheckCollisions();
         }
