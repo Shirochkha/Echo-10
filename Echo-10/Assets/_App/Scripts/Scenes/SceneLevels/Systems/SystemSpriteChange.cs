@@ -8,37 +8,28 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
     public class SystemSpriteChange : IUpdatable
     {
         private ConfigSprites _sprites;
-        private ConfigLevel _level;
-        private ServiceLevelSelection _serviceLevelSelection;
         private SphereCollider _sphereCollider;
         private SystemEnemyMovement _enemyMovement;
+        private ServiceLevelState _serviceLevelState;
 
         private ConfigObjects _configObjects;
-        private bool _hasSceneCreate = false;
 
-        public bool HasSceneCreate { get => _hasSceneCreate; set => _hasSceneCreate = value; }
-
-        public SystemSpriteChange(ConfigSprites sprites, ConfigLevel level, ServiceLevelSelection serviceLevelSelection,
-            SphereCollider sphereCollider, SystemEnemyMovement enemyMovement)
+        public SystemSpriteChange(ConfigSprites sprites, SphereCollider sphereCollider, 
+            SystemEnemyMovement enemyMovement, ServiceLevelState serviceLevelState)
         {
             _sprites = sprites;
-            _level = level;
-            _serviceLevelSelection = serviceLevelSelection;
             _sphereCollider = sphereCollider;
             _enemyMovement = enemyMovement;
+            _serviceLevelState = serviceLevelState;
         }
 
         public void Update()
         {
-            if (!HasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            if (_serviceLevelState.HasLevelCreate)
             {
-                foreach (var level in _level.levels)
-                {
-                    if (level.id == _serviceLevelSelection.SelectedLevelId)
-                        _configObjects = level.configObjects;
-                }
-                HasSceneCreate = true;
+                _configObjects = _serviceLevelState.ConfigObjects;
             }
+
             ChangeView();
         }
 

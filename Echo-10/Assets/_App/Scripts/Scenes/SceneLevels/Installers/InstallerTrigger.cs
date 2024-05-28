@@ -30,25 +30,25 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, _clickCount, 
                 _colliderComponent);
             container.SetService<IUpdatable, SystemColliderRadiusChange>(colliderRadiusChange);
-            container.SetServiceSelf<SystemColliderRadiusChange>(colliderRadiusChange);
+            container.SetServiceSelf(colliderRadiusChange);
 
             var clickCountUI = new ClickCountUI(_clickCountText, colliderRadiusChange);
             container.SetService<IUpdatable, ClickCountUI>(clickCountUI);
 
             var levelSelection = container.Get<ServiceLevelSelection>();
+            var levelState = container.Get<ServiceLevelState>();
 
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,
-                colliderRadiusChange, _level, levelSelection);
+                colliderRadiusChange, levelState);
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
-            container.SetServiceSelf<SystemSpriteAlphaChange>(spriteAlphaChange);
+            container.SetServiceSelf(spriteAlphaChange);
 
             var enemyMovement = new SystemEnemyMovement(_enemySpeed);
-            container.SetServiceSelf<SystemEnemyMovement>(enemyMovement);
+            container.SetServiceSelf(enemyMovement);
 
-            var spriteChange = new SystemSpriteChange(_sprites, _level, levelSelection, _colliderComponent, 
-                enemyMovement);
+            var spriteChange = new SystemSpriteChange(_sprites, _colliderComponent, enemyMovement, levelState);
             container.SetService<IUpdatable, SystemSpriteChange>(spriteChange);
-            container.SetServiceSelf<SystemSpriteChange>(spriteChange);
+            container.SetServiceSelf(spriteChange);
         }
     }
 }

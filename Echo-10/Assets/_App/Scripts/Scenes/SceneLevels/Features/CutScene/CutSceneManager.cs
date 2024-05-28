@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.CutScene.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private float _speedText;
         private Image _dialogImage;
         private Text _textArea;
+        private ServiceLevelState _serviceLevelState;
 
         private ConfigCutScene _configDialogLines;
         private int _currentLineIndex = 0;
@@ -30,7 +32,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public Action OnCutSceneEnd { get => _onCutSceneEnd; set => _onCutSceneEnd = value; }
 
         public CutSceneManager(GameObject cutSceneObject, ConfigCharacters characterManager,
-            float pauseTime, float speedText, Image dialogImage, Text textArea)
+            float pauseTime, float speedText, Image dialogImage, Text textArea, ServiceLevelState serviceLevelState)
         {
             _cutSceneObject = cutSceneObject;
             _characterManager = characterManager;
@@ -38,6 +40,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _speedText = speedText;
             _dialogImage = dialogImage;
             _textArea = textArea;
+            _serviceLevelState = serviceLevelState;
 
             _cutSceneObject.SetActive(false);
         }
@@ -81,22 +84,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             }
         }
 
-        public void InitializeCutScene(int selectedLevelId, ConfigCutScene configDialogLines)
+        public void StartNewDialog()
         {
-            _configDialogLines = configDialogLines;
-
-            if (_configDialogLines != null)
-            {
-                StartNewDialog();
-            }
-            else
-            {
-                Debug.LogError($"Cut-scene configuration for level {selectedLevelId} not found.");
-            }
-        }
-
-        private void StartNewDialog()
-        {
+            _configDialogLines = _serviceLevelState.ConfigCutScene;
             _cutSceneObject.SetActive(true);
             _currentLineIndex = 0;
             _letterIndex = 0;

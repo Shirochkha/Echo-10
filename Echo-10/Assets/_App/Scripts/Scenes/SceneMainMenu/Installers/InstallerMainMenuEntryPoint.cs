@@ -3,15 +3,12 @@ using _App.Scripts.Libs.SceneManagement;
 using _App.Scripts.Libs.SceneManagement.Config;
 using _App.Scripts.Libs.ServiceLocator;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace _App.Scripts.Scenes.SceneMainMenu.Installers
 {
     public class InstallerMainMenuEntryPoint : MonoInstaller
     {
-        // TODO: Я тупик
-
         [SerializeField] private Button _buttonStart;
         [SerializeField] private Button _buttonExit;
         [SerializeField] private ConfigScenes _scenes;

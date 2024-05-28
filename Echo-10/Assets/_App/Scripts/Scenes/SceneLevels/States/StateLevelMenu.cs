@@ -2,7 +2,7 @@
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
-using Assets._App.Scripts.Scenes.SceneLevels.Systems;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -13,17 +13,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
     {
         private LevelsMenuUI _levelsMenuUI;
         private ConfigLevel _configLevel;
-        private SystemPlayerInteractions _playerInteractions;
-        private SystemSpriteAlphaChange _spriteAlphaChange;
-        private SystemSpriteChange _spriteChange;
-        public StateLevelMenu(LevelsMenuUI levelsMenuUI, ConfigLevel configLevel, SystemPlayerInteractions playerInteractions, 
-            SystemSpriteAlphaChange spriteAlphaChange, SystemSpriteChange spriteChange)
+        private ServiceLevelState _serviceLevelState;
+        public StateLevelMenu(LevelsMenuUI levelsMenuUI, ConfigLevel configLevel, ServiceLevelState serviceLevelState)
         {
             _levelsMenuUI = levelsMenuUI;
             _configLevel = configLevel;
-            _playerInteractions = playerInteractions;
-            _spriteAlphaChange = spriteAlphaChange;
-            _spriteChange = spriteChange;
+            _serviceLevelState = serviceLevelState;
         }
 
         public override void OnEnterState()
@@ -59,9 +54,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
                 _levelsMenuUI.OnLevelButtonClicked += handler;
 
                 var selectedLevelId = await tcs.Task;
-                _playerInteractions.HasSceneCreate = false;
-                _spriteAlphaChange.HasSceneCreate = false;
-                _spriteChange.HasSceneCreate = false;
+                _serviceLevelState.HasLevelCreate = false;
                 StateMachine.ChangeState<StateLoadLevel>();
             }
         }

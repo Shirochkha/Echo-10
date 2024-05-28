@@ -2,6 +2,7 @@
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Infrastructure.CutScene.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +24,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         public override void InstallBindings(ServiceContainer container)
         {
             var cutSceneManager = new CutSceneManager(_cutScene, _characterManager, _pauseTime,
-                _speedText, _dialogImage, _textArea);
-            container.SetServiceSelf< CutSceneManager>(cutSceneManager);
+                _speedText, _dialogImage, _textArea, container.Get<ServiceLevelState>());
+            container.SetServiceSelf(cutSceneManager);
             container.SetService<IUpdatable, CutSceneManager>(cutSceneManager);
 
             var textColorChanger = new TextColorChanger(_cutScene, _textToChange, _targetColor);
-            container.SetServiceSelf<TextColorChanger>(textColorChanger);
+            container.SetServiceSelf(textColorChanger);
             container.SetService<IUpdatable, TextColorChanger>(textColorChanger);
 
         }

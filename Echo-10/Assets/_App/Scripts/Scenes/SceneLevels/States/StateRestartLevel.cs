@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using _App.Scripts.Infrastructure.GameCore.States;
-using _App.Scripts.Libs.Factory.Mono;
 using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
@@ -51,7 +49,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
             _healthUI.UpdateCurrentHealthUI(_healthBar.CurrentHealth);
             _echoBar.ClickCount = _echoBar.MaxClickCount;
             _playerMovement.PlayerTransform.position = _playerMovement.PlayerPosition;
-            //_coinCount.CoinCount = 0;
             _coinCount.AddCoins(-_coinCount.CoinCount);
 
             foreach (var level in _configLevel.levels)

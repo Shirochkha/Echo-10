@@ -1,12 +1,10 @@
-﻿using _App.Scripts.Libs.Installer;
-using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
-using UnityEngine;
+﻿using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
     public class SystemEnemyMovement
     {
-        private float _enemySpeed = 15f;
+        private float _enemySpeed;
 
 
         public SystemEnemyMovement(float enemySpeed)

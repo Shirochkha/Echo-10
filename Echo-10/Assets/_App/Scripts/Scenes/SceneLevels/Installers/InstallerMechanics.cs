@@ -2,8 +2,6 @@
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,16 +20,16 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         public override void InstallBindings(ServiceContainer container)
         {
             var health = new HealthUI(_helthContainer, _fullHeartSprite, _emptyHeartSprite);
-            container.SetServiceSelf<HealthUI>(health);
+            container.SetServiceSelf(health);
 
             var healthController = new SystemHealthBarChange(_maxHealth, health);
-            container.SetServiceSelf<SystemHealthBarChange>(healthController);
+            container.SetServiceSelf(healthController);
 
             var coin = new CoinUI(_coinCountText);
-            container.SetServiceSelf<CoinUI>(coin);
+            container.SetServiceSelf(coin);
 
             var coinController = new SystemAddCoin(_maxCoinCount, coin);
-            container.SetServiceSelf<SystemAddCoin>(coinController);
+            container.SetServiceSelf(coinController);
         }
     }
 }

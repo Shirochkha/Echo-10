@@ -67,7 +67,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 }
 
                 instance.interactable = false;
-                //instance.enabled = false;
+                
                 instance.onClick.AddListener(() =>
                 {
                     LevelsMenuPanel.SetActive(false);
@@ -89,7 +89,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 if (i == 0 || _levelState.IsLevelWin(_levelList.levels[i - 1].id))
                 {
                     button.interactable = true;
-                    //button.enabled = true;
                 }
             }
         }

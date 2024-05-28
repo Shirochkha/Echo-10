@@ -27,7 +27,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var playerMovement = new SystemPlayerMovement(_playerTransform, _defaultSpeed);
             container.SetService<IUpdatable, SystemPlayerMovement>(playerMovement);
-            container.SetServiceSelf<SystemPlayerMovement>(playerMovement);
+            container.SetServiceSelf(playerMovement);
 
             var cameraFollow = new SystemCameraFollow(_playerTransform, _cameraTransform, _cameraSmoothSpeed, 
                 _cameraHeightOffset);
@@ -38,8 +38,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelSelection = container.Get<ServiceLevelSelection>();
             var levelState = container.Get<ServiceLevelState>();
 
-            var playerInteractions = new SystemPlayerInteractions(_level, _player, _playerCollider, 
-                healthController, coinController, levelSelection, levelState);
+            var playerInteractions = new SystemPlayerInteractions(_player, _playerCollider, healthController, 
+                coinController, levelSelection, levelState);
             container.SetServiceSelf(playerInteractions);
             container.SetService<IUpdatable, SystemPlayerInteractions>(playerInteractions);
         }  

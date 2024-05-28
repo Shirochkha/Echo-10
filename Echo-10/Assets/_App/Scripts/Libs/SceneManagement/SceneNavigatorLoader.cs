@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using _App.Scripts.Libs.SceneManagement.Config;
 
 namespace _App.Scripts.Libs.SceneManagement

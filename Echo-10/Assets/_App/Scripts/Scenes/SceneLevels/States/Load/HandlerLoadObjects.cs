@@ -30,8 +30,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
                     _configObjects = level.configObjects;
             }
 
-            Dictionary<GameObject, FactoryMonoPrefab<GameObject>> prefabFactories =
-                new Dictionary<GameObject, FactoryMonoPrefab<GameObject>>();
+            Dictionary<GameObject, FactoryMonoPrefab<GameObject>> prefabFactories = new();
 
             foreach (ObjectData data in _configObjects.objects)
             {
@@ -50,8 +49,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
                 var factoryForPrefab = prefabFactories[data.prefabReference];
                 GameObject newObject = factoryForPrefab.Create();
 
-                newObject.transform.position = data.position;
-                newObject.transform.rotation = Quaternion.identity;
+                newObject.transform.SetPositionAndRotation(data.position, Quaternion.identity);
                 newObject.transform.localScale = data.scale;
 
                 data.objectReference = newObject;

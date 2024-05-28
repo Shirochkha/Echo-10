@@ -11,6 +11,8 @@ using Assets._App.Scripts.Scenes.SceneLevels.States.Load;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using UnityEngine;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
+
 namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
     internal class InstallerLevelsEntryPoint : MonoInstaller
@@ -46,21 +48,17 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         {
             return new StateLevelMenu(container.Get<LevelsMenuUI>(), 
                                     _configLevel, 
-                                    container.Get<SystemPlayerInteractions>(),
-                                    container.Get<SystemSpriteAlphaChange>(),
-                                    container.Get<SystemSpriteChange>());
+                                    container.Get<ServiceLevelState>());
         }
 
         private GameState CreateLoadLevelState(ServiceContainer container)
         {
             var handlers = new List<IHandlerLoadLevel>
             {
-                new HandlerLoadCutScene(_configLevel,
-                    container.Get<Sevices.ServiceLevelSelection>(),
-                    container.Get<CutSceneManager>(),
+                new HandlerLoadCutScene(container.Get<CutSceneManager>(),
                     container.Get<TextColorChanger>()),
                 new HandlerLoadObjects(_configLevel,
-                    container.Get<Sevices.ServiceLevelSelection>())
+                    container.Get<ServiceLevelSelection>())
                 
             };
 

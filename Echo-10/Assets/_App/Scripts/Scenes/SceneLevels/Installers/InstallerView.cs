@@ -36,11 +36,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var textureScroll = new SystemTextureScroll(_wallOffsets);
             container.SetService<IUpdatable, SystemTextureScroll>(textureScroll);
 
-            var levelSelectionService = new ServiceLevelSelection();
-            container.SetServiceSelf(levelSelectionService);
+            var levelSelection = container.Get<ServiceLevelSelection>();
 
             var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu,
-                _parentContainer, levelSelectionService, container.Get<SceneNavigatorLoader>(), container.Get<ServiceLevelState>());
+                _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), container.Get<ServiceLevelState>());
             container.SetServiceSelf(levelsMenuUI);
             container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
 

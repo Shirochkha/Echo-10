@@ -1,8 +1,5 @@
-﻿using _App.Scripts.Infrastructure.GameCore.Controllers;
-using _App.Scripts.Infrastructure.GameCore.States.LoadState;
-using _App.Scripts.Libs.Installer;
+﻿using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.ServiceLocator;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

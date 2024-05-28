@@ -12,39 +12,28 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private float _maxAlpha;
         private float _maxAlphaDuration;
         private SystemColliderRadiusChange _colliderRadiusChange;
-        private ConfigLevel _level;
-        private ServiceLevelSelection _serviceLevelSelection;
+        private ServiceLevelState _serviceLevelState;
 
         private ConfigObjects _configObjects;
-        private bool _hasSceneCreate = false;
 
         private bool _isMaxAlpha;
 
         public SystemSpriteAlphaChange(SphereCollider sphereCollider, float minAlpha, float maxAlpha, 
-            float maxAlphaDuration, SystemColliderRadiusChange colliderRadiusChange, ConfigLevel level,
-            ServiceLevelSelection serviceLevelSelection)
+            float maxAlphaDuration, SystemColliderRadiusChange colliderRadiusChange, ServiceLevelState serviceLevelState)
         {
             _sphereCollider = sphereCollider;
             _minAlpha = minAlpha;
             _maxAlpha = maxAlpha;
             _maxAlphaDuration = maxAlphaDuration;
             _colliderRadiusChange = colliderRadiusChange;
-            _level = level;
-            _serviceLevelSelection = serviceLevelSelection;
+            _serviceLevelState = serviceLevelState;
         }
-
-        public bool HasSceneCreate { get => _hasSceneCreate; set => _hasSceneCreate = value; }
 
         public void Update()
         {
-            if (!HasSceneCreate && _serviceLevelSelection.SelectedLevelId > 0)
+            if (_serviceLevelState.HasLevelCreate)
             {
-                foreach (var level in _level.levels)
-                {
-                    if (level.id == _serviceLevelSelection.SelectedLevelId)
-                        _configObjects = level.configObjects;
-                }
-                HasSceneCreate = true;
+                _configObjects = _serviceLevelState.ConfigObjects;
             }
 
             HandleMaxAlpha();

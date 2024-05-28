@@ -1,5 +1,4 @@
 ﻿using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -20,7 +19,7 @@ public class SceneManager : MonoBehaviour
 
         // Получаем список всех префабов в проекте
         string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab");
-        Dictionary<string, GameObject> prefabDictionary = new Dictionary<string, GameObject>();
+        Dictionary<string, GameObject> prefabDictionary = new();
         // Проходим по каждому GUID и загружаем префабы
         foreach (string guid in prefabGuids)
         {
@@ -41,7 +40,7 @@ public class SceneManager : MonoBehaviour
         foreach (GameObject obj in allObjects)
         {
             // Создаем новый экземпляр ObjectData и заполняем его данными
-            ObjectData newData = new ObjectData();
+            ObjectData newData = new();
             string name = obj.name.Split(' ')[0];
 
             if (prefabDictionary.ContainsKey(name))
