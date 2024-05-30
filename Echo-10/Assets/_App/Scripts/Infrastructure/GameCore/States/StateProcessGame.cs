@@ -8,22 +8,19 @@ namespace _App.Scripts.Infrastructure.GameCore.States
 {
     public class StateProcessGame : GameState
     {
-        private SystemHealthBarChange _healthBar;
         private SystemPlayerInteractions _playerInteractions;
-        private SystemPlayerMovement _playerMovement;
+        private IPlayer _player;
 
-        public StateProcessGame(SystemHealthBarChange healthBar, SystemPlayerInteractions playerInteractions, 
-            SystemPlayerMovement playerMovement)
+        public StateProcessGame(SystemPlayerInteractions playerInteractions, IPlayer player)
         {
-            _healthBar = healthBar;
             _playerInteractions = playerInteractions;
-            _playerMovement = playerMovement;
+            _player = player;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("Process");
-            _playerMovement.ChangeSpeed(_playerMovement.DefaultSpeed);
+            _player.ChangeSpeed(_player.DefaultForwardSpeed);
         }
 
         public override void Update()
@@ -33,7 +30,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States
                 StateMachine.ChangeState<StatePauseGame>();
             }
 
-            if(_healthBar.CurrentHealth <= 0)
+            if(_player.PlayerStateOnLevel.CurrentHealth <= 0)
             {
                 StateMachine.ChangeState<StateGameOver>();
             }
@@ -48,7 +45,7 @@ namespace _App.Scripts.Infrastructure.GameCore.States
         public override void OnExitState()
         {
             Debug.Log("EndProcess");
-            _playerMovement.ChangeSpeed(0f);
+            _player.ChangeSpeed(0f);
         }
     }
 }

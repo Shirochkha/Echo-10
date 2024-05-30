@@ -4,30 +4,19 @@ using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
-using Assets._App.Scripts.Scenes.SceneLevels.Systems;
 using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.States
 {
     public class StateRestartLevel : GameState
     {
-        private SystemHealthBarChange _healthBar;
-        private HealthUI _healthUI;
-        private SystemColliderRadiusChange _echoBar;
-        private SystemPlayerMovement _playerMovement;
-        private SystemAddCoin _coinCount;
         private ConfigLevel _configLevel;
+        private IPlayer _player;
 
-        public StateRestartLevel(SystemHealthBarChange healthBar, HealthUI healthUI, 
-            SystemColliderRadiusChange echoBar,SystemPlayerMovement playerMovement, 
-            SystemAddCoin coinCount, ConfigLevel configLevel)
+        public StateRestartLevel(ConfigLevel configLevel, IPlayer player)
         {
-            _healthBar = healthBar;
-            _healthUI = healthUI;
-            _echoBar = echoBar;
-            _playerMovement = playerMovement;
-            _coinCount = coinCount;
             _configLevel = configLevel;
+            _player = player;
         }
 
         public override void OnEnterState()
@@ -45,11 +34,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
 
         public Task Process()
         {
-            _healthBar.CurrentHealth = _healthBar.MaxHealth;
-            _healthUI.UpdateCurrentHealthUI(_healthBar.CurrentHealth);
-            _echoBar.ClickCount = _echoBar.MaxClickCount;
-            _playerMovement.PlayerTransform.position = _playerMovement.PlayerPosition;
-            _coinCount.AddCoins(-_coinCount.CoinCount);
+            // TODO: ПОменять на реальное значение монет в лвле
+            _player.SetDefaultState(10);
 
             foreach (var level in _configLevel.levels)
             {

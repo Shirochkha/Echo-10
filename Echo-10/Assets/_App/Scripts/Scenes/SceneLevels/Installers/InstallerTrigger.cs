@@ -13,7 +13,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
     {
         [SerializeField] private float _maxRadius = 150f;
         [SerializeField] private float _duration = 2f;
-        [SerializeField] private int _clickCount = 10;
         [SerializeField] private SphereCollider _colliderComponent;
         [SerializeField] private Text _clickCountText;
 
@@ -27,8 +26,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         public override void InstallBindings(ServiceContainer container)
         {
-            var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, _clickCount, 
-                _colliderComponent);
+            var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, 
+                _colliderComponent, container.Get<IPlayer>());
             container.SetService<IUpdatable, SystemColliderRadiusChange>(colliderRadiusChange);
             container.SetServiceSelf(colliderRadiusChange);
 
@@ -39,7 +38,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelState = container.Get<ServiceLevelState>();
 
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,
-                colliderRadiusChange, levelState);
+                colliderRadiusChange, levelState, container.Get<IPlayer>());
             container.SetService<IUpdatable, SystemSpriteAlphaChange>(spriteAlphaChange);
             container.SetServiceSelf(spriteAlphaChange);
 

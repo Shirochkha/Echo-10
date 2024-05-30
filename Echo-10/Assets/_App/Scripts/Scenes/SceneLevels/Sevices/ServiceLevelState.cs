@@ -52,11 +52,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
             }
         }
 
-        public void SetLevelWin(int levelId)
+        public void SetLevelWin()
         {
             foreach (var levelState in _levelStates)
             {
-                if (levelState.id == levelId)
+                if (levelState.id == _serviceLevelSelection.SelectedLevelId)
                 {
                     levelState.isWin = true;
                     _persistence.SaveLevelStates(_levelStates);

@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using UnityEngine;
 
@@ -13,13 +14,20 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private float _maxAlphaDuration;
         private SystemColliderRadiusChange _colliderRadiusChange;
         private ServiceLevelState _serviceLevelState;
+        private IPlayer _player;
 
         private ConfigObjects _configObjects;
 
         private bool _isMaxAlpha;
 
-        public SystemSpriteAlphaChange(SphereCollider sphereCollider, float minAlpha, float maxAlpha, 
-            float maxAlphaDuration, SystemColliderRadiusChange colliderRadiusChange, ServiceLevelState serviceLevelState)
+        public SystemSpriteAlphaChange(
+            SphereCollider sphereCollider,
+            float minAlpha,
+            float maxAlpha,
+            float maxAlphaDuration,
+            SystemColliderRadiusChange colliderRadiusChange,
+            ServiceLevelState serviceLevelState,
+            IPlayer player)
         {
             _sphereCollider = sphereCollider;
             _minAlpha = minAlpha;
@@ -27,6 +35,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             _maxAlphaDuration = maxAlphaDuration;
             _colliderRadiusChange = colliderRadiusChange;
             _serviceLevelState = serviceLevelState;
+            _player = player;
         }
 
         public void Update()
@@ -53,9 +62,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                 }
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (_player.IsEchoWorking && Input.GetMouseButtonDown(0))
             {
-                if (_colliderRadiusChange.ClickCount < 10 && _colliderRadiusChange.ClickCount > 0)
+                if (_colliderRadiusChange.ClickCount < _colliderRadiusChange.MaxClickCount && _colliderRadiusChange.ClickCount > 0)
                 {
                     _isMaxAlpha = true;
                     _maxAlphaDuration = 2f;

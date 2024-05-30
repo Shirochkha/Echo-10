@@ -36,7 +36,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             gameStateMachine.AddState(CreateLoadLevelState(container));
             gameStateMachine.AddState(CreateRestartState(container));
 
-            gameStateMachine.AddState(CreateProcessState(container, gameStateMachine));
+            gameStateMachine.AddState(CreateProcessState(container));
 
             gameStateMachine.AddState(CreatePauseState(container));
             gameStateMachine.AddState(CreateGameOverState(container));
@@ -72,19 +72,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         private GameState CreateRestartState(ServiceContainer container)
         {
 
-            return new StateRestartLevel(container.Get<SystemHealthBarChange>(),
-                    container.Get<HealthUI>(),
-                    container.Get<SystemColliderRadiusChange>(),
-                    container.Get<SystemPlayerMovement>(),
-                    container.Get<SystemAddCoin>(),
-                    _configLevel);
+            return new StateRestartLevel(_configLevel,
+                                        container.Get<IPlayer>());
         }
 
-        private GameState CreateProcessState(ServiceContainer container, GameStateMachine gameStateMachine)
+        private GameState CreateProcessState(ServiceContainer container)
         {
-            var stateProcess = new StateProcessGame(container.Get<SystemHealthBarChange>(),
-                                                    container.Get<SystemPlayerInteractions>(),
-                                                    container.Get<SystemPlayerMovement>());
+            var stateProcess = new StateProcessGame(container.Get<SystemPlayerInteractions>(),
+                                                    container.Get<IPlayer>()
+                                                    );
             return stateProcess;
         }
 

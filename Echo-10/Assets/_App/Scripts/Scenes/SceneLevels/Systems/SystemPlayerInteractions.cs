@@ -2,33 +2,26 @@
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
+using Assets._App.Scripts.Scenes.SceneLevels.Features;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
     public class SystemPlayerInteractions : IUpdatable
     {
-        private GameObject _player;
-        private Collider _playerCollider;
-        private SystemHealthBarChange _healthController;
-        private SystemAddCoin _addCoin;
-        private ServiceLevelSelection _serviceLevelSelection;
+        private IPlayer _player;
         private ServiceLevelState _serviceLevelState;
+        private ConfigObjects _configObjects;        
 
-        private ConfigObjects _configObjects;
-        private bool _isWin = false;
-        
-
-        public bool IsWin { get => _isWin; set => _isWin = value; }
-
-        public SystemPlayerInteractions(GameObject player, Collider playerCollider, SystemHealthBarChange healthController, 
-            SystemAddCoin addCoin, ServiceLevelSelection serviceLevelSelection, ServiceLevelState serviceLevelState)
+        public SystemPlayerInteractions(IPlayer player, ServiceLevelState serviceLevelState)
         {
             _player = player;
-            _playerCollider = playerCollider;
-            _healthController = healthController;
-            _addCoin = addCoin;
-            _serviceLevelSelection = serviceLevelSelection;
             _serviceLevelState = serviceLevelState;
+        }
+
+        public bool IsWin 
+        { 
+            get => _player.PlayerStateOnLevel.IsWin; 
+            set => _player.PlayerStateOnLevel.IsWin = value; 
         }
 
         public void Update()
@@ -37,7 +30,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 _serviceLevelState.HasLevelCreate = true;
                 _configObjects = _serviceLevelState.ConfigObjects;
-
             }
 
             CheckCollisions();
@@ -46,29 +38,27 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private void CheckCollisions()
         {
             if (_configObjects == null) return;
-            if (_player != null)
-            {
-                foreach (ObjectData otherObjectData in _configObjects.objects)
-                {
-                    if (otherObjectData.objectReference == null
-                        || _player.gameObject.transform.position.z > otherObjectData.objectReference.transform.position.z)
-                        continue;
-
-                    if (IsColliding(otherObjectData))
-                    {
-                        HandleCollision(otherObjectData);
-                    }
-                }
-            }
-            else
+            if (_player.PlayerGameObject == null)
             {
                 Debug.LogError("Player object not found in the list of objects.");
+            }
+            
+            foreach (ObjectData otherObjectData in _configObjects.objects)
+            {
+                if (otherObjectData.objectReference == null
+                    || _player.PlayerTransform.position.z > otherObjectData.objectReference.transform.position.z)
+                    continue;
+
+                if (IsColliding(otherObjectData))
+                {
+                    HandleCollision(otherObjectData);
+                }
             }
         }
 
         private bool IsColliding(ObjectData obj2)
         {
-            Collider collider1 = _playerCollider;
+            Collider collider1 = _player.PlayerCollider;
             Collider collider2 = obj2.objectReference.GetComponent<Collider>();
 
             if (collider1 != null && collider2 != null && collider2.enabled == true)
@@ -93,21 +83,39 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     obj2.collider.enabled = false;
                     obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
                             obj2.renderer.color.b, 0);
-                    _healthController.PlayerDamaged(1);
+                    _player.TakeDamage(1);
                     Debug.Log("Obstacle/Enemy");
                     break;
                 case ObjectType.Coin:
                     obj2.collider.enabled = false;
                     obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
                             obj2.renderer.color.b, 0);
-                    _addCoin.AddCoins(1);
+                    _player.AddCoins(1);
                     Debug.Log("Coin");
                     break;
                 case ObjectType.LevelEnd:
                     Debug.Log("LevelEnd");
                     obj2.collider.enabled = false;
-                    IsWin = true;
-                    _serviceLevelState.SetLevelWin((int)_serviceLevelSelection.SelectedLevelId);
+                    _player.PlayerStateOnLevel.IsWin = true;
+                    _serviceLevelState.SetLevelWin();
+                    break;
+                case ObjectType.SpeedBonus:
+                    obj2.collider.enabled = false;
+                    obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
+                            obj2.renderer.color.b, 0);
+                    _player = new SpeedPlayerDecorator(_player, 5, 15);
+                    break;
+                case ObjectType.MuteBonus:
+                    obj2.collider.enabled = false;
+                    obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
+                            obj2.renderer.color.b, 0);
+                    _player = new MuteEchoPlayerDecorator(_player, 3);
+                    break;
+                case ObjectType.AddEchoBonus:
+                    obj2.collider.enabled = false;
+                    obj2.renderer.color = new Color(obj2.renderer.color.r, obj2.renderer.color.g,
+                            obj2.renderer.color.b, 0);
+                    _player = new AddEchoPlayerDecorator(_player, 2);
                     break;
                 default:
                     Debug.LogWarning("Unknown object type.");

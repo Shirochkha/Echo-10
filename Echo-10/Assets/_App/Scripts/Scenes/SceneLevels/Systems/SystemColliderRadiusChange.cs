@@ -1,4 +1,5 @@
 ﻿using _App.Scripts.Libs.Installer;
+using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
@@ -7,24 +8,24 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
     {
         private float _maxRadius;
         private float _duration;
-        private int _clickCount;
         private int _maxClickCount;
         private SphereCollider _colliderComponent;
+        private IPlayer _player;
 
         private float _originalRadius;
         private bool _isChanging = false;
         private float _elapsedTime = 0f;
 
-        public int ClickCount { get => _clickCount; set => _clickCount = value; }
+        public int ClickCount { get => _player.PlayerStateOnLevel.EchoCount; set => _player.PlayerStateOnLevel.EchoCount = value; }
         public int MaxClickCount { get => _maxClickCount; set => _maxClickCount = value; }
 
-        public SystemColliderRadiusChange(float maxRadius, float duration, int clickCount, 
-            SphereCollider colliderComponent)
+        public SystemColliderRadiusChange(float maxRadius, float duration,
+            SphereCollider colliderComponent, IPlayer player)
         {
             _maxRadius = maxRadius;
             _duration = duration;
-            _clickCount = clickCount;
             _colliderComponent = colliderComponent;
+            _player = player;
             _originalRadius = _colliderComponent.radius;
 
             MaxClickCount = ClickCount;
@@ -32,12 +33,21 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
         public void Update()
         {
-            if (_clickCount > 0 && Input.GetMouseButtonDown(0))
+            if (_player.IsEchoWorking)
             {
                 if (!_isChanging)
                 {
-                    _clickCount--;
-                    StartRadiusChange();
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        _player.UseEcho();
+                        StartRadiusChange();
+                    }
+                    else if (Input.GetMouseButtonDown(1))
+                    {
+                        _player.UseEcho();
+                        // Че-то другое attack?
+
+                    }
                 }
             }
 

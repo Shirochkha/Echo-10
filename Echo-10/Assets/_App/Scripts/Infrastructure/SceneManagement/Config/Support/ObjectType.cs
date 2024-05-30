@@ -5,6 +5,9 @@
         Obstacle,
         Enemy,
         Coin,
-        LevelEnd
+        LevelEnd,
+        SpeedBonus,
+        MuteBonus,
+        AddEchoBonus
     }
 }

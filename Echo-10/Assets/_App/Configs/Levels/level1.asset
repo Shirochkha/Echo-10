@@ -22,6 +22,7 @@ MonoBehaviour:
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 858110578103565113, guid: 25d6f1b2cd5d18c4f93a22fa532cfd97, type: 3}
     objectName: TopObstacle
@@ -31,6 +32,7 @@ MonoBehaviour:
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 8559590442966316297, guid: e39c6ee0acd2c1d4082adb5e51663685, type: 3}
     objectName: Coin
@@ -40,15 +42,17 @@ MonoBehaviour:
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 8166836501575525924, guid: d320c23262ad41847a15ea03cb9ff32c, type: 3}
     objectName: BotObstacle
     position: {x: -15.6, y: 20, z: 48.4}
     scale: {x: 2, y: 2, z: 1}
-    objectType: 0
+    objectType: 6
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 8960265869900573298, guid: e6969e2297e0bb644974f130ec1c485e, type: 3}
     objectName: Enemy
@@ -58,6 +62,7 @@ MonoBehaviour:
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}
   - objectReference: {fileID: 0}
     prefabReference: {fileID: 7230013197551016419, guid: e287f0f33e64690448df379bb5043bd0, type: 3}
     objectName: LevelEnd
@@ -67,3 +72,4 @@ MonoBehaviour:
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}
+    collider: {fileID: 0}

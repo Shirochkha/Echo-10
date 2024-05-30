@@ -39,7 +39,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var levelSelection = container.Get<ServiceLevelSelection>();
 
             var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu,
-                _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), container.Get<ServiceLevelState>());
+                _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), 
+                container.Get<ServiceLevelState>());
             container.SetServiceSelf(levelsMenuUI);
             container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
 
