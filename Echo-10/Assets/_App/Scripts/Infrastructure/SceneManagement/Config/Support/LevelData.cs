@@ -1,5 +1,6 @@
 ﻿using Assets._App.Scripts.Infrastructure.CutScene.Config;
 using System;
+using UnityEngine;
 
 namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config.Support
 {
@@ -9,5 +10,6 @@ namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config.Support
         public int id;
         public ConfigObjects configObjects;
         public ConfigCutScene cutScene;
+        public Sprite sprite;
     }
 }

@@ -59,12 +59,21 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             {
                 var level = _levelList.levels[i];
                 Button instance = GameObject.Instantiate(_buttonPrefab, _parentContainer);
+                Image image = instance.image;
+
+                if (image != null)
+                {
+                    image.sprite = level.sprite;
+                }
+
                 Text buttonText = instance.GetComponentInChildren<Text>();
 
                 if (buttonText != null)
                 {
-                    buttonText.text = level.id.ToString();
+                    //buttonText.text = level.id.ToString();
+                    buttonText.text = "";
                 }
+
 
                 instance.interactable = false;
                 

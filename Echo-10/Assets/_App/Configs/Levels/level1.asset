@@ -48,7 +48,7 @@ MonoBehaviour:
     objectName: BotObstacle
     position: {x: -15.6, y: 20, z: 48.4}
     scale: {x: 2, y: 2, z: 1}
-    objectType: 6
+    objectType: 0
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.Player" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECYgIAIBEAIAEKkAASAESEAQCEAAAAACAAAAgAAAAQI=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.PlayerStateOnLevel" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAoAAAAACAAAAAACgEQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.BasePlayerDecorator" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYAIAAAEAIAEIgAAAAACEAQAEAAAAAAAAAAgAAAAQI=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\PlayerDecorator\Base\BasePlayerDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.AddEchoPlayerDecorator" Collapsed="true">
+    <Position X="7.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\PlayerDecorator\AddEchoPlayerDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.MuteEchoPlayerDecorator" Collapsed="true">
+    <Position X="11.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\PlayerDecorator\MuteEchoPlayerDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.SpeedPlayerDecorator" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\PlayerDecorator\SpeedPlayerDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets._App.Scripts.Scenes.SceneLevels.Features.TimerPlayerDecorator" Collapsed="true">
+    <Position X="10.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\PlayerDecorator\TimerPlayerDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Assets._App.Scripts.Scenes.SceneLevels.Features.IPlayer" Collapsed="true">
+    <Position X="8.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAIAAAEAIAEIgAAAAAAEAQAEAAAAAAAAAAgAAAAQI=</HashCode>
+      <FileName>Assets\_App\Scripts\Scenes\SceneLevels\Features\IPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

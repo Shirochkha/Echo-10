@@ -10,17 +10,22 @@ namespace _App.Scripts.Scenes.SceneMainMenu.Installers
     public class InstallerMainMenuEntryPoint : MonoInstaller
     {
         [SerializeField] private Button _buttonStart;
+        [SerializeField] private Button _buttonSettings;
         [SerializeField] private Button _buttonExit;
         [SerializeField] private ConfigScenes _scenes;
+        [SerializeField] private AudioClip _soundButtonClip;
 
         public override void InstallBindings(ServiceContainer container)
         {
             var sceneNavigator = new SceneNavigatorLoader(_scenes);
             container.SetServiceSelf(sceneNavigator);
 
-            var mainMenuButtons = new MainMenuButtons(sceneNavigator);
+            var settings = container.Get<Settings>();
+
+            var mainMenuButtons = new MainMenuButtons(sceneNavigator, settings, _soundButtonClip);
 
             _buttonStart.onClick.AddListener(mainMenuButtons.PlayGame);
+            _buttonSettings.onClick.AddListener(mainMenuButtons.Settings);
             _buttonExit.onClick.AddListener(mainMenuButtons.ExitGame);
 
             container.SetServiceSelf(mainMenuButtons);

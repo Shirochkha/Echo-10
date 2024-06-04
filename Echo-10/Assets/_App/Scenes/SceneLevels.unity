@@ -1234,7 +1234,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxRadius: 150
   _duration: 1
-  _clickCount: 10
   _colliderComponent: {fileID: 430184362}
   _clickCountText: {fileID: 146147056}
   _minAlpha: 0.03
@@ -2469,10 +2468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fullHeartSprite: {fileID: 21300000, guid: 70dec2d7122de2445bc92f63edb38a96, type: 3}
   _emptyHeartSprite: {fileID: 21300000, guid: a56324c7fcbe18641a2fb0f52588db5e, type: 3}
-  _maxHealth: 3
   _helthContainer: {fileID: 828425013}
   _coinCountText: {fileID: 666165992}
-  _maxCoinCount: 10
 --- !u!1 &1171870229
 GameObject:
   m_ObjectHideFlags: 0

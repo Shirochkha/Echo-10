@@ -9,8 +9,14 @@ namespace _App.Scripts.Libs.Installer
     {
         public List<MonoInstaller> installers = new();
 
+        private readonly List<IAwakeable> _awakeables = new();
         private readonly List<IInitializable> _initializables = new();
         private readonly List<IUpdatable> _updatables = new();
+
+        private void Awake()
+        {
+            foreach (var awakeables in _awakeables) awakeables.Awake();
+        }
 
         private void Start()
         {
@@ -33,6 +39,7 @@ namespace _App.Scripts.Libs.Installer
         private void Setup()
         {
             var container = BuildContainer();
+            _awakeables.AddRange(container.GetServices<IAwakeable>());
             _initializables.AddRange(container.GetServices<IInitializable>());
             _updatables.AddRange(container.GetServices<IUpdatable>());
         }
