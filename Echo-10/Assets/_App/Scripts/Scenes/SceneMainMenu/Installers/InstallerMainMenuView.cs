@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.ServiceLocator;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,12 +13,11 @@ namespace _App.Scripts.Scenes.SceneMainMenu.Installers
         [SerializeField] private Button _buttonSettings;
         [SerializeField] private Button _buttonExit;
 
-        [SerializeField] private Image _imageToChange;
-        [SerializeField] private Sprite _newSpriteOnHover;
+        [SerializeField] private List<SpriteMenuChangeData> _spriteChangeData;
 
         public override void InstallBindings(ServiceContainer serviceContainer)
         {
-            var buttonImageChange = new ButtonImageChange(_imageToChange, _newSpriteOnHover);
+            var buttonImageChange = new ButtonImageChange(_spriteChangeData);
 
             AddEventTrigger(_buttonStart.gameObject, buttonImageChange);
             AddEventTrigger(_buttonSettings.gameObject, buttonImageChange);

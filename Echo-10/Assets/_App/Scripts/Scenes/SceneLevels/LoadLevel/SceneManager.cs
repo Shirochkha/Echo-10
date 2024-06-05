@@ -1,4 +1,4 @@
-﻿/*using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+﻿using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -69,4 +69,3 @@ public class SceneManager : MonoBehaviour
         }
     }
 }
-*/

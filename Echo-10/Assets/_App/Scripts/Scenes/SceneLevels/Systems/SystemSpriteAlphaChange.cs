@@ -78,6 +78,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
             foreach (var otherObjectData in _configObjects.objects)
             {
+                if (otherObjectData.objectType == ObjectType.MuteBonus ||
+                    otherObjectData.objectType == ObjectType.SpeedBonus ||
+                    otherObjectData.objectType == ObjectType.AddEchoBonus) continue;
+
                 var renderer = otherObjectData.renderer;
                 if (renderer == null) continue;
 

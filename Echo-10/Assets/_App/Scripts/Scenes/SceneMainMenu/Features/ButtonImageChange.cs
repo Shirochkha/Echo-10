@@ -1,36 +1,44 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonImageChange
 {
-    private Image _imageToChange;
-    private Sprite _newSpriteOnHover;
-    private Sprite _originalSprite;
+    private List<SpriteMenuChangeData> _spriteChangeData;
 
-    public ButtonImageChange(Image imageToChange, Sprite newSpriteOnHover)
+    public ButtonImageChange(List<SpriteMenuChangeData> spriteChangeData)
     {
-        _imageToChange = imageToChange;
-        _newSpriteOnHover = newSpriteOnHover;
-
-        if (_imageToChange != null)
-        {
-            _originalSprite = _imageToChange.sprite;
-        }
+        _spriteChangeData = spriteChangeData;
     }
 
     public void OnPointerEnter()
     {
-        if (_imageToChange != null && _newSpriteOnHover != null)
+        foreach (var spriteData in _spriteChangeData)
         {
-            _imageToChange.sprite = _newSpriteOnHover;
+            if (spriteData.ImageToChange != null && spriteData.HoverSprites != null)
+            {
+                spriteData.ImageToChange.sprite = spriteData.HoverSprites;
+            }
         }
     }
 
     public void OnPointerExit()
     {
-        if (_imageToChange != null)
+        foreach (var spriteData in _spriteChangeData)
         {
-            _imageToChange.sprite = _originalSprite;
+            if (spriteData.ImageToChange != null)
+            {
+                spriteData.ImageToChange.sprite = spriteData.OriginalSprites;
+            }
         }
     }
+
+}
+
+[System.Serializable]
+public struct SpriteMenuChangeData
+{
+    public Image ImageToChange;
+    public Sprite OriginalSprites;
+    public Sprite HoverSprites;
 }

@@ -11,5 +11,6 @@ namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config.Support
         public ConfigObjects configObjects;
         public ConfigCutScene cutScene;
         public Sprite sprite;
+        public bool haveAttack;
     }
 }

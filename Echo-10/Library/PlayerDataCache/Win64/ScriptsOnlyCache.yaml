@@ -5,7 +5,6 @@ ScriptsOnlyBuild:
     - Assets._App.Scripts.Infrastructure.CutScene.Config.ConfigCutScene
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.ConfigLevel
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.ConfigObjects
-    - Assets._App.Scripts.Infrastructure.SceneManagement.Config.ConfigPrefabsTypes
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.ConfigSprites
     - Assets._App.Scripts.Libs.SoundsManager.SoundFXManager
     - Assets._App.Scripts.Scenes.SceneLevels.Installers.InstallerCutScene
@@ -55,7 +54,6 @@ ScriptsOnlyBuild:
   serializedClasses:
     Assembly-CSharp:
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.ObjectData
-    - Assets._App.Scripts.Infrastructure.SceneManagement.Config.PrefabData
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.SpriteChangeData
     - Assets._App.Scripts.Infrastructure.SceneManagement.Config.Support.LevelData
     - Assets._App.Scripts.Scenes.SceneLevels.Systems.WallMaterialOffset
@@ -158,8 +156,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 17284}
     - Class: 114
       Script: {instanceID: 17500}
-    - Class: 114
-      Script: {instanceID: 17584}
     - Class: 114
       Script: {instanceID: 18292}
     - Class: 114
