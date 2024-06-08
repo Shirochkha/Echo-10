@@ -41,12 +41,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     {
                         _player.UseEcho();
                         StartRadiusChange();
+                        //звук
                     }
                     else if (Input.GetMouseButtonDown(1))
                     {
                         _player.UseEcho();
-                        // Че-то другое attack?
-
+                        // дамажить врагов в коллайдере
+                        //анимация+звук
                     }
                 }
             }

@@ -20,5 +20,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         void TakeDamage(int damageAmount = 1);
         void Update();
         void UseEcho();
+        void SetMemento(PlayerMemento memento);
+        PlayerMemento GetMemento();
     }
 }

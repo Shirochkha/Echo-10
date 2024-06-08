@@ -35,9 +35,19 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _player.ChangeSpeed(newSpeed);
         }
 
+        public PlayerMemento GetMemento()
+        {
+            return _player.GetMemento();
+        }
+
         public virtual void SetDefaultState(int maxCoinsCount)
         {
             _player.SetDefaultState(maxCoinsCount);
+        }
+
+        public void SetMemento(PlayerMemento memento)
+        {
+            _player.SetMemento(memento);
         }
 
         public virtual void TakeDamage(int damageAmount = 1)

@@ -10,6 +10,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public Action<int, int> OnAddedCoins;
         public Action<int, int> OnHealthContainerChanged;
         public Action<int> OnHealthChanged;
+        public Action OnPlayerAttacked;
 
         private GameObject _player;
         private Rigidbody _playerRigidbody;
@@ -19,8 +20,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private float _speedByAxises;
         private float _defaultForwardSpeed;
         private int _coinsCount;
+        private int _attackPower;
         private int _maxHealth;
-        //private bool _isWin;
         private int _maxEchoCount;
         private PlayerStateOnLevel _playerStateOnLevel;
 
@@ -35,10 +36,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             int maxHealth,
             int maxEchoCount,
             Vector3 playerPosition,
+            int attackPower,
             Action<int, int> onAddedCoin,
             Action<int, int> onHealthContainerChanged,
-            Action<int> onHealthChanged
-            )
+            Action<int> onHealthChanged,
+            Action onPlayerAttacked)
         {
             _player = player;
             _playerRigidbody = playerRigidbody;
@@ -50,9 +52,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _maxHealth = maxHealth;
             _maxEchoCount = maxEchoCount;
             _playerPosition = playerPosition;
+            _attackPower = attackPower;
             OnAddedCoins += onAddedCoin;
             OnHealthContainerChanged += onHealthContainerChanged;
             OnHealthChanged += onHealthChanged;
+            OnPlayerAttacked += onPlayerAttacked;
             SetDefaultState(3);
 
             OnHealthContainerChanged?.Invoke(_playerStateOnLevel.CurrentHealth, _maxHealth);
@@ -71,7 +75,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public void Update()
         {
             UpdatePosition();
-
+            // AttackIfTime();
         }
 
         private void UpdatePosition()
@@ -84,7 +88,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _playerTransform.Translate(Vector3.forward * ForwardSpeed * Time.deltaTime);
         }
 
-        public void UseEcho(/*BaseEcho echo*/)
+        //TODO: и эхо и атака
+        public void UseEcho()
         {
             if (_playerStateOnLevel.EchoCount > 0)
             {
@@ -134,6 +139,19 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         {
             ForwardSpeed = newSpeed;
         }
+
+        public void SetMemento(PlayerMemento memento)
+        {
+            _coinsCount = memento.CoinsCount;
+            _maxEchoCount = memento.MaxEchoCount;
+            _maxHealth = memento.MaxHealth;
+            _attackPower = memento.AttackPower;
+        }
+
+        public PlayerMemento GetMemento()
+        {
+            return new PlayerMemento(_coinsCount, _maxHealth, _maxEchoCount, _attackPower);
+        }
     }
 
     public class PlayerStateOnLevel
@@ -155,6 +173,23 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             MaxHealth = maxHealth;
             EchoCount = echoCount;
             ForwardSpeed = forwardSpeed;
+        }
+    }
+
+    [Serializable]
+    public class PlayerMemento
+    {
+        public int CoinsCount;
+        public int MaxHealth;
+        public int MaxEchoCount;
+        public int AttackPower;
+
+        public PlayerMemento(int coinsCount, int maxHealth, int maxEchoCount, int attackPower)
+        {
+            CoinsCount = coinsCount;
+            MaxHealth = maxHealth;
+            MaxEchoCount = maxEchoCount;
+            AttackPower = attackPower;
         }
     }
 }

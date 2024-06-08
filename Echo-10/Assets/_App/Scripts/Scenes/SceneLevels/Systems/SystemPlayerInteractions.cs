@@ -10,12 +10,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
     {
         private IPlayer _player;
         private ServiceLevelState _serviceLevelState;
+        private IPersistence<PlayerMemento> _playerMementoPersistence;
         private ConfigObjects _configObjects;        
 
-        public SystemPlayerInteractions(IPlayer player, ServiceLevelState serviceLevelState)
+        public SystemPlayerInteractions(IPlayer player, ServiceLevelState serviceLevelState, IPersistence<PlayerMemento> playerMementoPersistence)
         {
             _player = player;
             _serviceLevelState = serviceLevelState;
+            _playerMementoPersistence = playerMementoPersistence;
         }
 
         public bool IsWin 
@@ -98,6 +100,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     obj2.collider.enabled = false;
                     _player.PlayerStateOnLevel.IsWin = true;
                     _serviceLevelState.SetLevelWin();
+                    var memento = _player.GetMemento();
+                    _playerMementoPersistence.Save(memento);
                     break;
                 case ObjectType.SpeedBonus:
                     obj2.collider.enabled = false;

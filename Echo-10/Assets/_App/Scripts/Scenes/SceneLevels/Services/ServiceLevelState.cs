@@ -38,7 +38,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
             ServiceLevelSelection serviceLevelSelection)
         {
             _persistence = persistence;
-            _levelStates = _persistence.LoadLevelStates() ?? new List<LevelState>();
+            _levelStates = _persistence.Load() ?? new List<LevelState>();
             _serviceLevelSelection = serviceLevelSelection;
             _configLevel = configLevel;
 
@@ -48,7 +48,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
                 {
                     _levelStates.Add(new LevelState { id = level.id, isWin = false });
                 }
-                _persistence.SaveLevelStates(_levelStates);
+                _persistence.Save(_levelStates);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
                 if (levelState.id == _serviceLevelSelection.SelectedLevelId)
                 {
                     levelState.isWin = true;
-                    _persistence.SaveLevelStates(_levelStates);
+                    _persistence.Save(_levelStates);
                     return;
                 }
             }
