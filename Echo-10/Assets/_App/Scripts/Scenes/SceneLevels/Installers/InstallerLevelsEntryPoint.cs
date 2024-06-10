@@ -56,7 +56,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var handlers = new List<IHandlerLoadLevel>
             {
                 new HandlerLoadCutScene(container.Get<CutSceneManager>(),
-                    container.Get<TextColorChanger>()),
+                    container.Get<TextColorChanger>(),
+                    container.Get<ServiceLevelState>()),
                 new HandlerLoadObjects(_configLevel,
                     container.Get<ServiceLevelSelection>())
                 
@@ -72,7 +73,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         private GameState CreateRestartState(ServiceContainer container)
         {
 
-            return new StateRestartLevel(_configLevel,
+            return new StateRestartLevel(container.Get<ServiceLevelState>(),
                                         container.Get<IPlayer>());
         }
 

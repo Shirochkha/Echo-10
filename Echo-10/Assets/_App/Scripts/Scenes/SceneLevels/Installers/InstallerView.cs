@@ -20,7 +20,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private ConfigLevel _levelList;
         [SerializeField] private Button _buttonPrefab;
         [SerializeField] private Button _buttonMainMenu;
+        [SerializeField] private Button _buttonShop;
         [SerializeField] private Transform _parentContainer;
+
+        [Header("Shop")]
+        [SerializeField] private GameObject _shopMenuObject;
+        [SerializeField] private GameObject _itemPrefab;
+        [SerializeField] private Button _buttonLevelMenu;
+        [SerializeField] private Text _allCoinsCount;
+        [SerializeField] private Transform _parentItemContainer;
 
         [Header("GameOver")]
         [SerializeField] private GameObject _gameOverMenu;
@@ -38,11 +46,29 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var levelSelection = container.Get<ServiceLevelSelection>();
 
-            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu,
+            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu, _buttonShop,
                 _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), 
                 container.Get<ServiceLevelState>());
             container.SetServiceSelf(levelsMenuUI);
             container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
+
+            var shopPersistence = container.Get<ShopPersistence>();
+
+            var shopUI = new ShopUI(_shopMenuObject, _itemPrefab, _buttonLevelMenu, _allCoinsCount,
+                _parentItemContainer, shopPersistence);
+            container.SetServiceSelf(shopUI);
+
+            levelsMenuUI.SubscribeToShopButtonClicked(() =>
+            {
+                levelsMenuUI.SetActiveObject(false);
+                shopUI.SetActiveObject(true);
+            });
+
+            shopUI.SubscribeToLevelMenuButtonClicked(() =>
+            {
+                shopUI.SetActiveObject(false);
+                levelsMenuUI.SetActiveObject(true);
+            });
 
             var gameOver = new GameOverMenu(_gameOverMenu, _buttonRetry, _buttonReturnToMenu);
             container.SetServiceSelf(gameOver);
@@ -50,5 +76,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var pause = new PauseMenu(_pauseMenu, _buttonInPauseMenu, _buttonRestart);
             container.SetServiceSelf(pause);
         }
+
     }
 }

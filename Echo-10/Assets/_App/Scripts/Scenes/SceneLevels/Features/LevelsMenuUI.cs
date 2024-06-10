@@ -7,108 +7,117 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets._App.Scripts.Scenes.SceneLevels.Features
+public class LevelsMenuUI : IUpdatable
 {
-    public class LevelsMenuUI : IUpdatable
+    private GameObject _levelsMenuUI;
+    private ConfigLevel _levelList;
+    private Button _buttonPrefab;
+    private Button _buttonMenu;
+    private Button _buttonShop;
+    private Transform _parentContainer;
+    private ServiceLevelSelection _levelSelectionService;
+    private SceneNavigatorLoader _scenes;
+    private ServiceLevelState _levelState;
+
+    private List<Button> _levelButtons = new List<Button>();
+
+    public GameObject LevelsMenuPanel { get => _levelsMenuUI; set => _levelsMenuUI = value; }
+
+    public event Action<int> OnLevelButtonClicked;
+    public event Action OnShopButtonClicked;
+
+    public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, Button buttonMenu,
+        Button buttonShop, Transform parentContainer, ServiceLevelSelection levelSelectionService,
+        SceneNavigatorLoader scenes, ServiceLevelState levelState)
     {
-        private GameObject _levelsMenuUI;
-        private ConfigLevel _levelList;
-        private Button _buttonPrefab;
-        private Button _buttonMenu;
-        private Transform _parentContainer;
-        private ServiceLevelSelection _levelSelectionService;
-        private SceneNavigatorLoader _scenes;
-        private ServiceLevelState _levelState;
+        LevelsMenuPanel = levelsMenuUI;
+        _levelList = levelList;
+        _buttonPrefab = buttonPrefab;
+        _buttonMenu = buttonMenu;
+        _buttonShop = buttonShop;
+        _parentContainer = parentContainer;
+        _levelSelectionService = levelSelectionService;
+        _scenes = scenes;
+        _levelState = levelState;
 
-        private List<Button> _levelButtons = new List<Button>();
+        _buttonMenu.onClick.AddListener(ReturnToMainMenu);
+        _buttonShop.onClick.AddListener(() => OnShopButtonClicked?.Invoke());
+        CreateButtonsPrefabs();
+    }
 
-        public GameObject LevelsMenuPanel { get => _levelsMenuUI; set => _levelsMenuUI = value; }
+    public void Update()
+    {
+        UpdateButtonStates();
+    }
 
-        public event Action<int> OnLevelButtonClicked;
+    public void SubscribeToShopButtonClicked(Action action)
+    {
+        OnShopButtonClicked += action;
+    }
 
-        public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, Button buttonMenu,
-            Transform parentContainer, ServiceLevelSelection levelSelectionService, SceneNavigatorLoader scenes,
-            ServiceLevelState levelState)
+    public void SetActiveObject(bool isActive)
+    {
+        LevelsMenuPanel.SetActive(isActive);
+    }
+
+    private void CreateButtonsPrefabs()
+    {
+        foreach (Transform child in _parentContainer)
         {
-            LevelsMenuPanel = levelsMenuUI;
-            _levelList = levelList;
-            _buttonPrefab = buttonPrefab;
-            _buttonMenu = buttonMenu;
-            _parentContainer = parentContainer;
-            _levelSelectionService = levelSelectionService;
-            _scenes = scenes;
-            _levelState = levelState;
-
-            _buttonMenu.onClick.AddListener(ReturnToMainMenu);
-            CreateButtonsPrefabs();
+            GameObject.Destroy(child.gameObject);
         }
 
-        public void Update()
+        for (int i = 0; i < _levelList.levels.Count; i++)
         {
-            UpdateButtonStates();
-        }
+            var level = _levelList.levels[i];
+            Button instance = GameObject.Instantiate(_buttonPrefab, _parentContainer);
+            Image image = instance.image;
 
-        private void CreateButtonsPrefabs()
-        {
-            foreach (Transform child in _parentContainer)
+            if (image != null)
             {
-                GameObject.Destroy(child.gameObject);
+                image.sprite = level.sprite;
             }
 
-            for (int i = 0; i < _levelList.levels.Count; i++)
+            Text buttonText = instance.GetComponentInChildren<Text>();
+
+            if (buttonText != null)
             {
-                var level = _levelList.levels[i];
-                Button instance = GameObject.Instantiate(_buttonPrefab, _parentContainer);
-                Image image = instance.image;
+                buttonText.text = "";
+            }
 
-                if (image != null)
-                {
-                    image.sprite = level.sprite;
-                }
+            instance.interactable = false;
 
-                Text buttonText = instance.GetComponentInChildren<Text>();
+            instance.onClick.AddListener(() =>
+            {
+                LevelsMenuPanel.SetActive(false);
+                _levelSelectionService.SetSelectedLevel(level.id);
+                Debug.Log($"Clicked on level: {_levelSelectionService.SelectedLevelId}");
+                OnLevelButtonClicked?.Invoke(level.id);
+            });
 
-                if (buttonText != null)
-                {
-                    //buttonText.text = level.id.ToString();
-                    buttonText.text = "";
-                }
+            _levelButtons.Add(instance);
+        }
+    }
 
+    private void UpdateButtonStates()
+    {
+        for (int i = 0; i < _levelList.levels.Count; i++)
+        {
+            Button button = _levelButtons[i];
 
-                instance.interactable = false;
-                
-                instance.onClick.AddListener(() =>
-                {
-                    LevelsMenuPanel.SetActive(false);
-                    _levelSelectionService.SetSelectedLevel(level.id);
-                    Debug.Log($"Clicked on level: {_levelSelectionService.SelectedLevelId}");
-                    OnLevelButtonClicked?.Invoke(level.id);
-                });
-
-                _levelButtons.Add(instance);
+            if (i == 0 || _levelState.IsLevelWin(_levelList.levels[i - 1].id))
+            {
+                button.interactable = true;
             }
         }
+    }
 
-        private void UpdateButtonStates()
+    private void ReturnToMainMenu()
+    {
+        foreach (var scene in _scenes.GetAvailableSwitchScenes())
         {
-            for (int i = 0; i < _levelList.levels.Count; i++)
-            {
-                Button button = _levelButtons[i];
-
-                if (i == 0 || _levelState.IsLevelWin(_levelList.levels[i - 1].id))
-                {
-                    button.interactable = true;
-                }
-            }
-        }
-
-        private void ReturnToMainMenu()
-        {
-            foreach (var scene in _scenes.GetAvailableSwitchScenes())
-            {
-                if (scene.SceneViewName == "MainMenu")
-                    _scenes.LoadScene(scene.SceneKey);
-            }
+            if (scene.SceneViewName == "MainMenu")
+                _scenes.LoadScene(scene.SceneKey);
         }
     }
 }

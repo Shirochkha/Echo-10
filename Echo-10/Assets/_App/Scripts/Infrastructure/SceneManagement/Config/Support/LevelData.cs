@@ -11,6 +11,7 @@ namespace Assets._App.Scripts.Infrastructure.SceneManagement.Config.Support
         public ConfigObjects configObjects;
         public ConfigCutScene cutScene;
         public Sprite sprite;
+        public int coinCount;
         public bool haveAttack;
     }
 }

@@ -8,13 +8,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
     public class ServiceLevelState
     {
         private List<LevelState> _levelStates;
-        private LevelStatePersistence _persistence;
+        private IPersistence<List<LevelState>> _persistence;
         private ServiceLevelSelection _serviceLevelSelection;
         private ConfigLevel _configLevel;
 
         private ConfigObjects _configObjects;
         private ConfigCutScene _configCutScene;
+        private int _maxCoinCount;
         private bool _hasLevelCreate = false;
+
         public bool HasLevelCreate
         {
             get => _hasLevelCreate;
@@ -33,8 +35,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
 
         public ConfigObjects ConfigObjects => _configObjects;
         public ConfigCutScene ConfigCutScene => _configCutScene;
+        public int MaxCoinCount { get => _maxCoinCount; set => _maxCoinCount = value; }
 
-        public ServiceLevelState(ConfigLevel configLevel, LevelStatePersistence persistence, 
+        public ServiceLevelState(ConfigLevel configLevel, IPersistence<List<LevelState>> persistence,
             ServiceLevelSelection serviceLevelSelection)
         {
             _persistence = persistence;
@@ -46,7 +49,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
             {
                 foreach (var level in _configLevel.levels)
                 {
-                    _levelStates.Add(new LevelState { id = level.id, isWin = false });
+                    _levelStates.Add(new LevelState { id = level.id, isWin = false, IsCutSceneLook = false });
                 }
                 _persistence.Save(_levelStates);
             }
@@ -77,6 +80,31 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
             return false;
         }
 
+        public bool IsCutSceneLook()
+        {
+            foreach (var levelState in _levelStates)
+            {
+                if (levelState.id == _serviceLevelSelection.SelectedLevelId)
+                {
+                    return levelState.IsCutSceneLook;
+                }
+            }
+            return false;
+        }
+
+        public void SetCutSceneLook()
+        {
+            foreach (var levelState in _levelStates)
+            {
+                if (levelState.id == _serviceLevelSelection.SelectedLevelId)
+                {
+                    levelState.IsCutSceneLook = true;
+                    _persistence.Save(_levelStates);
+                    return;
+                }
+            }
+        }
+
         private void LoadLevelObjects()
         {
             if (_serviceLevelSelection.SelectedLevelId > 0)
@@ -87,6 +115,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
                     {
                         _configObjects = level.configObjects;
                         _configCutScene = level.cutScene;
+                        _maxCoinCount = level.coinCount;
                         break;
                     }
                 }
@@ -99,5 +128,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
     {
         public int id;
         public bool isWin;
+        public bool IsCutSceneLook;
     }
 }

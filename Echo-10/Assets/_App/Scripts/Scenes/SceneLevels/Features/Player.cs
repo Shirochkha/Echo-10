@@ -8,6 +8,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
     public class Player : IUpdatable, IPlayer
     {
         public Action<int, int> OnAddedCoins;
+        public Action<int> OnCoinsCountChanged;
         public Action<int, int> OnHealthContainerChanged;
         public Action<int> OnHealthChanged;
         public Action OnPlayerAttacked;
@@ -38,6 +39,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             Vector3 playerPosition,
             int attackPower,
             Action<int, int> onAddedCoin,
+            Action<int> onCoinsCountChanged,
             Action<int, int> onHealthContainerChanged,
             Action<int> onHealthChanged,
             Action onPlayerAttacked)
@@ -54,12 +56,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _playerPosition = playerPosition;
             _attackPower = attackPower;
             OnAddedCoins += onAddedCoin;
+            OnCoinsCountChanged += onCoinsCountChanged;
             OnHealthContainerChanged += onHealthContainerChanged;
             OnHealthChanged += onHealthChanged;
             OnPlayerAttacked += onPlayerAttacked;
             SetDefaultState(3);
 
             OnHealthContainerChanged?.Invoke(_playerStateOnLevel.CurrentHealth, _maxHealth);
+            OnCoinsCountChanged?.Invoke(_coinsCount);
             OnAddedCoins?.Invoke(_playerStateOnLevel.CoinsCollected, _playerStateOnLevel.MaxCoinsCount);
         }
 
@@ -95,6 +99,17 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             {
                 _playerStateOnLevel.EchoCount--;
             }
+        }
+
+        public void SubscribeToShop(ShopUI shopUI)
+        {
+            shopUI.OnItemPurchased += UpdateCoinsAfterPurchase;
+        }
+
+        private void UpdateCoinsAfterPurchase(int newCoinsCount)
+        {
+            _coinsCount = newCoinsCount;
+            OnCoinsCountChanged?.Invoke(_coinsCount);
         }
 
         public void AddCoins(int count = 1)
@@ -146,6 +161,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _maxEchoCount = memento.MaxEchoCount;
             _maxHealth = memento.MaxHealth;
             _attackPower = memento.AttackPower;
+            OnCoinsCountChanged?.Invoke(_coinsCount);
         }
 
         public PlayerMemento GetMemento()

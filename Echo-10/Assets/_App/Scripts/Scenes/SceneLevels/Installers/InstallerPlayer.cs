@@ -41,16 +41,21 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var healthUI = container.Get<HealthUI>();
             var coinUI = container.Get<CoinUI>();
+            var shopUI = container.Get<ShopUI>();
             var player = new Player(_player, _rb, _playerTransform, _playerCollider, _playerSpeed,
                 _defaultSpeed, _coinsCount, _maxHealth, _echoCount, _playerPosition, _attackPower,
-                coinUI.UpdateCoinCountUI, healthUI.UpdateHealthUI, healthUI.UpdateCurrentHealthUI, 
-                () => { }); // TODO: Дописать логику на UI при атаке (анимация + звук)
-            var playerMemento = playerMementoPersistence.Load() ?? new PlayerMemento(_coinsCount, _maxHealth, _echoCount, _attackPower);
+                coinUI.UpdateCoinCountUI, shopUI.UpdateCoinsCount, healthUI.UpdateHealthUI, 
+                healthUI.UpdateCurrentHealthUI, () => { }); 
+            // TODO: Дописать логику на UI при атаке (анимация + звук)
+            var playerMemento = playerMementoPersistence.Load() ?? 
+                new PlayerMemento(_coinsCount, _maxHealth, _echoCount, _attackPower);
             player.SetMemento(playerMemento);
 
             container.SetServiceSelf(player);
             container.SetService<IUpdatable, Player>(player);
             container.SetService<IPlayer, Player>(player);
+
+            player.SubscribeToShop(shopUI);
 
             var playerInteractions = new SystemPlayerInteractions(player, levelState, playerMementoPersistence);
             container.SetServiceSelf(playerInteractions);

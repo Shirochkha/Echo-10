@@ -17,24 +17,29 @@ MonoBehaviour:
     configObjects: {fileID: 11400000, guid: 071794bdca9c620439e9d64c6ea27fbc, type: 2}
     cutScene: {fileID: 11400000, guid: 56b42375888a0f44aac5eea9109b56cb, type: 2}
     sprite: {fileID: 21300000, guid: 3ed2ddccef5ac774c817fe43d8549003, type: 3}
+    coinCount: 5
     haveAttack: 0
   - id: 2
     configObjects: {fileID: 11400000, guid: 8479afb36239b4443972e8b8f57ff157, type: 2}
     cutScene: {fileID: 11400000, guid: 6395e9337184319428fea9026c9a3d4a, type: 2}
     sprite: {fileID: 21300000, guid: 6c73143607022c34dae8f2473296231b, type: 3}
+    coinCount: 0
     haveAttack: 0
   - id: 3
     configObjects: {fileID: 11400000, guid: 3df1ee5e9722e404e9c1a9c58f6648d7, type: 2}
     cutScene: {fileID: 0}
     sprite: {fileID: 21300000, guid: 463b1b3db40b3d645bf17caebfcb2bd0, type: 3}
+    coinCount: 0
     haveAttack: 1
   - id: 4
     configObjects: {fileID: 11400000, guid: 8479afb36239b4443972e8b8f57ff157, type: 2}
     cutScene: {fileID: 11400000, guid: 6395e9337184319428fea9026c9a3d4a, type: 2}
     sprite: {fileID: 21300000, guid: 75a96bf5c464e5148987de7de6175455, type: 3}
+    coinCount: 0
     haveAttack: 1
   - id: 5
     configObjects: {fileID: 11400000, guid: 8479afb36239b4443972e8b8f57ff157, type: 2}
     cutScene: {fileID: 11400000, guid: 6395e9337184319428fea9026c9a3d4a, type: 2}
     sprite: {fileID: 21300000, guid: 64ef43e84813a714f9eedd897142d1b7, type: 3}
+    coinCount: 0
     haveAttack: 1
