@@ -10,10 +10,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private GameObject _cutSceneObject;
         private TextMeshProUGUI _textToChange;
         private Color32 _targetColor;
-
         private Color32 _originalColor;
         private bool _changeColors = false;
-
         private float _timeBetweenChanges = 0.1f;
         private float _elapsedTime = 0f;
         private int _currentLetterIndex = 0;
@@ -24,14 +22,16 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         public TextColorChanger(GameObject cutSceneObject, TextMeshProUGUI textToChange, Color32 targetColor)
         {
-            _cutSceneObject = cutSceneObject;
-            _textToChange = textToChange;
+            _cutSceneObject = cutSceneObject ?? throw new ArgumentNullException(nameof(cutSceneObject));
+            _textToChange = textToChange ?? throw new ArgumentNullException(nameof(textToChange));
             _targetColor = targetColor;
             _originalColor = _textToChange.color;
         }
 
         public void Update()
         {
+            if (_cutSceneObject == null || _textToChange == null) return;
+
             if (Input.GetKey(KeyCode.Escape))
             {
                 _escapeHoldTime += Time.deltaTime;
@@ -54,7 +54,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                     }
                 }
 
-                if (_currentLetterIndex >= _textToChange.textInfo.characterCount)
+                if (_textToChange.textInfo != null && _currentLetterIndex >= _textToChange.textInfo.characterCount)
                 {
                     if (_escapeHoldTime >= _timeBetweenChanges * _textToChange.textInfo.characterCount)
                     {
@@ -76,6 +76,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         private void ChangeNextLetterColor()
         {
+            if (_textToChange == null || _textToChange.textInfo == null) return;
+
             TMP_TextInfo textInfo = _textToChange.textInfo;
             if (_currentLetterIndex >= textInfo.characterCount) return;
 
@@ -83,18 +85,23 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             int vertexIndex = textInfo.characterInfo[_currentLetterIndex].vertexIndex;
             Color32[] newVertexColors = textInfo.meshInfo[materialIndex].colors32;
 
-            newVertexColors[vertexIndex + 0] = _targetColor;
-            newVertexColors[vertexIndex + 1] = _targetColor;
-            newVertexColors[vertexIndex + 2] = _targetColor;
-            newVertexColors[vertexIndex + 3] = _targetColor;
+            if (newVertexColors != null)
+            {
+                newVertexColors[vertexIndex + 0] = _targetColor;
+                newVertexColors[vertexIndex + 1] = _targetColor;
+                newVertexColors[vertexIndex + 2] = _targetColor;
+                newVertexColors[vertexIndex + 3] = _targetColor;
 
-            _textToChange.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+                _textToChange.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
 
-            _currentLetterIndex++;
+                _currentLetterIndex++;
+            }
         }
 
         private void ResetLetterColors()
         {
+            if (_textToChange == null || _textToChange.textInfo == null) return;
+
             TMP_TextInfo textInfo = _textToChange.textInfo;
 
             for (int i = 0; i < textInfo.characterCount; i++)
@@ -103,10 +110,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
                 int vertexIndex = textInfo.characterInfo[i].vertexIndex;
                 Color32[] newVertexColors = textInfo.meshInfo[materialIndex].colors32;
 
-                newVertexColors[vertexIndex + 0] = _originalColor;
-                newVertexColors[vertexIndex + 1] = _originalColor;
-                newVertexColors[vertexIndex + 2] = _originalColor;
-                newVertexColors[vertexIndex + 3] = _originalColor;
+                if (newVertexColors != null)
+                {
+                    newVertexColors[vertexIndex + 0] = _originalColor;
+                    newVertexColors[vertexIndex + 1] = _originalColor;
+                    newVertexColors[vertexIndex + 2] = _originalColor;
+                    newVertexColors[vertexIndex + 3] = _originalColor;
+                }
             }
 
             _textToChange.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
@@ -114,9 +124,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         private void LoadNextScene()
         {
-            _cutSceneObject.SetActive(false);
+            if (_cutSceneObject != null)
+            {
+                _cutSceneObject.SetActive(false);
+            }
             OnCutSceneEnd?.Invoke();
         }
     }
 }
-    

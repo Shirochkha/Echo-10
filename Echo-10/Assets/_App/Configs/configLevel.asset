@@ -27,7 +27,7 @@ MonoBehaviour:
     haveAttack: 0
   - id: 3
     configObjects: {fileID: 11400000, guid: 3df1ee5e9722e404e9c1a9c58f6648d7, type: 2}
-    cutScene: {fileID: 0}
+    cutScene: {fileID: 11400000, guid: 56b42375888a0f44aac5eea9109b56cb, type: 2}
     sprite: {fileID: 21300000, guid: 463b1b3db40b3d645bf17caebfcb2bd0, type: 3}
     coinCount: 0
     haveAttack: 1

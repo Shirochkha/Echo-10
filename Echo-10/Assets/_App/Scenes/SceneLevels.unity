@@ -2177,7 +2177,7 @@ MonoBehaviour:
   _minAlpha: 0.03
   _maxAlpha: 1
   _level: {fileID: 11400000, guid: 1b682392e1ec0534f9d81ffafdf3c4d5, type: 2}
-  _enemySpeed: 35
+  _enemySpeed: 15
   _sprites: {fileID: 11400000, guid: 0ff83c6da5fb5db45a993193ec0dd908, type: 2}
 --- !u!4 &484201442
 Transform:
