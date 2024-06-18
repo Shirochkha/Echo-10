@@ -12,11 +12,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
     {
         private ServiceLevelState _levelState;
         private IPlayer _player;
+        private Boss _boss;
 
-        public StateRestartLevel(ServiceLevelState levelState, IPlayer player)
+        public StateRestartLevel(ServiceLevelState levelState, IPlayer player, Boss boss)
         {
             _levelState = levelState;
             _player = player;
+            _boss = boss;
         }
 
         public override void OnEnterState()
@@ -35,6 +37,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         public Task Process()
         {
             _player.SetDefaultState(_levelState.MaxCoinCount);
+            _boss.SetDefault();
 
             foreach (var objectData in _levelState.ConfigObjects.objects)
             {

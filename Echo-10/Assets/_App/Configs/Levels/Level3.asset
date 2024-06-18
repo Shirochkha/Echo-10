@@ -14,41 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - objectReference: {fileID: 0}
-    prefabReference: {fileID: 5848081133267343273, guid: 531c966f2374bfb42acec1ab7bf7c799, type: 3}
-    objectName: MidObstacle
-    position: {x: -10.465906, y: 31.4, z: 378.0174}
-    scale: {x: 2.3, y: 2.3, z: 1}
-    objectType: 0
-    renderer: {fileID: 0}
-    animator: {fileID: 0}
-    rigidbody: {fileID: 0}
-    collider: {fileID: 0}
-  - objectReference: {fileID: 0}
-    prefabReference: {fileID: 5589649131097058758, guid: 95005f11c1c189344b7fce5b02f942fc, type: 3}
-    objectName: bonusEcho
-    position: {x: -23.86, y: 26.51, z: 66.8}
-    scale: {x: 10, y: 10, z: 1}
-    objectType: 6
-    renderer: {fileID: 0}
-    animator: {fileID: 0}
-    rigidbody: {fileID: 0}
-    collider: {fileID: 0}
-  - objectReference: {fileID: 0}
-    prefabReference: {fileID: 1762472781887603762, guid: 0834f3f3646cd7144ae611db38329dc5, type: 3}
-    objectName: BonusSpeed
-    position: {x: 2.8771, y: 27.1, z: 170}
-    scale: {x: 3.5, y: 3.5, z: 1}
-    objectType: 4
-    renderer: {fileID: 0}
-    animator: {fileID: 0}
-    rigidbody: {fileID: 0}
-    collider: {fileID: 0}
-  - objectReference: {fileID: 0}
-    prefabReference: {fileID: 3431415067057591626, guid: ea9ca9b3ac850f849ad6c3f571f06d90, type: 3}
-    objectName: WebBonus
-    position: {x: -10.403154, y: 30.6, z: 294}
-    scale: {x: 2, y: 2, z: 1}
-    objectType: 5
+    prefabReference: {fileID: 2271819473473997095, guid: 8e239b88ab049964db0d97177c203d1c, type: 3}
+    objectName: Owl
+    position: {x: -16.1, y: 30.6, z: 10}
+    scale: {x: 1, y: 1, z: 1}
+    objectType: 7
     renderer: {fileID: 0}
     animator: {fileID: 0}
     rigidbody: {fileID: 0}

@@ -74,7 +74,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         {
 
             return new StateRestartLevel(container.Get<ServiceLevelState>(),
-                                        container.Get<IPlayer>());
+                                        container.Get<IPlayer>(), 
+                                        container.Get<Boss>());
         }
 
         private GameState CreateProcessState(ServiceContainer container)

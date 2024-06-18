@@ -44,6 +44,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var textureScroll = new SystemTextureScroll(_wallOffsets);
             container.SetService<IUpdatable, SystemTextureScroll>(textureScroll);
 
+
+
             var levelSelection = container.Get<ServiceLevelSelection>();
 
             var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu, _buttonShop,
@@ -53,9 +55,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
 
             var shopPersistence = container.Get<ShopPersistence>();
+            var player = container.Get<IPlayer>();
+            var playerPersistence = container.Get<PlayerMementoPersistence>();
 
             var shopUI = new ShopUI(_shopMenuObject, _itemPrefab, _buttonLevelMenu, _allCoinsCount,
-                _parentItemContainer, shopPersistence);
+                _parentItemContainer, shopPersistence, player, playerPersistence);
             container.SetServiceSelf(shopUI);
 
             levelsMenuUI.SubscribeToShopButtonClicked(() =>

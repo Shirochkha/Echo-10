@@ -17,9 +17,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private float _cameraSmoothSpeed = 0.125f;
         [SerializeField] private float _cameraHeightOffset = -35f;
+        [SerializeField] private float _attackDelay = 1f;
         [SerializeField] private ConfigLevel _level;
         [SerializeField] private GameObject _player;
         [SerializeField] private Collider _playerCollider;
+        [SerializeField] private Collider _attackCollider;
         [SerializeField] private Vector3 _playerPosition;
 
         [SerializeField] private int _coinsCount = 0;
@@ -35,17 +37,17 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, SystemCameraFollow>(cameraFollow);
 
             var playerMementoPersistence = new PlayerMementoPersistence(_fileName);
+            container.SetServiceSelf(playerMementoPersistence);
             container.SetService<IPersistence<PlayerMemento>, PlayerMementoPersistence>(playerMementoPersistence);
 
             var levelState = container.Get<ServiceLevelState>();
 
             var healthUI = container.Get<HealthUI>();
             var coinUI = container.Get<CoinUI>();
-            var shopUI = container.Get<ShopUI>();
-            var player = new Player(_player, _rb, _playerTransform, _playerCollider, _playerSpeed,
+            var player = new Player(_player, _rb, _playerTransform, _playerCollider, _attackCollider, _playerSpeed,
                 _defaultSpeed, _coinsCount, _maxHealth, _echoCount, _playerPosition, _attackPower,
-                coinUI.UpdateCoinCountUI, shopUI.UpdateCoinsCount, healthUI.UpdateHealthUI, 
-                healthUI.UpdateCurrentHealthUI, () => { }); 
+                coinUI.UpdateCoinCountUI, healthUI.UpdateHealthUI, 
+                healthUI.UpdateCurrentHealthUI, () => { }, _attackDelay); 
             // TODO: Дописать логику на UI при атаке (анимация + звук)
             var playerMemento = playerMementoPersistence.Load() ?? 
                 new PlayerMemento(_coinsCount, _maxHealth, _echoCount, _attackPower);
@@ -54,8 +56,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetServiceSelf(player);
             container.SetService<IUpdatable, Player>(player);
             container.SetService<IPlayer, Player>(player);
-
-            player.SubscribeToShop(shopUI);
 
             var playerInteractions = new SystemPlayerInteractions(player, levelState, playerMementoPersistence);
             container.SetServiceSelf(playerInteractions);

@@ -23,7 +23,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
         {
             if (!File.Exists(_filePath))
             {
-                //create d4efault
                 return null;
             }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
@@ -19,6 +20,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public virtual PlayerStateOnLevel PlayerStateOnLevel { get => _player.PlayerStateOnLevel; set => _player.PlayerStateOnLevel = value; }
         public virtual Transform PlayerTransform { get => _player.PlayerTransform; set => _player.PlayerTransform = value; }
         public virtual bool IsEchoWorking { get => _player.IsEchoWorking; set => _player.IsEchoWorking = value; }
+        public virtual Collider AttackCollider { get => _player.AttackCollider; set => _player.AttackCollider = value; }
+        public int CoinsCount => _player.CoinsCount;
+        public int MaxEchoCount { get => _player.MaxEchoCount; set => _player.MaxEchoCount = value; }
+        public Action<int, int> OnAddedCoins { get => _player.OnAddedCoins; set => _player.OnAddedCoins = value; }
+
+        public bool CanAttack => _player.CanAttack;
 
         public virtual void AddCoins(int count = 1)
         {

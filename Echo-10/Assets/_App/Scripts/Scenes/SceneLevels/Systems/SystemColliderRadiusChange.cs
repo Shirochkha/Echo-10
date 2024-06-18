@@ -1,5 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
+using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
@@ -11,6 +12,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         private int _maxClickCount;
         private SphereCollider _colliderComponent;
         private IPlayer _player;
+        private ServiceLevelState _levelState;
+        private SystemAttack _systemAttack;
 
         private float _originalRadius;
         private bool _isChanging = false;
@@ -20,7 +23,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
         public int MaxClickCount { get => _maxClickCount; set => _maxClickCount = value; }
 
         public SystemColliderRadiusChange(float maxRadius, float duration,
-            SphereCollider colliderComponent, IPlayer player)
+            SphereCollider colliderComponent, IPlayer player, SystemAttack systemAttack, 
+            ServiceLevelState levelState)
         {
             _maxRadius = maxRadius;
             _duration = duration;
@@ -29,6 +33,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             _originalRadius = _colliderComponent.radius;
 
             MaxClickCount = ClickCount;
+            _systemAttack = systemAttack;
+            _levelState = levelState;
         }
 
         public void Update()
@@ -41,13 +47,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
                     {
                         _player.UseEcho();
                         StartRadiusChange();
-                        //звук
                     }
-                    else if (Input.GetMouseButtonDown(1))
+                    else if (Input.GetMouseButtonDown(1) && _levelState.HaveAttack)
                     {
-                        _player.UseEcho();
-                        // дамажить врагов в коллайдере
-                        //анимация+звук
+                        if (_player.CanAttack)
+                        {
+                            _player.UseEcho();
+                            _systemAttack.UserAttack();
+                        }
                     }
                 }
             }
@@ -56,6 +63,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 AnimateRadiusChange();
             }
+
+            _systemAttack.BossAttack();
         }
 
         private void AnimateRadiusChange()

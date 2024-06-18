@@ -12,6 +12,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
         private ServiceLevelSelection _serviceLevelSelection;
         private ConfigLevel _configLevel;
 
+        private bool _haveAttack;
         private ConfigObjects _configObjects;
         private ConfigCutScene _configCutScene;
         private int _maxCoinCount;
@@ -36,6 +37,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
         public ConfigObjects ConfigObjects => _configObjects;
         public ConfigCutScene ConfigCutScene => _configCutScene;
         public int MaxCoinCount { get => _maxCoinCount; set => _maxCoinCount = value; }
+        public bool HaveAttack { get => _haveAttack; set => _haveAttack = value; }
 
         public ServiceLevelState(ConfigLevel configLevel, IPersistence<List<LevelState>> persistence,
             ServiceLevelSelection serviceLevelSelection)
@@ -116,6 +118,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
                         _configObjects = level.configObjects;
                         _configCutScene = level.cutScene;
                         _maxCoinCount = level.coinCount;
+                        _haveAttack = level.haveAttack;
                         break;
                     }
                 }

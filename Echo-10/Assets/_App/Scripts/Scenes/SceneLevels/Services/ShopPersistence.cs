@@ -56,8 +56,6 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
     {
         public string Name;
         public int Cost;
-        //public int Level;
-        //public int MaxLevel;
         public string ImagePath;
         public bool BoughtByUser;
     }

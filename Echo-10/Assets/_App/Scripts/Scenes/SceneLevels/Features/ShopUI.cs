@@ -15,6 +15,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private Text _allCoinsCount;
         private Transform _parentContainer;
         private IPersistence<List<Item>> _persistence;
+        private IPersistence<PlayerMemento> _playerPersistence;
+        private IPlayer _player;
 
         private List<Item> _items;
         private int _currentCoins;
@@ -22,10 +24,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public GameObject ShopMenuObject { get => _shopMenuObject; set => _shopMenuObject = value; }
 
         public event Action OnLevelMenuButtonClicked;
-        public event Action<int> OnItemPurchased;
 
         public ShopUI(GameObject shopMenuObject, GameObject itemPrefab, Button buttonLevelMenu, Text allCoinsCount,
-            Transform parentContainer, IPersistence<List<Item>> persistence)
+            Transform parentContainer, IPersistence<List<Item>> persistence, IPlayer player, 
+            IPersistence<PlayerMemento> playerPersistence)
         {
             ShopMenuObject = shopMenuObject;
             _itemPrefab = itemPrefab;
@@ -37,6 +39,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
             SetActiveObject(false);
             _buttonLevelMenu.onClick.AddListener(() => OnLevelMenuButtonClicked?.Invoke());
+            _player = player;
+            UpdateCoinsCount(_player.CoinsCount);
+            _player.OnAddedCoins += (collected, max) => UpdateCoinsCount(_player.CoinsCount);
+            _playerPersistence = playerPersistence;
         }
 
         public void SubscribeToLevelMenuButtonClicked(Action action)
@@ -118,13 +124,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             if (!item.BoughtByUser && item.Cost <= _currentCoins)
             {
                 _currentCoins -= item.Cost;
+                _player.AddCoins(-item.Cost);
                 item.BoughtByUser = true;
                 AddItemProperty(item.Name);
 
-                OnItemPurchased?.Invoke(_currentCoins);
-
                 UpdateItemStates();
                 _persistence.Save(_items);
+                _playerPersistence.Save(_player.GetMemento());
             }
         }
 
@@ -153,7 +159,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         {
             if(nameItem == "Эхо-заряды +")
             {
-
+                _player.MaxEchoCount++;
+                return;
             }
         }
     }

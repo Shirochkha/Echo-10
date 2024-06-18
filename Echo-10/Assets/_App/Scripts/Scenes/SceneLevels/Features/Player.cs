@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
+
     public class Player : IUpdatable, IPlayer
     {
-        public Action<int, int> OnAddedCoins;
-        public Action<int> OnCoinsCountChanged;
+        public Action<int, int> OnAddedCoins { get; set; }
         public Action<int, int> OnHealthContainerChanged;
         public Action<int> OnHealthChanged;
         public Action OnPlayerAttacked;
@@ -18,6 +18,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private Vector3 _playerPosition;
         private Transform _playerTransform;
         private Collider _playerCollider;
+        private Collider _attackCollider;
         private float _speedByAxises;
         private float _defaultForwardSpeed;
         private int _coinsCount;
@@ -25,12 +26,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private int _maxHealth;
         private int _maxEchoCount;
         private PlayerStateOnLevel _playerStateOnLevel;
+        private float _elapsedTime;
 
         public Player(
             GameObject player,
             Rigidbody playerRigidbody,
             Transform playerTransform,
             Collider playerCollider,
+            Collider attackCollider,
             float speedByAxises,
             float forwardSpeed,
             int coinsCount,
@@ -39,32 +42,32 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             Vector3 playerPosition,
             int attackPower,
             Action<int, int> onAddedCoin,
-            Action<int> onCoinsCountChanged,
             Action<int, int> onHealthContainerChanged,
             Action<int> onHealthChanged,
-            Action onPlayerAttacked)
+            Action onPlayerAttacked,
+            float attackDelay)
         {
             _player = player;
             _playerRigidbody = playerRigidbody;
             _playerTransform = playerTransform;
             _playerCollider = playerCollider;
+            _attackCollider = attackCollider;
             _speedByAxises = speedByAxises;
             _defaultForwardSpeed = forwardSpeed;
             _coinsCount = coinsCount;
             _maxHealth = maxHealth;
-            _maxEchoCount = maxEchoCount;
+            MaxEchoCount = maxEchoCount;
             _playerPosition = playerPosition;
             _attackPower = attackPower;
             OnAddedCoins += onAddedCoin;
-            OnCoinsCountChanged += onCoinsCountChanged;
             OnHealthContainerChanged += onHealthContainerChanged;
             OnHealthChanged += onHealthChanged;
             OnPlayerAttacked += onPlayerAttacked;
             SetDefaultState(3);
 
             OnHealthContainerChanged?.Invoke(_playerStateOnLevel.CurrentHealth, _maxHealth);
-            OnCoinsCountChanged?.Invoke(_coinsCount);
             OnAddedCoins?.Invoke(_playerStateOnLevel.CoinsCollected, _playerStateOnLevel.MaxCoinsCount);
+            AttackDelay = attackDelay;
         }
 
         public Transform PlayerTransform { get => _playerTransform; set => _playerTransform = value; }
@@ -75,11 +78,16 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public float ForwardSpeed { get => _playerStateOnLevel.ForwardSpeed; set => _playerStateOnLevel.ForwardSpeed = value; }
         public float DefaultForwardSpeed { get => _defaultForwardSpeed; set => _defaultForwardSpeed = value; }
         public bool IsEchoWorking { get; set; } = true;
+        public int CoinsCount { get => _coinsCount; }
+        public int MaxEchoCount { get => _maxEchoCount; set => _maxEchoCount = value; }
+        public Collider AttackCollider { get => _attackCollider; set => _attackCollider = value; }
+        public float AttackDelay { get; }
+        public bool CanAttack => _elapsedTime > AttackDelay && _playerStateOnLevel.EchoCount > 0;
 
         public void Update()
         {
+            _elapsedTime += Time.deltaTime;
             UpdatePosition();
-            // AttackIfTime();
         }
 
         private void UpdatePosition()
@@ -92,24 +100,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _playerTransform.Translate(Vector3.forward * ForwardSpeed * Time.deltaTime);
         }
 
-        //TODO: и эхо и атака
         public void UseEcho()
         {
-            if (_playerStateOnLevel.EchoCount > 0)
+            if (CanAttack)
             {
                 _playerStateOnLevel.EchoCount--;
+                _elapsedTime = 0;
             }
-        }
-
-        public void SubscribeToShop(ShopUI shopUI)
-        {
-            shopUI.OnItemPurchased += UpdateCoinsAfterPurchase;
-        }
-
-        private void UpdateCoinsAfterPurchase(int newCoinsCount)
-        {
-            _coinsCount = newCoinsCount;
-            OnCoinsCountChanged?.Invoke(_coinsCount);
         }
 
         public void AddCoins(int count = 1)
@@ -144,10 +141,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public void SetDefaultState(int maxCoinsCount)
         {
             _playerStateOnLevel = new PlayerStateOnLevel(false, 0, maxCoinsCount, _maxHealth, _maxHealth,
-                _maxEchoCount, 0f);
+                MaxEchoCount, 0f);
             OnAddedCoins?.Invoke(0, maxCoinsCount);
             OnHealthChanged?.Invoke(_maxHealth);
             _playerTransform.position = _playerPosition;
+            _elapsedTime = AttackDelay;
         }
 
         public void ChangeSpeed(float newSpeed)
@@ -158,15 +156,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public void SetMemento(PlayerMemento memento)
         {
             _coinsCount = memento.CoinsCount;
-            _maxEchoCount = memento.MaxEchoCount;
+            MaxEchoCount = memento.MaxEchoCount;
             _maxHealth = memento.MaxHealth;
             _attackPower = memento.AttackPower;
-            OnCoinsCountChanged?.Invoke(_coinsCount);
         }
 
         public PlayerMemento GetMemento()
         {
-            return new PlayerMemento(_coinsCount, _maxHealth, _maxEchoCount, _attackPower);
+            return new PlayerMemento(_coinsCount, _maxHealth, MaxEchoCount, _attackPower);
         }
     }
 

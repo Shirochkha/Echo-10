@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 {
     public interface IPlayer
     {
+        Action<int, int> OnAddedCoins { get; set; }
+
+        int CoinsCount { get; }
+        int MaxEchoCount { get; set; }
         float DefaultForwardSpeed { get; set; }
         float ForwardSpeed { get; set; }
         bool IsEchoWorking { get; set; }
@@ -12,6 +17,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         Vector3 PlayerPosition { get; set; }
         PlayerStateOnLevel PlayerStateOnLevel { get; set; }
         Transform PlayerTransform { get; set; }
+        Collider AttackCollider { get; set; }
+        bool CanAttack { get; }
 
         void AddCoins(int count = 1);
         void AddHealth(int amount = 1);

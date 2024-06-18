@@ -80,7 +80,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 if (otherObjectData.objectType == ObjectType.MuteBonus ||
                     otherObjectData.objectType == ObjectType.SpeedBonus ||
-                    otherObjectData.objectType == ObjectType.AddEchoBonus) continue;
+                    otherObjectData.objectType == ObjectType.AddEchoBonus||
+                    otherObjectData.objectType == ObjectType.Boss) continue;
 
                 var renderer = otherObjectData.renderer;
                 if (renderer == null) continue;

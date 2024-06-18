@@ -11,6 +11,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
     public class InstallerTrigger : MonoInstaller
     {
+        [SerializeField] private Animator _playerAnimator;
+
         [SerializeField] private float _maxRadius = 150f;
         [SerializeField] private float _duration = 2f;
         [SerializeField] private SphereCollider _colliderComponent;
@@ -26,15 +28,19 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         public override void InstallBindings(ServiceContainer container)
         {
+            var systemAttack = new SystemAttack(container.Get<IPlayer>(), container.Get<Boss>(), _playerAnimator);
+            container.SetService<IUpdatable, SystemAttack>(systemAttack);
+            container.SetServiceSelf(systemAttack);
+
             var colliderRadiusChange = new SystemColliderRadiusChange(_maxRadius, _duration, 
-                _colliderComponent, container.Get<IPlayer>());
+                _colliderComponent, container.Get<IPlayer>(), systemAttack, 
+                container.Get<ServiceLevelState>());
             container.SetService<IUpdatable, SystemColliderRadiusChange>(colliderRadiusChange);
             container.SetServiceSelf(colliderRadiusChange);
 
             var clickCountUI = new ClickCountUI(_clickCountText, colliderRadiusChange);
             container.SetService<IUpdatable, ClickCountUI>(clickCountUI);
 
-            var levelSelection = container.Get<ServiceLevelSelection>();
             var levelState = container.Get<ServiceLevelState>();
 
             var spriteAlphaChange = new SystemSpriteAlphaChange(_colliderComponent, _minAlpha, _maxAlpha, _duration,

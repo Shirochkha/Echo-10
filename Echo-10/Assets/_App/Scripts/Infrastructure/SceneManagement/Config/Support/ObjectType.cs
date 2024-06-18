@@ -8,7 +8,8 @@
         LevelEnd,
         SpeedBonus,
         MuteBonus,
-        AddEchoBonus
+        AddEchoBonus,
+        Boss
     }
 
 }
