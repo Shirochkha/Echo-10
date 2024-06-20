@@ -21,8 +21,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public virtual Transform PlayerTransform { get => _player.PlayerTransform; set => _player.PlayerTransform = value; }
         public virtual bool IsEchoWorking { get => _player.IsEchoWorking; set => _player.IsEchoWorking = value; }
         public virtual Collider AttackCollider { get => _player.AttackCollider; set => _player.AttackCollider = value; }
+        public virtual Animator PlayerAnimator { get => _player.PlayerAnimator; set => _player.PlayerAnimator = value; }
         public int CoinsCount => _player.CoinsCount;
+        public int MaxHealth => _player.MaxHealth;
         public int MaxEchoCount { get => _player.MaxEchoCount; set => _player.MaxEchoCount = value; }
+        public int SkinId { get => _player.SkinId; set => _player.SkinId = value; }
+        public int AttackPower { get => _player.AttackPower; set => _player.AttackPower = value; }
+
         public Action<int, int> OnAddedCoins { get => _player.OnAddedCoins; set => _player.OnAddedCoins = value; }
 
         public bool CanAttack => _player.CanAttack;

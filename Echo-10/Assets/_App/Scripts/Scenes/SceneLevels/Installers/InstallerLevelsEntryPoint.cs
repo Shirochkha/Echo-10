@@ -19,6 +19,11 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
     {
         [SerializeField] private ConfigLevel _configLevel;
 
+        [SerializeField] private AudioClip _musicLevelMenu;
+        [SerializeField] private AudioClip _musicCutScene;
+        [SerializeField] private AudioClip _musicProcess;
+        [SerializeField] private AudioClip _musicGameOver;
+
         public override void InstallBindings(ServiceContainer container)
         {
             var gameStateMachine = BuildStateMachine(container);
@@ -48,7 +53,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         {
             return new StateLevelMenu(container.Get<LevelsMenuUI>(), 
                                     _configLevel, 
-                                    container.Get<ServiceLevelState>());
+                                    container.Get<ServiceLevelState>(),
+                                    _musicLevelMenu);
         }
 
         private GameState CreateLoadLevelState(ServiceContainer container)
@@ -57,7 +63,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             {
                 new HandlerLoadCutScene(container.Get<CutSceneManager>(),
                     container.Get<TextColorChanger>(),
-                    container.Get<ServiceLevelState>()),
+                    container.Get<ServiceLevelState>(),
+                    _musicCutScene),
                 new HandlerLoadObjects(_configLevel,
                     container.Get<ServiceLevelSelection>())
                 
@@ -81,8 +88,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         private GameState CreateProcessState(ServiceContainer container)
         {
             var stateProcess = new StateProcessGame(container.Get<SystemPlayerInteractions>(),
-                                                    container.Get<IPlayer>()
-                                                    );
+                                                    container.Get<IPlayer>(),
+                                                    _musicProcess);
             return stateProcess;
         }
 
@@ -93,7 +100,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         private GameState CreateGameOverState(ServiceContainer container)
         {
-            return new StateGameOver(container.Get<GameOverMenu>());
+            return new StateGameOver(container.Get<GameOverMenu>(),
+                _musicGameOver);
         }
     }
 }

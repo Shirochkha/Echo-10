@@ -22,6 +22,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private GameObject _player;
         [SerializeField] private Collider _playerCollider;
         [SerializeField] private Collider _attackCollider;
+        [SerializeField] private Animator _playerAnimator;
         [SerializeField] private Vector3 _playerPosition;
 
         [SerializeField] private int _coinsCount = 0;
@@ -29,6 +30,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private int _echoCount = 10;
         [SerializeField] private int _attackPower = 10;
         [SerializeField] private string _fileName;
+
+        private int _skinId = 0;
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -44,13 +47,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
             var healthUI = container.Get<HealthUI>();
             var coinUI = container.Get<CoinUI>();
-            var player = new Player(_player, _rb, _playerTransform, _playerCollider, _attackCollider, _playerSpeed,
-                _defaultSpeed, _coinsCount, _maxHealth, _echoCount, _playerPosition, _attackPower,
-                coinUI.UpdateCoinCountUI, healthUI.UpdateHealthUI, 
+            var player = new Player(_player, _rb, _playerTransform, _playerCollider, _attackCollider, _playerAnimator,
+                _playerSpeed, _defaultSpeed, _coinsCount, _maxHealth, _echoCount, _playerPosition, _attackPower,
+                _skinId, coinUI.UpdateCoinCountUI, healthUI.UpdateHealthUI, 
                 healthUI.UpdateCurrentHealthUI, () => { }, _attackDelay); 
             // TODO: Дописать логику на UI при атаке (анимация + звук)
             var playerMemento = playerMementoPersistence.Load() ?? 
-                new PlayerMemento(_coinsCount, _maxHealth, _echoCount, _attackPower);
+                new PlayerMemento(_coinsCount, _maxHealth, _echoCount, _attackPower, _skinId);
             player.SetMemento(playerMemento);
 
             container.SetServiceSelf(player);

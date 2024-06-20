@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1ce89254a9211478d223cd593f9d0b, type: 3}
+  m_Name: configCutScene 6
+  m_EditorClassIdentifier: 
+  dialogLines:
+  - text: 
+    sprite: {fileID: 21300000, guid: 7cd88e6d9142c1240bae40a8834efc33, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: "\u041C\u0438\u0433\u0435\u043B\u044C? \u0422\u044B \u0443\u0436\u0435
+      \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F? "
+    sprite: {fileID: 21300000, guid: 11cdcb2038ef96746a124bee00c83029, type: 3}
+    characterIndex: 2
+    pauseResume: 2
+  - text: 
+    sprite: {fileID: 21300000, guid: fb319c21b8750ee4c8b1d269e83adc3b, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: 1db7cdccb49ac354f81eaa38449e2e26, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: d29d13740a9aec24397325f49663cabb, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: 52b8e707028f53d4aa811901b259ce76, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: "\u0410\u0410\u0410\u0410\u0410!"
+    sprite: {fileID: 21300000, guid: ca75b55bff431b0458db88fc87ebcdf3, type: 3}
+    characterIndex: 2
+    pauseResume: 2
+  - text: 
+    sprite: {fileID: 21300000, guid: 57ba02dc4a61ea349a3f38ae4c928c01, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: ca06bc892e8602b409d31d5a2c933e90, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: 77ef9568bda907d4d9d83ab262cebc40, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5

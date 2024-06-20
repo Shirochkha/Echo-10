@@ -17,3 +17,5 @@ MonoBehaviour:
     SceneViewName: MainMenu
   - SceneKey: SceneLevels
     SceneViewName: Levels
+  - SceneKey: SceneEndGame
+    SceneViewName: EndGame

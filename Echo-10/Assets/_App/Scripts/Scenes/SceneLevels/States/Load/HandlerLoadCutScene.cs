@@ -1,4 +1,5 @@
 ﻿using _App.Scripts.Infrastructure.GameCore.States.LoadState;
+using Assets._App.Scripts.Libs.SoundsManager;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using System.Threading.Tasks;
@@ -12,12 +13,15 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
         private TextColorChanger _textColorChanger;
         private ServiceLevelState _serviceLevelState;
 
+        private AudioClip _musicCutScene;
+
         public HandlerLoadCutScene(CutSceneManager cutSceneManager, TextColorChanger textColorChanger,
-            ServiceLevelState serviceLevelState)
+            ServiceLevelState serviceLevelState, AudioClip musicCutScene)
         {
             _cutSceneManager = cutSceneManager;
             _textColorChanger = textColorChanger;
             _serviceLevelState = serviceLevelState;
+            _musicCutScene = musicCutScene;
         }
 
         public async Task Process()
@@ -31,6 +35,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States.Load
             }
 
             _cutSceneManager.StartNewDialog();
+            if (SoundMusicManager.instance != null)
+                SoundMusicManager.instance.PlayMusicClip(_musicCutScene);
             await Task.WhenAny(WaitForCutSceneEnd(), WaitForTextColorChange());
             _serviceLevelState.SetCutSceneLook();
         }

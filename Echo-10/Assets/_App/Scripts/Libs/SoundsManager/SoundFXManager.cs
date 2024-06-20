@@ -13,21 +13,13 @@ namespace Assets._App.Scripts.Libs.SoundsManager
             if (instance == null)
             {
                 instance = this;
-            }
-        }
-
-        /*private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
                 DontDestroyOnLoad(gameObject);
             }
             else if (instance != this)
             {
                 Destroy(gameObject);
             }
-        }*/
+        }
 
         public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform = null, float volume = 1f)
         {

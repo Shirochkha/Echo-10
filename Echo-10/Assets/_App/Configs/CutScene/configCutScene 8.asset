@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1ce89254a9211478d223cd593f9d0b, type: 3}
+  m_Name: configCutScene 8
+  m_EditorClassIdentifier: 
+  dialogLines:
+  - text: "\u041D\u0415\u0415\u0415\u0415\u0422."
+    sprite: {fileID: 21300000, guid: cf8cd0b28d2d78d47acbe45e6bdddc48, type: 3}
+    characterIndex: 4
+    pauseResume: 2
+  - text: "\u041D\u0435 \u0441\u043C\u0435\u0439 \u0431\u043E\u043B\u044C\u0448\u0435
+      \u043F\u0440\u0438\u0431\u043B\u0438\u0436\u0430\u0442\u044C\u0441\u044F \u043A
+      \u043C\u043E\u0435\u0439 \u0436\u0435\u043D\u0435!"
+    sprite: {fileID: 21300000, guid: eb72f5c083b370a42a79f547f859d53f, type: 3}
+    characterIndex: 0
+    pauseResume: 2
+  - text: "\u0418\u0437\u0432\u0438\u043D\u0438, \u044F \u043D\u0435 \u0437\u043D\u0430\u043B\u0430
+      \u0447\u0442\u043E \u0443 \u044D\u0442\u043E\u0439 \u043C\u044B\u0448\u0438
+      \u0435\u0441\u0442\u044C \u043C\u0443\u0436. \u041C\u043E\u0436\u043D\u043E
+      \u044F \u0443\u0436\u0435 \u043F\u043E\u0439\u0434\u0443?"
+    sprite: {fileID: 21300000, guid: eb72f5c083b370a42a79f547f859d53f, type: 3}
+    characterIndex: 4
+    pauseResume: 2
+  - text: "\u041B\u0435\u0442\u0438, \u043D\u0430\u0434\u0435\u044E\u0441\u044C \u043C\u044B
+      \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0438\u043A\u043E\u0433\u0434\u0430
+      \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0442\u0438\u043C\u0441\u044F."
+    sprite: {fileID: 21300000, guid: eb72f5c083b370a42a79f547f859d53f, type: 3}
+    characterIndex: 0
+    pauseResume: 2
+  - text: 
+    sprite: {fileID: 21300000, guid: 1a3edd79541a75943adf35d071e092db, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: bc4d44d7a7f95f6469f5218c1f6b4e15, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5
+  - text: 
+    sprite: {fileID: 21300000, guid: b62df4602c73ed4418ef7c56940d5568, type: 3}
+    characterIndex: 0
+    pauseResume: 0.5

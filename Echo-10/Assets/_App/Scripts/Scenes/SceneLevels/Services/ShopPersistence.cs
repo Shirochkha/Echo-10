@@ -44,8 +44,60 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
         {
             List<Item> defaultItems = new List<Item>();
 
-            defaultItems.Add(new Item { Name = "Костюм", Cost = 15, ImagePath = "bat", BoughtByUser = false });
-            defaultItems.Add(new Item { Name = "Эхо-заряды +", Cost = 1, ImagePath = "bonusEcho", BoughtByUser = false });
+            defaultItems.Add(new Item
+            {
+                Id = 0,
+                Category = "Костюмы",
+                Name = "Базовый",
+                Cost = 0,
+                ImagePath = "Skin0",
+                BoughtByUser = true,
+                Level = 1
+            });
+            defaultItems.Add(new Item { Id = 1, Category = "Костюмы", Name = "Цилиндр(светлый)", Cost = 10, 
+                ImagePath = "Skin1", BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 2,
+                Category = "Костюмы", Name = "Цилиндр(красный)", Cost = 10, ImagePath = "Skin2",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 3,
+                Category = "Костюмы", Name = "Цилиндр(темный)", Cost = 10, ImagePath = "Skin3",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 4,
+                Category = "Костюмы", Name = "Джентельмен", Cost = 15, ImagePath = "Skin4",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 5,
+                Category = "Костюмы", Name = "Сыщик", Cost = 15, ImagePath = "Skin5",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 6,
+                Category = "Костюмы", Name = "Викинг", Cost = 20, ImagePath = "Skin6",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 7,
+                Category = "Костюмы", Name = "Ковбой", Cost = 20, ImagePath = "Skin7",
+                BoughtByUser = false, Level = 1 });
+            defaultItems.Add(new Item {
+                Id = 8,
+                Category = "Костюмы", Name = "Наномышь", Cost = 30, ImagePath = "Skin8",
+                BoughtByUser = false, Level = 1 });
+
+
+            defaultItems.Add(new Item { Category = "Бонусы", Name = "Эхо-заряды +", Cost = 2, ImagePath = "bonusEcho",
+                BoughtByUser = false, Level = 1, MaxLevel = 5 });
+            defaultItems.Add(new Item
+            {
+                Category = "Бонусы",
+                Name = "Атака +",
+                Cost = 15,
+                ImagePath = "attackBonus",
+                BoughtByUser = false,
+                Level = 1,
+                MaxLevel = 3
+            });
 
             return defaultItems;
         }
@@ -54,9 +106,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Sevices
     [Serializable]
     public class Item
     {
+        public int Id;
+        public string Category;
         public string Name;
         public int Cost;
         public string ImagePath;
         public bool BoughtByUser;
+        public int Level;
+        public int MaxLevel;
     }
 }

@@ -9,6 +9,9 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         int CoinsCount { get; }
         int MaxEchoCount { get; set; }
+        int SkinId { get; set; }
+        int AttackPower { get; set; }
+        int MaxHealth{ get; }
         float DefaultForwardSpeed { get; set; }
         float ForwardSpeed { get; set; }
         bool IsEchoWorking { get; set; }
@@ -18,6 +21,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         PlayerStateOnLevel PlayerStateOnLevel { get; set; }
         Transform PlayerTransform { get; set; }
         Collider AttackCollider { get; set; }
+        Animator PlayerAnimator { get; set; }
         bool CanAttack { get; }
 
         void AddCoins(int count = 1);

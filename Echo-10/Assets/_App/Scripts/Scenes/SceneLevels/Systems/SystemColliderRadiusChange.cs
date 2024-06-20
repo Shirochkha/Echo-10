@@ -43,7 +43,8 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
             {
                 if (!_isChanging)
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    // TODO: подумать над двумя атаками сразу
+                    if (Input.GetMouseButtonDown(0) && !_levelState.HaveAttack)
                     {
                         _player.UseEcho();
                         StartRadiusChange();

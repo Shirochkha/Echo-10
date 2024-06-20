@@ -1,4 +1,5 @@
 ﻿using _App.Scripts.Libs.StateMachine;
+using Assets._App.Scripts.Libs.SoundsManager;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.States;
 using Assets._App.Scripts.Scenes.SceneLevels.Systems;
@@ -11,15 +12,20 @@ namespace _App.Scripts.Infrastructure.GameCore.States
         private SystemPlayerInteractions _playerInteractions;
         private IPlayer _player;
 
-        public StateProcessGame(SystemPlayerInteractions playerInteractions, IPlayer player)
+        private AudioClip _musicProcess;
+
+        public StateProcessGame(SystemPlayerInteractions playerInteractions, IPlayer player, AudioClip musicProcess)
         {
             _playerInteractions = playerInteractions;
             _player = player;
+            _musicProcess = musicProcess;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("Process");
+            if (SoundMusicManager.instance != null)
+                SoundMusicManager.instance.PlayMusicClip(_musicProcess);
             _player.ChangeSpeed(_player.DefaultForwardSpeed);
         }
 

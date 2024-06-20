@@ -1,53 +1,62 @@
 ﻿using UnityEngine;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using _App.Scripts.Libs.Installer;
+using _App.Scripts.Libs.SceneManagement;
 
 namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 {
     public class SystemAttack : IUpdatable
     {
+        private SceneNavigatorLoader _scenes;
         private IPlayer _player;
         private Boss _boss;
-        private Animator _playerAnimator;
 
         private bool _bossAnimationStarted;
         private bool _isAttacking = false;
 
-        public SystemAttack(IPlayer player, Boss boss, Animator playerAnimator)
+        public SystemAttack(IPlayer player, Boss boss, SceneNavigatorLoader scenes)
         {
             _player = player;
             _boss = boss;
-            _playerAnimator = playerAnimator;
+            _scenes = scenes;
         }
 
         public void Update()
         {
-            if (_isAttacking && _playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && 
-                !_playerAnimator.IsInTransition(0))
+            if (_isAttacking && _player.PlayerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && 
+                !_player.PlayerAnimator.IsInTransition(0))
             {
-                _playerAnimator.SetBool("Attack", false);
+                _player.PlayerAnimator.SetBool("Attack", false);
                 _isAttacking = false;
             }
         }
 
         public void UserAttack()
         {
-            _playerAnimator.SetBool("Attack", true);
+            _player.PlayerAnimator.SetBool("Attack", true);
             _isAttacking = true;
 
             if (IsColliding(_player.AttackCollider, _boss.Collider))
             {
                 HandleCollision(_player, _boss);
+                if(_boss.Health <= 0)
+                {
+                    foreach (var scene in _scenes.GetAvailableSwitchScenes())
+                    {
+                        if (scene.SceneViewName == "EndGame")
+                            _scenes.LoadScene(scene.SceneKey);
+                    }
+                }
             }            
         }
 
         public void BossAttack()
         {
+            if (_boss.AttackAnimator == null) return;
             if (_boss.StartAnimation && !_bossAnimationStarted)
             {
                 _bossAnimationStarted = true;
                 _boss.AttackAnimator.SetBool("Attack", true);
-                //Debug.Log("Начинаем анимацию");
             }
 
             if (!_boss.CanAttack) return;
@@ -76,8 +85,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Systems
 
         private void HandleCollision(IPlayer player, Boss boss)
         {
-            _boss.TakeDamage(1);
-            //TODO: КОНЕЦ ИГРЫ
+            _boss.TakeDamage(_player.AttackPower);
         }
 
         private void HandleCollision(Boss boss, IPlayer player)

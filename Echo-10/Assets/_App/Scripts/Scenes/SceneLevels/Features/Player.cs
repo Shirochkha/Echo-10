@@ -19,6 +19,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private Transform _playerTransform;
         private Collider _playerCollider;
         private Collider _attackCollider;
+        private Animator _playerAnimator;
         private float _speedByAxises;
         private float _defaultForwardSpeed;
         private int _coinsCount;
@@ -27,6 +28,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         private int _maxEchoCount;
         private PlayerStateOnLevel _playerStateOnLevel;
         private float _elapsedTime;
+        private int _skinId;
 
         public Player(
             GameObject player,
@@ -34,6 +36,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             Transform playerTransform,
             Collider playerCollider,
             Collider attackCollider,
+            Animator playerAnimator,
             float speedByAxises,
             float forwardSpeed,
             int coinsCount,
@@ -41,6 +44,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             int maxEchoCount,
             Vector3 playerPosition,
             int attackPower,
+            int skinId,
             Action<int, int> onAddedCoin,
             Action<int, int> onHealthContainerChanged,
             Action<int> onHealthChanged,
@@ -52,20 +56,22 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _playerTransform = playerTransform;
             _playerCollider = playerCollider;
             _attackCollider = attackCollider;
+            _playerAnimator = playerAnimator;
             _speedByAxises = speedByAxises;
             _defaultForwardSpeed = forwardSpeed;
             _coinsCount = coinsCount;
             _maxHealth = maxHealth;
             MaxEchoCount = maxEchoCount;
             _playerPosition = playerPosition;
-            _attackPower = attackPower;
+            AttackPower = attackPower;
+            _skinId = skinId;
             OnAddedCoins += onAddedCoin;
             OnHealthContainerChanged += onHealthContainerChanged;
             OnHealthChanged += onHealthChanged;
             OnPlayerAttacked += onPlayerAttacked;
             SetDefaultState(3);
 
-            OnHealthContainerChanged?.Invoke(_playerStateOnLevel.CurrentHealth, _maxHealth);
+            OnHealthContainerChanged?.Invoke(_playerStateOnLevel.CurrentHealth, MaxHealth);
             OnAddedCoins?.Invoke(_playerStateOnLevel.CoinsCollected, _playerStateOnLevel.MaxCoinsCount);
             AttackDelay = attackDelay;
         }
@@ -81,8 +87,13 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public int CoinsCount { get => _coinsCount; }
         public int MaxEchoCount { get => _maxEchoCount; set => _maxEchoCount = value; }
         public Collider AttackCollider { get => _attackCollider; set => _attackCollider = value; }
+        public Animator PlayerAnimator { get => _playerAnimator; set => _playerAnimator = value; }
         public float AttackDelay { get; }
         public bool CanAttack => _elapsedTime > AttackDelay && _playerStateOnLevel.EchoCount > 0;
+
+        public int SkinId { get => _skinId; set => _skinId = value; }
+        public int AttackPower { get => _attackPower; set => _attackPower = value; }
+        public int MaxHealth { get => _maxHealth; }
 
         public void Update()
         {
@@ -140,10 +151,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
 
         public void SetDefaultState(int maxCoinsCount)
         {
-            _playerStateOnLevel = new PlayerStateOnLevel(false, 0, maxCoinsCount, _maxHealth, _maxHealth,
+            _playerStateOnLevel = new PlayerStateOnLevel(false, 0, maxCoinsCount, MaxHealth, MaxHealth,
                 MaxEchoCount, 0f);
             OnAddedCoins?.Invoke(0, maxCoinsCount);
-            OnHealthChanged?.Invoke(_maxHealth);
+            OnHealthChanged?.Invoke(MaxHealth);
             _playerTransform.position = _playerPosition;
             _elapsedTime = AttackDelay;
         }
@@ -158,12 +169,14 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
             _coinsCount = memento.CoinsCount;
             MaxEchoCount = memento.MaxEchoCount;
             _maxHealth = memento.MaxHealth;
-            _attackPower = memento.AttackPower;
+            AttackPower = memento.AttackPower;
+            SkinId = memento.SkinId;
+            PlayerAnimator.SetInteger("Skin", memento.SkinId);
         }
 
         public PlayerMemento GetMemento()
         {
-            return new PlayerMemento(_coinsCount, _maxHealth, MaxEchoCount, _attackPower);
+            return new PlayerMemento(_coinsCount, MaxHealth, MaxEchoCount, AttackPower, SkinId);
         }
     }
 
@@ -196,13 +209,16 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Features
         public int MaxHealth;
         public int MaxEchoCount;
         public int AttackPower;
+        public int SkinId;
 
-        public PlayerMemento(int coinsCount, int maxHealth, int maxEchoCount, int attackPower)
+        public PlayerMemento(int coinsCount, int maxHealth, int maxEchoCount, int attackPower,
+            int skinId)
         {
             CoinsCount = coinsCount;
             MaxHealth = maxHealth;
             MaxEchoCount = maxEchoCount;
             AttackPower = attackPower;
+            SkinId = skinId;
         }
     }
 }

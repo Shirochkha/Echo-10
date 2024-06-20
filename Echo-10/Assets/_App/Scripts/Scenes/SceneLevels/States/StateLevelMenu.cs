@@ -1,6 +1,7 @@
 ﻿using _App.Scripts.Libs.StateMachine;
 using _App.Scripts.Libs.TaskExtensions;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
+using Assets._App.Scripts.Libs.SoundsManager;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
 using Assets._App.Scripts.Scenes.SceneLevels.Sevices;
 using System;
@@ -14,16 +15,22 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.States
         private LevelsMenuUI _levelsMenuUI;
         private ConfigLevel _configLevel;
         private ServiceLevelState _serviceLevelState;
-        public StateLevelMenu(LevelsMenuUI levelsMenuUI, ConfigLevel configLevel, ServiceLevelState serviceLevelState)
+
+        private AudioClip _musicLevelMenu;
+        public StateLevelMenu(LevelsMenuUI levelsMenuUI, ConfigLevel configLevel, ServiceLevelState serviceLevelState,
+            AudioClip musicLevelMenu)
         {
             _levelsMenuUI = levelsMenuUI;
             _configLevel = configLevel;
             _serviceLevelState = serviceLevelState;
+            _musicLevelMenu = musicLevelMenu;
         }
 
         public override void OnEnterState()
         {
             Debug.Log("LevelMenu");
+            if(SoundMusicManager.instance != null)
+                SoundMusicManager.instance.PlayMusicClip(_musicLevelMenu);
 
             foreach (var level in _configLevel.levels)
             {

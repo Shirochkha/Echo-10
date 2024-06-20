@@ -2,6 +2,7 @@ using _App.Scripts.Libs.Installer;
 using _App.Scripts.Libs.SceneManagement;
 using _App.Scripts.Libs.SceneManagement.Config;
 using _App.Scripts.Libs.ServiceLocator;
+using Assets._App.Scripts.Libs.SoundsManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ namespace _App.Scripts.Scenes.SceneMainMenu.Installers
         [SerializeField] private Button _buttonExit;
         [SerializeField] private ConfigScenes _scenes;
         [SerializeField] private AudioClip _soundButtonClip;
+        [SerializeField] private AudioClip _mainMenuClip;
 
         public override void InstallBindings(ServiceContainer container)
         {
@@ -29,6 +31,7 @@ namespace _App.Scripts.Scenes.SceneMainMenu.Installers
             _buttonExit.onClick.AddListener(mainMenuButtons.ExitGame);
 
             container.SetServiceSelf(mainMenuButtons);
+            SoundMusicManager.instance.PlayMusicClip(_mainMenuClip, 0.8f);
         }
     }
 }

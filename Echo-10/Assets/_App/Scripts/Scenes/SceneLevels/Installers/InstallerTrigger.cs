@@ -1,4 +1,6 @@
 ﻿using _App.Scripts.Libs.Installer;
+using _App.Scripts.Libs.SceneManagement;
+using _App.Scripts.Libs.SceneManagement.Config;
 using _App.Scripts.Libs.ServiceLocator;
 using Assets._App.Scripts.Infrastructure.SceneManagement.Config;
 using Assets._App.Scripts.Scenes.SceneLevels.Features;
@@ -11,8 +13,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 {
     public class InstallerTrigger : MonoInstaller
     {
-        [SerializeField] private Animator _playerAnimator;
-
+        [SerializeField] private ConfigScenes _scenes;
         [SerializeField] private float _maxRadius = 150f;
         [SerializeField] private float _duration = 2f;
         [SerializeField] private SphereCollider _colliderComponent;
@@ -28,7 +29,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
 
         public override void InstallBindings(ServiceContainer container)
         {
-            var systemAttack = new SystemAttack(container.Get<IPlayer>(), container.Get<Boss>(), _playerAnimator);
+            var sceneNavigator = new SceneNavigatorLoader(_scenes);
+            container.SetServiceSelf(sceneNavigator);
+
+            var systemAttack = new SystemAttack(container.Get<IPlayer>(), container.Get<Boss>(), sceneNavigator);
             container.SetService<IUpdatable, SystemAttack>(systemAttack);
             container.SetServiceSelf(systemAttack);
 

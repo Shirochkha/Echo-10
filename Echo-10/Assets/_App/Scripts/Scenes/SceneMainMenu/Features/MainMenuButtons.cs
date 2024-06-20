@@ -20,8 +20,10 @@ public class MainMenuButtons
         foreach (var scene in _scenes.GetAvailableSwitchScenes())
         {
             if (scene.SceneViewName == "Levels")
+            {
                 PlaySoundClip();
                 _scenes.LoadScene(scene.SceneKey);
+            }
         }
     }
 

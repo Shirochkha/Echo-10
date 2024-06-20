@@ -14,6 +14,7 @@ public class LevelsMenuUI : IUpdatable
     private Button _buttonPrefab;
     private Button _buttonMenu;
     private Button _buttonShop;
+    private Button _buttonProfile;
     private Transform _parentContainer;
     private ServiceLevelSelection _levelSelectionService;
     private SceneNavigatorLoader _scenes;
@@ -25,16 +26,18 @@ public class LevelsMenuUI : IUpdatable
 
     public event Action<int> OnLevelButtonClicked;
     public event Action OnShopButtonClicked;
+    public event Action OnProfileButtonClicked;
 
     public LevelsMenuUI(GameObject levelsMenuUI, ConfigLevel levelList, Button buttonPrefab, Button buttonMenu,
-        Button buttonShop, Transform parentContainer, ServiceLevelSelection levelSelectionService,
-        SceneNavigatorLoader scenes, ServiceLevelState levelState)
+        Button buttonShop, Button buttonProfile, Transform parentContainer, 
+        ServiceLevelSelection levelSelectionService, SceneNavigatorLoader scenes, ServiceLevelState levelState)
     {
         LevelsMenuPanel = levelsMenuUI;
         _levelList = levelList;
         _buttonPrefab = buttonPrefab;
         _buttonMenu = buttonMenu;
         _buttonShop = buttonShop;
+        _buttonProfile = buttonProfile;
         _parentContainer = parentContainer;
         _levelSelectionService = levelSelectionService;
         _scenes = scenes;
@@ -42,6 +45,7 @@ public class LevelsMenuUI : IUpdatable
 
         _buttonMenu.onClick.AddListener(ReturnToMainMenu);
         _buttonShop.onClick.AddListener(() => OnShopButtonClicked?.Invoke());
+        _buttonProfile.onClick.AddListener(() => OnProfileButtonClicked?.Invoke());
         CreateButtonsPrefabs();
     }
 
@@ -53,6 +57,11 @@ public class LevelsMenuUI : IUpdatable
     public void SubscribeToShopButtonClicked(Action action)
     {
         OnShopButtonClicked += action;
+    }
+
+    public void SubscribeToProfileButtonClicked(Action action)
+    {
+        OnProfileButtonClicked += action;
     }
 
     public void SetActiveObject(bool isActive)

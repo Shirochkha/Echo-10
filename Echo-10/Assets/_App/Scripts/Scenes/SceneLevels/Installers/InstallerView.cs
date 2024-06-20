@@ -21,6 +21,7 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Button _buttonPrefab;
         [SerializeField] private Button _buttonMainMenu;
         [SerializeField] private Button _buttonShop;
+        [SerializeField] private Button _buttonProfile;
         [SerializeField] private Transform _parentContainer;
 
         [Header("Shop")]
@@ -29,6 +30,18 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
         [SerializeField] private Button _buttonLevelMenu;
         [SerializeField] private Text _allCoinsCount;
         [SerializeField] private Transform _parentItemContainer;
+        [SerializeField] private Button _skinsButton;
+        [SerializeField] private Button _bonusesButton;
+
+        [Header("Profile")]
+        [SerializeField] private GameObject _profileMenuObject;
+        [SerializeField] private Button _buttonReturnLevelMenu;
+        [SerializeField] private Text _profileInfo;
+        [SerializeField] private Image _skinImage;
+        [SerializeField] private Text _skinNameText;
+        [SerializeField] private Button _chooseButton;
+        [SerializeField] private Button _prevButton;
+        [SerializeField] private Button _nextButton;
 
         [Header("GameOver")]
         [SerializeField] private GameObject _gameOverMenu;
@@ -45,11 +58,10 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             container.SetService<IUpdatable, SystemTextureScroll>(textureScroll);
 
 
-
             var levelSelection = container.Get<ServiceLevelSelection>();
 
-            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu, _buttonShop,
-                _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), 
+            var levelsMenuUI = new LevelsMenuUI(_levelsMenuUI, _levelList, _buttonPrefab, _buttonMainMenu, 
+                _buttonShop, _buttonProfile, _parentContainer, levelSelection, container.Get<SceneNavigatorLoader>(), 
                 container.Get<ServiceLevelState>());
             container.SetServiceSelf(levelsMenuUI);
             container.SetService<IUpdatable, LevelsMenuUI>(levelsMenuUI);
@@ -59,7 +71,12 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
             var playerPersistence = container.Get<PlayerMementoPersistence>();
 
             var shopUI = new ShopUI(_shopMenuObject, _itemPrefab, _buttonLevelMenu, _allCoinsCount,
-                _parentItemContainer, shopPersistence, player, playerPersistence);
+                _parentItemContainer, _skinsButton, _bonusesButton, shopPersistence, player, playerPersistence);
+            container.SetServiceSelf(shopUI);
+
+            var profileUI = new ProfileUI(_profileMenuObject, _buttonReturnLevelMenu, _profileInfo, 
+                _skinImage, _skinNameText, _chooseButton, _prevButton, _nextButton,
+                shopPersistence, player, playerPersistence);
             container.SetServiceSelf(shopUI);
 
             levelsMenuUI.SubscribeToShopButtonClicked(() =>
@@ -68,9 +85,21 @@ namespace Assets._App.Scripts.Scenes.SceneLevels.Installers
                 shopUI.SetActiveObject(true);
             });
 
+            levelsMenuUI.SubscribeToProfileButtonClicked(() =>
+            {
+                levelsMenuUI.SetActiveObject(false);
+                profileUI.SetActiveObject(true);
+            });
+
             shopUI.SubscribeToLevelMenuButtonClicked(() =>
             {
                 shopUI.SetActiveObject(false);
+                levelsMenuUI.SetActiveObject(true);
+            });
+
+            profileUI.SubscribeToLevelMenuButtonClicked(() =>
+            {
+                profileUI.SetActiveObject(false);
                 levelsMenuUI.SetActiveObject(true);
             });
 
